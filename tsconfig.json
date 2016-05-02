@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "moduleResolution": "node",
+    "newLine": "LF",
+    "preserveConstEnums": true,
+    "pretty": true,
+    "experimentalDecorators": true
+  },
+  "files": [
+    "index.ts"
+  ]
+}
