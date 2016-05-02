@@ -1,0 +1,32 @@
+{
+  "name": "telegram_bot_api",
+  "version": "0.0.1",
+  "description": "Node.js Telegram Bot API (ESNext)",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AliMD/Node.js-Telegram-Bot-API.git"
+  },
+  "keywords": [
+    "telegram",
+    "bot",
+    "telegram bot",
+    "api",
+    "alimd",
+    "ali.md",
+    "ali",
+    "mihandoost",
+    "1devs"
+  ],
+  "author": "Ali Mihandoost <i@ali.md> (http://ali.md/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AliMD/Node.js-Telegram-Bot-API/issues"
+  },
+  "homepage": "https://github.com/AliMD/Node.js-Telegram-Bot-API#readme"
+}
