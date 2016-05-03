@@ -3,13 +3,8 @@
   "version": "0.0.1",
   "description": "Node.js Telegram Bot API (ESNext)",
   "main": "index.js",
-  "dependencies": {
-    "debug": "^2.2.0"
-  },
-  "devDependencies": {
-  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jasmine JASMINE_CONFIG_PATH=src/.jasminerc.json",
     "start": "node index",
     "watch": "tsc -w -p .",
     "build": "tsc -p ."
@@ -34,5 +29,14 @@
   "bugs": {
     "url": "https://github.com/AliMD/Node.js-Telegram-Bot-API/issues"
   },
-  "homepage": "https://github.com/AliMD/Node.js-Telegram-Bot-API#readme"
+  "homepage": "https://github.com/AliMD/Node.js-Telegram-Bot-API#readme",
+  "dependencies": {
+    "debug": "^2.2.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.7.7",
+    "babel-preset-es2015": "^6.6.0",
+    "jasmine": "^2.4.1",
+    "typescript": "^1.8.10"
+  }
 }
