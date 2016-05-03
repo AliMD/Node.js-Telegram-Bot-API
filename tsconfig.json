@@ -1,14 +1,16 @@
 {
   "compilerOptions": {
-    "target": "ES6",
+    "target": "es6",
+    "module": "commonjs",
     "moduleResolution": "node",
+    "declaration": false,
     "newLine": "LF",
     "preserveConstEnums": true,
     "pretty": true,
     "experimentalDecorators": true
   },
 
-  "files": [
-    "index.ts"
+  "exclude": [
+    "node_modules"
   ]
 }
