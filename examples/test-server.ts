@@ -1,3 +1,3 @@
-import * from "../";
+import * as test from "../";
 
-console.log(msg);
+console.log(test.msg);
