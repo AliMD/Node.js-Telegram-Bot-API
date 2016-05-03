@@ -4,6 +4,7 @@
   "description": "Node.js Telegram Bot API (ESNext)",
   "main": "index.js",
   "dependencies": {
+    "debug": "^2.2.0"
   },
   "devDependencies": {},
   "scripts": {
