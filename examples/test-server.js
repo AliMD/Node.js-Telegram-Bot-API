@@ -1,3 +1,3 @@
 "use strict";
-const test = require("../main");
+const test = require("../");
 console.log(test.msg);

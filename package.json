@@ -10,7 +10,7 @@
   "scripts": {
     "postinstall": "typings install",
     "test": "jasmine JASMINE_CONFIG_PATH=src/.jasminerc.json",
-    "start": "node index",
+    "start": "node .",
     "watch": "tsc -w -p .",
     "build": "tsc -p ."
   },
