@@ -1,1 +1,2 @@
-export var msg = "hi";
+"use strict";
+exports.msg = "hi";
