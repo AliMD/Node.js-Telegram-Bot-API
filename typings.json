@@ -4,5 +4,8 @@
   },
   "dependencies": {
     "debug": "registry:npm/debug#2.0.0+20160211003958"
+  },
+  "ambientDependencies": {
+    "node": "registry:dt/node#4.0.0+20160501135006"
   }
 }
