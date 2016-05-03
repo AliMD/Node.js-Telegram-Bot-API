@@ -2,8 +2,11 @@
   "name": "telegram_bot_api",
   "version": "0.0.1",
   "description": "Node.js Telegram Bot API (ESNext)",
-  "main": "main.js",
-  "typings": "main.d.ts",
+  "main": "index.js",
+  "typescript": {
+    "main": "index.ts"
+  },
+  "typings": "index.d.ts",
   "scripts": {
     "test": "jasmine JASMINE_CONFIG_PATH=src/.jasminerc.json",
     "start": "node index",
