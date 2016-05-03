@@ -1,3 +1,3 @@
-import * as test from "../";
+import * as test from "../main";
 
 console.log(test.msg);
