@@ -6,7 +6,9 @@
   "dependencies": {
     "debug": "^2.2.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "jasmine-core": "^2.4.1"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index",
