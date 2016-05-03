@@ -11,6 +11,7 @@
   },
 
   "exclude": [
+    "index.ts",
     "node_modules",
     "typings"
   ]
