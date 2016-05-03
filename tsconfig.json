@@ -3,7 +3,7 @@
     "target": "es6",
     "module": "commonjs",
     "moduleResolution": "node",
-    "declaration": false,
+    "declaration": true,
     "newLine": "LF",
     "preserveConstEnums": true,
     "pretty": true,
