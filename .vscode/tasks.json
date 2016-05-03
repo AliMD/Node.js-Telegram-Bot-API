@@ -4,17 +4,22 @@
 	"version": "0.1.0",
 	"command": "npm",
 	"isShellCommand": true,
-	"args": ["run-script"],
-	"showOutput": "always",
+	"args": ["run"],
   "tasks": [
     {
       "taskName": "build",
+	    "showOutput": "always",
 	    "problemMatcher": "$tsc"
     },
     {
       "taskName": "watch",
 	    "isWatching": true,
+	    "showOutput": "silent",
 	    "problemMatcher": "$tsc-watch"
+    },
+    {
+      "taskName": "test",
+	    "showOutput": "always"
     }
   ]
 }
