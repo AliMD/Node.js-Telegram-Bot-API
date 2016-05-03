@@ -3,12 +3,14 @@
   "version": "0.0.1",
   "description": "Node.js Telegram Bot API (ESNext)",
   "main": "index.js",
-  "dependencies": {},
+  "dependencies": {
+  },
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prestart": "tsc",
-    "start": "node index"
+    "start": "node index",
+    "watch": "tsc -w -p .",
+    "build": "tsc -p ."
   },
   "repository": {
     "type": "git",

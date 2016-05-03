@@ -9,7 +9,7 @@
 			"stopOnEntry": false,
 			"args": [],
 			"cwd": "${workspaceRoot}",
-			"preLaunchTask": "tsc",
+			"preLaunchTask": "watch",
 			"runtimeExecutable": null,
 			"runtimeArgs": [
 				"--nolazy"
