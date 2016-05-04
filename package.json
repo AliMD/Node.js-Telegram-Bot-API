@@ -9,7 +9,8 @@
   "typings": "index.d.ts",
   "scripts": {
     "postinstall": "typings install",
-    "test": "mocha --compilers js:babel-register --colors ./**/*[sS]pec.js",
+    "test": "mocha --compilers js:babel-register --reporter 'spec' src/**/*[sS]pec.js",
+    "watchtest": "mocha --compilers js:babel-register --reporter 'spec' --watch example/*[sS]pec.js",
     "start": "node .",
     "watch": "tsc -w -p .",
     "build": "tsc -p ."
