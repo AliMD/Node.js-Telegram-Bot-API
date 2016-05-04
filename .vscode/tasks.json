@@ -34,6 +34,11 @@
     {
       "taskName": "test",
 	    "showOutput": "always"
+    },
+
+    {
+      "taskName": "watchtest",
+	    "showOutput": "always"
     }
   ]
 }
