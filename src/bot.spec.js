@@ -1,6 +1,6 @@
 /// <reference path="../typings/main.d.ts" />
 
-import TelegramBot from "./";
+import TelegramBot from "../";
 
 const expect = require('expect.js');
 
