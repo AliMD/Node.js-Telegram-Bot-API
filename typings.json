@@ -1,8 +1,12 @@
 {
   "ambientDevDependencies": {
+    "expect.js": "registry:dt/expect.js#0.3.1+20160317120654",
     "mocha": "registry:dt/mocha#2.2.5+20160317120654"
   },
   "dependencies": {
     "debug": "registry:npm/debug#2.0.0+20160211003958"
+  },
+  "ambientDependencies": {
+    "node": "registry:dt/node#4.0.0+20160501135006"
   }
 }
