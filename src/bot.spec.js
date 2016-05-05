@@ -1,7 +1,5 @@
-/// <reference path="../typings/main.d.ts" />
-
-import TelegramBot from "./bot";
-import expect from "expect.js";
+import TelegramBot from './bot';
+import expect from 'expect.js';
 
 const
 token = '123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11',

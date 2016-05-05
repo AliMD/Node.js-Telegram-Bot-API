@@ -1,4 +1,3 @@
-/// <reference path="../typings/main.d.ts" />
 /**
  * @class TelegramBot
  * @param {string} tocken
