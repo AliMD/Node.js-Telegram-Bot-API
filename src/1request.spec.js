@@ -38,7 +38,7 @@ var server = http.createServer((req, resp) => {
   }
 });
 
-describe('_1request', () => {
+describe('1request.js', () => {
   before ((done) => {
     console.log(`server listen on ${port}`);
     server.listen(port, host, null, done);
@@ -82,7 +82,7 @@ describe('_1request', () => {
     ;
   });
 
-  it('shoud be return body', (done) => {
+  it('shoud return body', (done) => {
     let text = 'salam';
     _1request({
       url: serverUrl + text

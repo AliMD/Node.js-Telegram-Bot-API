@@ -18,36 +18,36 @@ expectToBePromise = (obj) => {
 }
 ;
 
-describe('Bot.js', () => {
+describe('bot.js', () => {
 
   describe('new instance', () => {
 
-    it('should be an constructor', () => {
+    it('should an constructor', () => {
       expect(TelegramBot).to.be.a('function');
       expect(new TelegramBot()).to.be.an('object');
     });
 
-    it('should be have token', () => {
+    it('should have token', () => {
       let bot = new TelegramBot(token);
       expect(bot.token).to.be.equal(token);
     });
 
-    it('should be have not token', () => {
+    it('should have not token', () => {
       let bot = new TelegramBot();
       expect(bot.token).to.be.empty();
     });
 
-    it('should be have default options', () => {
+    it('should have default options', () => {
       let bot = new TelegramBot(token);
       expect(bot.options).to.be.eql(defOptions);
     });
 
-    it('should be have default options with extend', () => {
+    it('should have default options with extend', () => {
       let bot = new TelegramBot(token, {});
       expect(bot.options).to.be.eql(defOptions);
     });
 
-    it('should be have extended options', () => {
+    it('should have extended options', () => {
       let bot = new TelegramBot(token, {foo: 'bar'});
       expect(bot.options.foo).to.be.equal('bar');
     });
@@ -56,12 +56,12 @@ describe('Bot.js', () => {
 
   describe('makeUrl', () => {
 
-    it('should be exist', () => {
+    it('should exist', () => {
       let bot = new TelegramBot('123456');
       expect(bot).to.have.property('makeUrl');
     });
 
-    it('should be return correct url', () => {
+    it('should return correct url', () => {
       let bot = new TelegramBot(token);
       expect(bot.makeUrl('getMe')).to.be.equal('https://api.telegram.org/bot123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11/getMe');
     });
