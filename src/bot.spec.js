@@ -1,25 +1,26 @@
 /// <reference path="../typings/main.d.ts" />
 
 import TelegramBot from "./bot";
+import expect from "expect.js";
 
-const expect = require('expect.js');
-
-var expectToBePromise = (obj) => {
-  expect(bot).to.be.an('object');
-  expect(bot).to.have('then');
-  expect(bot.then).to.be.a('function');
-};
-
-const token = '123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11';
-const defOptions = {
+const
+token = '123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11',
+defOptions = {
   webhook: false,
   autoUpdate: true,
   updateInterval: 1000
-};
+},
 
-describe('telegram bot client general', () => {
+expectToBePromise = (obj) => {
+  expect(bot).to.be.an('object');
+  expect(bot).to.have('then');
+  expect(bot.then).to.be.a('function');
+}
+;
 
-  describe('setup', () => {
+describe('Bot.js', () => {
+
+  describe('New TelegramBot', () => {
 
     it('should be an constructor', () => {
       expect(TelegramBot).to.be.a('function');
