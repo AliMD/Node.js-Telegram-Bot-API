@@ -1,14 +1,14 @@
+/// <reference path="../typings/main.d.ts" />
 "use strict";
-var _ = require('lodash');
-var debug = require('debug');
-var log = debug('TelegramBot index');
+const _ = require('lodash');
+const debug = require('debug');
+const log = debug('TelegramBot index');
 /**
  * @class TelegramBot
  * @param {string} tocken
  */
-var TelegramBot = (function () {
-    function TelegramBot(token, opt) {
-        if (token === void 0) { token = ''; }
+class TelegramBot {
+    constructor(token = '', opt) {
         this.token = token;
         this.opt = opt;
         this.options = {
@@ -19,7 +19,6 @@ var TelegramBot = (function () {
         console.assert(typeof token === 'string', 'token must be string');
         _.extend(this.options, opt);
     }
-    return TelegramBot;
-}());
-exports.__esModule = true;
-exports["default"] = TelegramBot;
+}
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = TelegramBot;
