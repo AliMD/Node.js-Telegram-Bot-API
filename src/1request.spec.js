@@ -22,6 +22,12 @@ var server = http.createServer((req, resp) => {
       resp.writeHead(200, {'Content-Type': 'text/plain'});
       resp.end('okay');
     }
+
+    else if (req.url === '/test.json') {
+      resp.writeHead(200, {'Content-Type': 'application/json'});
+      resp.end('{msg: hi}');
+    }
+
     else {
       resp.writeHead(200, {'Content-Type': 'text/plain'});
       resp.end(req.url.substr(1));
@@ -64,6 +70,7 @@ describe('_1request', () => {
       url: serverUrl
     })
     .then((data) => {
+      expect(data.response.statusCode).to.be.equal(200);
       done(data.err);
     }, (err) => {
       console.log(err);
@@ -81,9 +88,11 @@ describe('_1request', () => {
       url: serverUrl + text
     })
     .then((data) => {
+      expect(data.response.statusCode).to.be.equal(200);
       expect(data.body).to.be.equal(text);
       done(data.err);
     }, done)
     ;
   });
+
 });
