@@ -41,7 +41,8 @@
   "homepage": "https://github.com/AliMD/Node.js-Telegram-Bot-API#readme",
   "dependencies": {
     "debug": "^2.2.0",
-    "lodash": "^4.11.2"
+    "lodash": "^4.11.2",
+    "request": "^2.72.0"
   },
   "devDependencies": {
     "babel-polyfill": "^6.7.4",
