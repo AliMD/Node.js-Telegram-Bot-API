@@ -4,7 +4,8 @@ import expect from 'expect.js';
 import TelegramBot from '../';
 
 const
-token = '123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11',
+token = process.env.TEST_TOCKEN || '123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11',
+userId = process.env.TEST_USERID || 777000,
 defOptions = {
   webhook: false,
   autoUpdate: true,
@@ -62,8 +63,8 @@ describe('bot.js', () => {
     });
 
     it('should return correct url', () => {
-      let bot = new TelegramBot(token);
-      expect(bot.makeUrl('getMe')).to.be.equal('https://api.telegram.org/bot123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11/getMe');
+      let bot = new TelegramBot('123456');
+      expect(bot.makeUrl('getMe')).to.be.equal('https://api.telegram.org/bot123456/getMe');
     });
   });
 
@@ -90,13 +91,32 @@ describe('bot.js', () => {
     it('should work with getMe', (done)=>{
       bot.query('getMe', {})
       .then((data) => {
-        expect(data.response.statusCode).to.be.equal(401);
-        expect(data.body).to.be.ok();
+        expect(data).to.be.ok();
         done();
-      }, (err)=>{
-        console.log(err);
-        done(err);
-      });
+      }, done);
+    });
+
+    it('should return pased json', (done)=>{
+      bot.query('getMe', {})
+      .then((data) => {
+        expect(data).to.be.an('object');
+        expect(data).to.have.property('ok');
+        done();
+      }, done);
+    });
+
+    it('should send text message', (done)=>{
+      bot.query('sendMessage', {
+        chat_id: userId,
+        text: 'Test bot.js',
+        disable_notification: false
+      })
+      .then((data) => {
+        console.log(data);
+        expect(data).to.be.an('object');
+        expect(data).to.have.property('ok');
+        done();
+      }, done);
     });
 
   });
