@@ -33,9 +33,11 @@ class TelegramBot {
         return `${BASE_API_URL}bot${this.token}/${methodName}`;
     }
     query(methodName, parameters) {
-        return __awaiter(this, void 0, void 0, function* () {
-            let a = yield _1request_1.default({});
-            return a;
+        return __awaiter(this, void 0, Promise, function* () {
+            return _1request_1.default({
+                url: this.makeUrl(methodName),
+                qs: parameters
+            });
         });
     }
 }

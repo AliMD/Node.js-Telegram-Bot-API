@@ -8,5 +8,5 @@ export default class TelegramBot {
         updateInterval: number;
     });
     makeUrl(methodName: string): string;
-    query(methodName: string, parameters: Object): Promise<{}>;
+    query(methodName: string, parameters?: Object): Promise<{}>;
 }
