@@ -8,28 +8,34 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments)).next());
     });
 };
-const _ = require('lodash');
 const debug = require('debug');
 const log = debug('TelegramBot index');
+const _extend = require('lodash/extend');
+const _1request_1 = require('./1request');
 /**
  * @class TelegramBot
  * @param {string} tocken
  */
+const BASE_API_URL = 'https://api.telegram.org/';
 class TelegramBot {
     constructor(token = '', opt) {
         this.token = token;
-        this.opt = opt;
         this.options = {
             webhook: false,
             autoUpdate: true,
             updateInterval: 1000
         };
+        log('new TelegramBot');
         console.assert(typeof token === 'string', 'token must be string');
-        _.extend(this.options, opt);
+        _extend(this.options, opt);
+    }
+    makeUrl(methodName) {
+        return `${BASE_API_URL}bot${this.token}/${methodName}`;
     }
     query(methodName, parameters) {
         return __awaiter(this, void 0, void 0, function* () {
-            return 1;
+            let a = yield _1request_1.default({});
+            return a;
         });
     }
 }

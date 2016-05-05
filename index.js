@@ -5,7 +5,6 @@
  * @license MIT
  */
 "use strict";
-function __export(m) {
-    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
-}
-__export(require('./src/bot'));
+const bot_1 = require('./src/bot');
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = bot_1.default;
