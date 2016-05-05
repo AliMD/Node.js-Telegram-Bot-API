@@ -1,7 +1,7 @@
 import "babel-polyfill";
+import expect from 'expect.js';
 
 import TelegramBot from '../';
-import expect from 'expect.js';
 
 const
 token = '123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11',
@@ -20,7 +20,7 @@ expectToBePromise = (obj) => {
 
 describe('Bot.js', () => {
 
-  describe('New TelegramBot', () => {
+  describe('new instance', () => {
 
     it('should be an constructor', () => {
       expect(TelegramBot).to.be.a('function');
@@ -49,9 +49,22 @@ describe('Bot.js', () => {
 
     it('should be have extended options', () => {
       let bot = new TelegramBot(token, {foo: 'bar'});
-      expect(bot.options.foo).to.be.equal('bar')
+      expect(bot.options.foo).to.be.equal('bar');
     });
 
+  });
+
+  describe('makeUrl', () => {
+
+    it('should be exist', () => {
+      let bot = new TelegramBot('123456');
+      expect(bot).to.have.property('makeUrl');
+    });
+
+    it('should be return correct url', () => {
+      let bot = new TelegramBot(token);
+      expect(bot.makeUrl('getMe')).to.be.equal('https://api.telegram.org/bot123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11/getMe');
+    });
   });
 
   describe('query', () => {
@@ -72,9 +85,16 @@ describe('Bot.js', () => {
     it('should return promise', () => {
       var queryRes = bot.query('getMe', {});
       expectToBePromise(queryRes);
+    })
+
+    it('should work with getMe', (done)=>{
+      bot.query('getMe', {})
+      .then((data) => {
+        if(!data) throw(data);
+        done();
+      }, done);
     });
 
-    it('should work with getMe');
   });
 
 });
