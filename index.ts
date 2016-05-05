@@ -5,4 +5,6 @@
  * @license MIT
  */
 
-export * from './src/bot';
+import TelegramBot from './src/bot';
+
+export default TelegramBot;
