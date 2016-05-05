@@ -4,12 +4,12 @@ const request = require('request');
 
 export default function (options) {
   return new Promise((resolve, reject) => {
-    request(options, (err, httpResponse, body) => {
+    request(options, (err, response, body) => {
       if (err) {
         reject(err);
       }
       else {
-        resolve({httpResponse: httpResponse, body: body});
+        resolve({response: response, body: body});
       }
     })
   });
