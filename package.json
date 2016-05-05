@@ -9,15 +9,13 @@
   "typings": "index.d.ts",
   "scripts": {
     "postinstall": "typings install",
-
     "start": "node .",
     "build": "tsc -p .",
     "test": "mocha --compilers js:babel-register --reporter 'spec' src/**/*[sS]pec.js examples/*[sS]pec.js",
     "watchtest": "mocha --compilers js:babel-register --reporter 'spec' --watch src/**/*[sS]pec.js examples/*[sS]pec.js",
     "watch": "tsc -w -p .",
-
-    "preversion": "npm test",
-    "version": "npm run build && git add -A dist",
+    "preversion": "npm run build && npm test",
+    "version": "git add -A .",
     "postversion": "git push && git push --tags"
   },
   "repository": {
