@@ -4,4 +4,4 @@
  * @author Ali Mihandoost <i@ali.md> (http://ali.md/)
  * @license MIT
  */
-export * from "./src";
+export * from './src/bot';
