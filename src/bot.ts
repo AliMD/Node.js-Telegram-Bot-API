@@ -1,3 +1,5 @@
+/// <reference path="../typings/main.d.ts" />
+
 import _ = require('lodash');
 import debug = require('debug');
 const log = debug('TelegramBot index');
