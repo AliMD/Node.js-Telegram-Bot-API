@@ -1,6 +1,6 @@
 /// <reference path="../typings/main.d.ts" />
 
-import TelegramBot from "../";
+import TelegramBot from "./bot";
 
 const expect = require('expect.js');
 
@@ -38,6 +38,11 @@ describe('telegram bot client general', () => {
 
     it('should be have default options', () => {
       let bot = new TelegramBot(token);
+      expect(bot.options).to.be.eql(defOptions);
+    });
+
+    it('should be have default options with extend', () => {
+      let bot = new TelegramBot(token, {});
       expect(bot.options).to.be.eql(defOptions);
     });
 
