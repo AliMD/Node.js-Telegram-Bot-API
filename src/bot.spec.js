@@ -1,4 +1,6 @@
-import TelegramBot from './bot';
+import "babel-polyfill";
+
+import TelegramBot from '../';
 import expect from 'expect.js';
 
 const
@@ -10,9 +12,9 @@ defOptions = {
 },
 
 expectToBePromise = (obj) => {
-  expect(bot).to.be.an('object');
-  expect(bot).to.have('then');
-  expect(bot.then).to.be.a('function');
+  expect(obj).to.be.an('object');
+  expect(obj).to.have.property('then');
+  expect(obj.then).to.be.a('function');
 }
 ;
 
@@ -52,14 +54,27 @@ describe('Bot.js', () => {
 
   });
 
-  describe('api', () => {
+  describe('query', () => {
     var bot;
     before(() => {
       bot = new TelegramBot(token);
+      return bot;
     });
 
-    it('should be worked!');
+    it('should exist', () => {
+      expect(bot).to.have.property('query');
+    });
 
+    it('should a function', () => {
+      expect(bot.query).to.be.a('function');
+    });
+
+    it('should return promise', () => {
+      var queryRes = bot.query('getMe', {});
+      expectToBePromise(queryRes);
+    });
+
+    it('should work with getMe');
   });
 
 });

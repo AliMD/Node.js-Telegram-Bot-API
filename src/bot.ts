@@ -25,4 +25,9 @@ export default class TelegramBot {
     console.assert(typeof token === 'string', 'token must be string');
     _.extend(this.options, opt);
   }
+
+  async query (methodName: string, parameters: Object) {
+    return 1;
+  }
+
 }

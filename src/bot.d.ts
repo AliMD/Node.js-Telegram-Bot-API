@@ -20,4 +20,5 @@ export default class TelegramBot {
         autoUpdate: boolean;
         updateInterval: number;
     });
+    query(methodName: string, parameters: Object): Promise<number>;
 }
