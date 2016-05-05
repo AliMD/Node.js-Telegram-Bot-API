@@ -58,4 +58,20 @@ describe('_1request', () => {
       done();
     });
   });
+
+  it('shoud resolved on success', (done) => {
+    _1request({
+      url: serverUrl
+    })
+    .then((data) => {
+      done(data.err);
+    }, (err) => {
+      console.log(err);
+      throw(err);
+    })
+    .catch((err) => {
+      throw(err);
+    })
+    ;
+  });
 });
