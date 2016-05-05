@@ -74,4 +74,16 @@ describe('_1request', () => {
     })
     ;
   });
+
+  it('shoud be return body', (done) => {
+    let text = 'salam';
+    _1request({
+      url: serverUrl + text
+    })
+    .then((data) => {
+      expect(data.body).to.be.equal(text);
+      done(data.err);
+    }, done)
+    ;
+  });
 });
