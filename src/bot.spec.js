@@ -90,9 +90,13 @@ describe('bot.js', () => {
     it('should work with getMe', (done)=>{
       bot.query('getMe', {})
       .then((data) => {
-        if(!data) throw(data);
+        expect(data.response.statusCode).to.be.equal(401);
+        expect(data.body).to.be.ok();
         done();
-      }, done);
+      }, (err)=>{
+        console.log(err);
+        done(err);
+      });
     });
 
   });

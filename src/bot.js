@@ -9,7 +9,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const debug = require('debug');
-const log = debug('TelegramBot index');
+const log = debug('TelegramBotApi:bot');
+const queryLog = debug('TelegramBotApi:bot:query');
 const _extend = require('lodash/extend');
 const _1request_1 = require('./1request');
 /**
@@ -34,10 +35,12 @@ class TelegramBot {
     }
     query(methodName, parameters) {
         return __awaiter(this, void 0, Promise, function* () {
-            return _1request_1.default({
+            let requestOptions = {
                 url: this.makeUrl(methodName),
                 qs: parameters
-            });
+            };
+            queryLog(requestOptions);
+            return _1request_1.default(requestOptions);
         });
     }
 }

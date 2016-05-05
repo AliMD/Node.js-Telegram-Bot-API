@@ -1,7 +1,11 @@
 /// <reference path="../typings/main.d.ts" />
 "use strict";
+const debug = require('debug');
+const log = debug('TelegramBotApi:1request');
 const request = require('request');
+log('init');
 function default_1(options) {
+    log(options);
     return new Promise((resolve, reject) => {
         request(options, (err, response, body) => {
             if (err) {

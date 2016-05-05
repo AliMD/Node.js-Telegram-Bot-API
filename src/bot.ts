@@ -1,7 +1,8 @@
 /// <reference path="../typings/main.d.ts" />
 
 import debug = require('debug');
-const log = debug('TelegramBot index');
+const log = debug('TelegramBotApi:bot');
+const queryLog = debug('TelegramBotApi:bot:query');
 const _extend = require('lodash/extend');
 import _1requert from './1request';
 
@@ -34,10 +35,12 @@ export default class TelegramBot {
   }
 
   async query (methodName: string, parameters?: Object): Promise<{}> {
-    return _1requert({
+    let requestOptions = {
       url: this.makeUrl(methodName),
       qs: parameters
-    });
+    }
+    queryLog(requestOptions);
+    return _1requert(requestOptions);
   }
 
 }
