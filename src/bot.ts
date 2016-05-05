@@ -1,8 +1,8 @@
 /// <reference path="../typings/main.d.ts" />
 
-import _ = require('lodash');
 import debug = require('debug');
 const log = debug('TelegramBot index');
+const _extend = require('lodash/extend');
 
 /**
  * @class TelegramBot
@@ -25,7 +25,7 @@ export default class TelegramBot {
     }) {
     log('new TelegramBot');
     console.assert(typeof token === 'string', 'token must be string');
-    _.extend(this.options, opt);
+    _extend(this.options, opt);
   }
 
   makeUrl (methodName: string) {
