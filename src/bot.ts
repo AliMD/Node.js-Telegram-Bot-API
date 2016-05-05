@@ -3,6 +3,7 @@
 import debug = require('debug');
 const log = debug('TelegramBot index');
 const _extend = require('lodash/extend');
+const _1requert = require('./1request');
 
 /**
  * @class TelegramBot
@@ -33,7 +34,10 @@ export default class TelegramBot {
   }
 
   async query (methodName: string, parameters: Object) {
-    return;
+    return _1requert({
+      url: this.makeUrl(methodName),
+      qs: parameters
+    });
   }
 
 }
