@@ -40,7 +40,11 @@ class TelegramBot {
                 qs: parameters
             };
             queryLog(requestOptions);
-            return _1request_1.default(requestOptions);
+            return _1request_1.default(requestOptions)
+                .then((data) => {
+                let parsed = JSON.parse(data['body']);
+                return parsed;
+            });
         });
     }
 }

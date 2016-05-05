@@ -112,7 +112,6 @@ describe('bot.js', () => {
         disable_notification: false
       })
       .then((data) => {
-        console.log(data);
         expect(data).to.be.an('object');
         expect(data).to.have.property('ok');
         done();
