@@ -46,4 +46,16 @@ describe('_1request', () => {
   it('shoud return promise', () => {
     expectToBePromise(_1request({}));
   });
+
+  it('shoud rejected on failed', (done) => {
+    let count = 0;
+    _1request({
+      url: 'junk'
+    })
+    .then((data) => {
+      throw('_1request load success !!!');
+    }, (err) => {
+      done();
+    });
+  });
 });
