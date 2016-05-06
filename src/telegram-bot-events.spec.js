@@ -6,8 +6,8 @@ import TelegramBotApi from './telegram-bot-events';
 const
 token = process.env.TEST_TOCKEN || '123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11',
 userId = process.env.TEST_USERID || 777000,
-defOptions = {
-  autoUpdate: true,
+options = {
+  autoUpdate: false,
   updateInterval: 1000
 },
 
@@ -19,75 +19,34 @@ expectToBePromise = (obj) => {
 ;
 
 describe('bot.js', () => {
-  var bot = new TelegramBotApi(token, defOptions);
+  var bot = new TelegramBotApi(token, options);
   after(() => {
     bot.stopAutoUpdates();
   })
 
   describe('new instance', () => {
 
-    it('should an constructor', () => {
-      expect(TelegramBotApi).to.be.a('function');
-      expect(new TelegramBotApi()).to.be.an('object');
-    });
-
-    it('should have token', () => {
-      let bot = new TelegramBotApi(token);
-      expect(bot.token).to.be.equal(token);
-    });
-
-    it('should have not token', () => {
-      let bot = new TelegramBotApi();
-      expect(bot.token).to.be.empty();
-    });
-
     it('should have default options', () => {
       let bot = new TelegramBotApi(token);
-      expect(bot.options).to.be.eql(defOptions);
+      bot.stopAutoUpdates();
+      expect(bot.options).to.be.eql(options);
     });
 
     it('should have default options with extend', () => {
       let bot = new TelegramBotApi(token, {});
-      expect(bot.options).to.be.eql(defOptions);
+      bot.stopAutoUpdates();
+      expect(bot.options).to.be.eql(options);
     });
 
     it('should have extended options', () => {
       let bot = new TelegramBotApi(token, {foo: 'bar'});
+      bot.stopAutoUpdates();
       expect(bot.options.foo).to.be.equal('bar');
     });
 
   });
 
-  describe('methods', () => {
-    let methods = [
-      'makeUrl',
-      'query',
-      'getMe',
-      'sendMessage',
-      'forwardMessage',
-      'sendPhoto',
-      'sendAudio',
-      'sendDocument',
-      'sendSticker',
-      'sendVideo',
-      'sendVoice',
-      'sendLocation',
-      'sendVenue',
-      'sendContact',
-      'sendChatAction',
-      'getUserProfilePhotos',
-      'getFile',
-      'kickChatMember',
-      'unbanChatMember',
-      'answerCallbackQuery',
-      'editMessageText',
-      'editMessageCaption',
-      'editMessageReplyMarkup',
-      'answerInlineQuery'
-    ];
-  });
-
-  describe.only('events', () => {
+  describe('events', () => {
     afterEach(() => {
       bot.offAll();
     });
@@ -198,6 +157,7 @@ describe('bot.js', () => {
 
       expect(bot.events.listeners('junk').length).to.be.equal(1);
       expect(bot.events.listeners('junk')[0]).to.be.equal(callback2);
+      done();
     });
 
 

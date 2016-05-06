@@ -76,7 +76,11 @@ export default class TelegramBotApi extends TelegramBotApiMethods{
    */
   offAll(eventName?: string) {
     log(`offAll ${eventName}`);
-    this.events.removeAllListeners(eventName);
+    if (eventName) {
+      this.events.removeAllListeners(eventName);
+    } else {
+      this.events.removeAllListeners();
+    }
   }
 
   private _setTimeout:NodeJS.Timer;

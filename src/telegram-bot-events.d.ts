@@ -5,14 +5,16 @@ import TelegramBotApiMethods from './telegram-bot-methods';
  */
 export default class TelegramBotApi extends TelegramBotApiMethods {
     events: any;
-    options: Object;
+    options: {
+        autoUpdate: boolean;
+        updateInterval: number;
+    };
     /**
      * create a TelegramBotApi
      * @param {string} token
      * @param {Object} options
      */
     constructor(token?: string, options?: {
-        webhook?: boolean;
         autoUpdate?: boolean;
         updateInterval?: number;
     });
@@ -40,4 +42,8 @@ export default class TelegramBotApi extends TelegramBotApiMethods {
      * @param  {Function} listener
      */
     offAll(eventName?: string): void;
+    private _setTimeout;
+    private _getUpdates(_this?);
+    startAutoUpdates(updateInterval?: number): void;
+    stopAutoUpdates(): void;
 }
