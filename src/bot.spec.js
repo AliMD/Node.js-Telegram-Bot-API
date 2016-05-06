@@ -123,6 +123,7 @@ describe('bot.js', () => {
 
   describe('methods', () => {
     let methods = [
+      'getMe',
       'sendMessage',
       'forwardMessage',
       'sendPhoto',

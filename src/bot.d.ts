@@ -9,6 +9,7 @@ export default class TelegramBot {
     });
     makeUrl(methodName: string): string;
     query(methodName: string, parameters?: Object): Promise<{}>;
+    getMe(): Promise<{}>;
     sendMessage(parameters: Object): Promise<{}>;
     forwardMessage(parameters: Object): Promise<{}>;
     sendPhoto(parameters: Object): Promise<{}>;

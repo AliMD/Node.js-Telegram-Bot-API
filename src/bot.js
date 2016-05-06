@@ -47,6 +47,11 @@ class TelegramBot {
             });
         });
     }
+    getMe() {
+        return __awaiter(this, void 0, Promise, function* () {
+            return this.query('sendMessage');
+        });
+    }
     sendMessage(parameters) {
         return __awaiter(this, void 0, Promise, function* () {
             return this.query('sendMessage', parameters);

@@ -47,6 +47,10 @@ export default class TelegramBot {
       });
   }
 
+  async getMe(): Promise<{}> {
+    return this.query('sendMessage');
+  }
+
   async sendMessage(parameters: Object): Promise<{}> {
     return this.query('sendMessage', parameters);
   }
