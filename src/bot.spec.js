@@ -110,7 +110,7 @@ describe('bot.js', () => {
       bot.query('sendMessage', {
         chat_id: userId,
         text: 'Test bot.js',
-        disable_notification: false
+        disable_notification: true
       })
       .then((data) => {
         expect(data).to.be.an('object');
@@ -149,7 +149,20 @@ describe('bot.js', () => {
       it(`should ${method} exist.`, () => {
         expect(bot).to.have.property(method);
       })
-    })
-  })
+    });
+
+    it('should sendMessage work', (done)=>{
+      bot.sendMessage({
+        chat_id: userId,
+        text: 'Test2 bot.js',
+        disable_notification: true
+      })
+      .then((data) => {
+        expect(data).to.be.an('object');
+        expect(data).to.have.property('ok');
+        done();
+      }, done);
+    });
+  });
 
 });

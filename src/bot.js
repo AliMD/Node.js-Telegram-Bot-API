@@ -47,6 +47,111 @@ class TelegramBot {
             });
         });
     }
+    sendMessage(parameters) {
+        return __awaiter(this, void 0, Promise, function* () {
+            return this.query('sendMessage', parameters);
+        });
+    }
+    forwardMessage(parameters) {
+        return __awaiter(this, void 0, Promise, function* () {
+            return this.query('forwardMessage', parameters);
+        });
+    }
+    sendPhoto(parameters) {
+        return __awaiter(this, void 0, Promise, function* () {
+            return this.query('sendPhoto', parameters);
+        });
+    }
+    sendAudio(parameters) {
+        return __awaiter(this, void 0, Promise, function* () {
+            return this.query('sendAudio', parameters);
+        });
+    }
+    sendDocument(parameters) {
+        return __awaiter(this, void 0, Promise, function* () {
+            return this.query('sendDocument', parameters);
+        });
+    }
+    sendSticker(parameters) {
+        return __awaiter(this, void 0, Promise, function* () {
+            return this.query('sendSticker', parameters);
+        });
+    }
+    sendVideo(parameters) {
+        return __awaiter(this, void 0, Promise, function* () {
+            return this.query('sendVideo', parameters);
+        });
+    }
+    sendVoice(parameters) {
+        return __awaiter(this, void 0, Promise, function* () {
+            return this.query('sendVoice', parameters);
+        });
+    }
+    sendLocation(parameters) {
+        return __awaiter(this, void 0, Promise, function* () {
+            return this.query('sendLocation', parameters);
+        });
+    }
+    sendVenue(parameters) {
+        return __awaiter(this, void 0, Promise, function* () {
+            return this.query('sendVenue', parameters);
+        });
+    }
+    sendContact(parameters) {
+        return __awaiter(this, void 0, Promise, function* () {
+            return this.query('sendContact', parameters);
+        });
+    }
+    sendChatAction(parameters) {
+        return __awaiter(this, void 0, Promise, function* () {
+            return this.query('sendChatAction', parameters);
+        });
+    }
+    getUserProfilePhotos(parameters) {
+        return __awaiter(this, void 0, Promise, function* () {
+            return this.query('getUserProfilePhotos', parameters);
+        });
+    }
+    getFile(parameters) {
+        return __awaiter(this, void 0, Promise, function* () {
+            return this.query('getFile', parameters);
+        });
+    }
+    kickChatMember(parameters) {
+        return __awaiter(this, void 0, Promise, function* () {
+            return this.query('kickChatMember', parameters);
+        });
+    }
+    unbanChatMember(parameters) {
+        return __awaiter(this, void 0, Promise, function* () {
+            return this.query('unbanChatMember', parameters);
+        });
+    }
+    answerCallbackQuery(parameters) {
+        return __awaiter(this, void 0, Promise, function* () {
+            return this.query('answerCallbackQuery', parameters);
+        });
+    }
+    editMessageText(parameters) {
+        return __awaiter(this, void 0, Promise, function* () {
+            return this.query('editMessageText', parameters);
+        });
+    }
+    editMessageCaption(parameters) {
+        return __awaiter(this, void 0, Promise, function* () {
+            return this.query('editMessageCaption', parameters);
+        });
+    }
+    editMessageReplyMarkup(parameters) {
+        return __awaiter(this, void 0, Promise, function* () {
+            return this.query('editMessageReplyMarkup', parameters);
+        });
+    }
+    answerInlineQuery(parameters) {
+        return __awaiter(this, void 0, Promise, function* () {
+            return this.query('answerInlineQuery', parameters);
+        });
+    }
 }
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = TelegramBot;
