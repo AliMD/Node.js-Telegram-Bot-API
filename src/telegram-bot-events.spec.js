@@ -86,14 +86,33 @@ describe('bot.js', () => {
   });
 
   describe.only('events', () => {
+    after(() => {
+      bot.offAll();
+    });
+
     it('should have `on` method', () => {
       expect(bot).to.have.property('on');
       expect(bot.on).to.be.a('function');
     });
 
+    it('should have `once` method', () => {
+      expect(bot).to.have.property('once');
+      expect(bot.once).to.be.a('function');
+    });
+
     it('should have `off` method', () => {
       expect(bot).to.have.property('off');
       expect(bot.off).to.be.a('function');
+    });
+
+    it('should have `offAll` method', () => {
+      expect(bot).to.have.property('offAll');
+      expect(bot.offAll).to.be.a('function');
+    });
+
+    it('should have `events`', () => {
+      expect(bot.events).to.be.a('object');
+      expect(bot.events.on).to.be.a('function');
     });
 
     it('should trigger on mesage', (done) => {
