@@ -44,6 +44,6 @@ export default class TelegramBotApi extends TelegramBotApiMethods {
     offAll(eventName?: string): void;
     private _setTimeout;
     private _getUpdates(_this?);
-    startAutoUpdates(updateInterval?: number): void;
-    stopAutoUpdates(): void;
+    startAutoUpdate(updateInterval?: number): void;
+    stopAutoUpdate(): void;
 }

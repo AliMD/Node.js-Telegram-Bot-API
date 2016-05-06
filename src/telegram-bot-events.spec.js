@@ -21,7 +21,7 @@ expectToBePromise = (obj) => {
 describe('bot.js', () => {
   var bot = new TelegramBotApi(token, options);
   after(() => {
-    bot.stopAutoUpdates();
+    bot.stopAutoUpdate();
   })
 
   describe('new instance', () => {
@@ -163,7 +163,30 @@ describe('bot.js', () => {
 
   })
 
-  describe('auto update', () => {
+  describe.only('auto update', () => {
+    it('shout be autoUpdated by default', () => {
+      let bot = new TelegramBotApi(token, {autoUpdate: true});
+      after(() => {
+        bot.stopAutoUpdate();
+        console.log(1);
+      });
+      expect(bot._setTimeout).to.be.ok();
+    });
+
+    it('shout be startAutoUpdated work', (done) => {
+      let bot = new TelegramBotApi(token, {autoUpdate: false, updateInterval: 100});
+      after(()=>{
+        bot.stopAutoUpdate();
+      });
+      expect(bot._setTimeout).to.not.be.ok();
+      bot.startAutoUpdate();
+      setTimeout(()=>{
+        expect(bot._setTimeout).to.be.ok();
+        bot.stopAutoUpdate();
+        done();
+      }, 200);
+    });
+
     it('should trigger on mesage', (done) => {
       console.log('send message to this bot for test');
       bot.on('message', () => {

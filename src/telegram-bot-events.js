@@ -26,7 +26,7 @@ class TelegramBotApi extends telegram_bot_methods_1.default {
         log('constructor');
         _extend(this.options, options);
         if (this.options.autoUpdate) {
-            this.startAutoUpdates();
+            this.startAutoUpdate();
         }
     }
     /**
@@ -73,17 +73,17 @@ class TelegramBotApi extends telegram_bot_methods_1.default {
     _getUpdates(_this = this) {
         logUpdate('getInternalUpdates');
         if (!_this.options.autoUpdate) {
-            return _this.stopAutoUpdates();
+            return _this.stopAutoUpdate();
         }
         _this._setTimeout = setTimeout(_this._getUpdates, _this.options.updateInterval, _this);
     }
-    startAutoUpdates(updateInterval = this.options.updateInterval) {
-        this.stopAutoUpdates();
+    startAutoUpdate(updateInterval = this.options.updateInterval) {
+        this.stopAutoUpdate();
         this.options.autoUpdate = true;
         this.options.updateInterval = updateInterval;
         this._getUpdates();
     }
-    stopAutoUpdates() {
+    stopAutoUpdate() {
         if (this.options.autoUpdate) {
             clearTimeout(this._setTimeout);
             this.options.autoUpdate = false;
