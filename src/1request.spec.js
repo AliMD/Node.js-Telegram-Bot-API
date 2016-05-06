@@ -28,6 +28,12 @@ var server = http.createServer((req, resp) => {
       resp.end('{msg: hi}');
     }
 
+    else if (req.url === '/timeout') {
+      resp.writeHead(200, {'Content-Type': 'application/json'});
+      // resp.end('okay');
+      // cancel for timeout test
+    }
+
     else {
       resp.writeHead(200, {'Content-Type': 'text/plain'});
       resp.end(req.url.substr(1));
@@ -92,6 +98,24 @@ describe('1request.js', () => {
       expect(data.body).to.be.equal(text);
       done(data.err);
     }, done)
+    ;
+  });
+
+  it('shoud timeout on server busy', (done) => {
+    _1request({
+      url: serverUrl + 'timeout',
+      timeout: 200
+    })
+    .then((data) => {
+      done('request response!');
+    }, (err) => {
+      console.log(err.Error);
+      if (err == 'Error: ETIMEDOUT') {
+        done();
+      } else {
+        done(err);
+      }
+    })
     ;
   });
 
