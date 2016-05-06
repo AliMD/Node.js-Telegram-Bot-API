@@ -1,4 +1,7 @@
 /// <reference path="../typings/main.d.ts" />
+/**
+ * @class TelegramBot
+ */
 export default class TelegramBot {
     token: string;
     options: Object;
@@ -7,10 +10,10 @@ export default class TelegramBot {
      * @param {string} token
      * @param {Object} options
      */
-    constructor(token: string, options: {
-        webhook: boolean;
-        autoUpdate: boolean;
-        updateInterval: number;
+    constructor(token?: string, options?: {
+        webhook?: boolean;
+        autoUpdate?: boolean;
+        updateInterval?: number;
     });
     /**
      * Make telegram api query url
@@ -38,7 +41,15 @@ export default class TelegramBot {
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
-    sendMessage(parameters: Object): Promise<{}>;
+    sendMessage(parameters: {
+        chat_id: number | string;
+        text: string;
+        parse_mode?: string;
+        disable_web_page_preview?: boolean;
+        disable_notification?: boolean;
+        reply_to_message_id?: number;
+        reply_markup?: string | Object;
+    }): Promise<{}>;
     /**
      * Send query for forwardMessage
      * @param  {string} methodName

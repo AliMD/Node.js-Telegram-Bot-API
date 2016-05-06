@@ -13,11 +13,10 @@ const log = debug('TelegramBotApi:bot');
 const queryLog = debug('TelegramBotApi:bot:query');
 const _extend = require('lodash/extend');
 const _1request_1 = require('./1request');
+const BASE_API_URL = 'https://api.telegram.org/';
 /**
  * @class TelegramBot
- * @param {string} tocken
  */
-const BASE_API_URL = 'https://api.telegram.org/';
 class TelegramBot {
     /**
      * create a TelegramBot

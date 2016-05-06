@@ -6,13 +6,11 @@ const queryLog = debug('TelegramBotApi:bot:query');
 const _extend = require('lodash/extend');
 import _1request from './1request';
 
-/**
- * @class TelegramBot
- * @param {string} tocken
- */
-
 const BASE_API_URL: string = 'https://api.telegram.org/';
 
+/**
+ * @class TelegramBot
+ */
 export default class TelegramBot {
   public options: Object = {
     webhook: false,
@@ -25,10 +23,10 @@ export default class TelegramBot {
    * @param {string} token
    * @param {Object} options
    */
-  constructor(public token: string = '', options: {
-    webhook: boolean,
-    autoUpdate: boolean,
-    updateInterval: number
+  constructor(public token: string = '', options?: {
+    webhook?: boolean,
+    autoUpdate?: boolean,
+    updateInterval?: number
   }) {
     log('new TelegramBot');
     console.assert(typeof token === 'string', 'token must be string');
@@ -79,7 +77,15 @@ export default class TelegramBot {
    * @param  {Object} parameters
    * @returns {Promise} requet promise
    */
-  async sendMessage(parameters: Object): Promise<{}> {
+  async sendMessage(parameters: {
+      chat_id: number | string, // Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+      text: string, // Text of the message to be sent
+      parse_mode?: string, // Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message.
+      disable_web_page_preview?: boolean, // Disables link previews for links in this message
+      disable_notification?: boolean, // Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
+      reply_to_message_id?: number, // If the message is a reply, ID of the original message
+      reply_markup?: string | Object // Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to hide reply keyboard or to force a reply from the user.
+    }): Promise<{}> {
     return this.query('sendMessage', parameters);
   }
 
@@ -282,6 +288,5 @@ export default class TelegramBot {
   async answerInlineQuery(parameters: Object): Promise<{}> {
     return this.query('answerInlineQuery', parameters);
   }
-
 
 }
