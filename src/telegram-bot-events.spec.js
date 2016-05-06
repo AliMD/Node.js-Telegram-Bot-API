@@ -20,7 +20,7 @@ expectToBePromise = (obj) => {
 ;
 
 describe('bot.js', () => {
-  var bot;
+  var bot = new TelegramBotApi(token, defOptions);
 
   describe('new instance', () => {
 
@@ -56,73 +56,10 @@ describe('bot.js', () => {
 
   });
 
-  describe('makeUrl', () => {
-
-    it('should exist', () => {
-      let bot = new TelegramBotApi('123456');
-      expect(bot).to.have.property('makeUrl');
-    });
-
-    it('should return correct url', () => {
-      let bot = new TelegramBotApi('123456');
-      expect(bot.makeUrl('getMe')).to.be.equal('https://api.telegram.org/bot123456/getMe');
-    });
-  });
-
-  before(() => {
-    bot = new TelegramBotApi(token);
-    return bot;
-  });
-
-  describe('query', () => {
-
-    it('should exist', () => {
-      expect(bot).to.have.property('query');
-    });
-
-    it('should a function', () => {
-      expect(bot.query).to.be.a('function');
-    });
-
-    it('should return promise', () => {
-      var queryRes = bot.query('getMe', {});
-      expectToBePromise(queryRes);
-    })
-
-    it('should work with getMe', (done)=>{
-      bot.query('getMe', {})
-      .then((data) => {
-        expect(data).to.be.ok();
-        done();
-      }, done);
-    });
-
-    it('should return pased json', (done)=>{
-      bot.query('getMe', {})
-      .then((data) => {
-        expect(data).to.be.an('object');
-        expect(data).to.have.property('ok');
-        done();
-      }, done);
-    });
-
-    it('should send text message', (done)=>{
-      bot.query('sendMessage', {
-        chat_id: userId,
-        text: 'Test bot.js',
-        disable_notification: true
-      })
-      .then((data) => {
-        expect(data).to.be.an('object');
-        expect(data).to.have.property('ok');
-        done();
-      }, done);
-    });
-
-  });
-
   describe('methods', () => {
     let methods = [
+      'makeUrl',
+      'query',
       'getMe',
       'sendMessage',
       'forwardMessage',
@@ -146,37 +83,29 @@ describe('bot.js', () => {
       'editMessageReplyMarkup',
       'answerInlineQuery'
     ];
-    methods.forEach((method) => {
-      it(`should ${method} exist.`, () => {
-        expect(bot).to.have.property(method);
-      })
-    });
-
-    it('should sendMessage work', (done)=>{
-      bot.sendMessage({
-        chat_id: userId+'',
-        text: 'Test2 bot.js',
-        disable_notification: true
-      })
-      .then((data) => {
-        expect(data).to.be.an('object');
-        expect(data).to.have.property('ok');
-        done();
-      }, done);
-    });
-
-    it('should sendMessage with userId as a number', (done)=>{
-      bot.sendMessage({
-        chat_id: parseInt(userId),
-        text: 'Test3 bot.js',
-        disable_notification: true
-      })
-      .then((data) => {
-        expect(data).to.be.an('object');
-        expect(data).to.have.property('ok');
-        done();
-      }, done);
-    });
   });
+
+  describe.only('events', () => {
+    it('should have `on` method', () => {
+      expect(bot).to.have.property('on');
+      expect(bot.on).to.be.a('function');
+    });
+
+    it('should have `off` method', () => {
+      expect(bot).to.have.property('off');
+      expect(bot.off).to.be.a('function');
+    });
+
+    it('should trigger on mesage', (done) => {
+      console.log('send message to this bot for test');
+      bot.on('message', () => {
+        done();
+      })
+    });
+
+    it.skip('should trigger on inlineQuery', () => {
+
+    })
+  })
 
 });
