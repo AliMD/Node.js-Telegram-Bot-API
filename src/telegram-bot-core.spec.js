@@ -5,7 +5,7 @@ import TelegramBotApi from './telegram-bot-core';
 
 const
 token = process.env.TEST_TOCKEN || '123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11',
-userId = process.env.TEST_USERID || 777000
+userId = process.env.TEST_USERID || 777000,
 
 expectToBePromise = (obj) => {
   expect(obj).to.be.an('object');
@@ -36,7 +36,7 @@ describe('telegram-bot-core', () => {
 
     it('should not have any option', () => {
       let bot = new TelegramBotApi(token, {});
-      expect(bot.options).to.not.be(undefined);
+      expect(bot.options).to.be(undefined);
     });
 
   });
