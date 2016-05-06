@@ -33,7 +33,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
     limit?:  number | string,
     timeout?:  number | string
   }): Promise<{}> {
-    return this.query('getUpdates', parameters);
+    return super.query('getUpdates', parameters);
   }
 
   /**
@@ -45,7 +45,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
     url?: string,
     certificate?: string
   }): Promise<{}> {
-    return this.query('setWebhook', parameters);
+    return super.query('setWebhook', parameters);
   }
 
   /**
@@ -53,7 +53,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
    * @returns {Promise} requet promise
    */
   async getMe(): Promise<{}> {
-    return this.query('sendMessage');
+    return super.query('sendMessage');
   }
 
   /**
@@ -70,7 +70,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
       reply_to_message_id?: number | string, // If the message is a reply, ID of the original message
       reply_markup?: string | Object // Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to hide reply keyboard or to force a reply from the user.
     }): Promise<{}> {
-    return this.query('sendMessage', parameters);
+    return super.query('sendMessage', parameters);
   }
 
   /**
@@ -84,7 +84,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
       message_id: number | string,
       disable_notification?: boolean
     }): Promise<{}> {
-    return this.query('forwardMessage', parameters);
+    return super.query('forwardMessage', parameters);
   }
 
   /**
@@ -101,7 +101,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
       reply_markup?: string
     }): Promise<{}> {
     console.assert((parameters.caption || '').length <= 200, "Photo caption must be 0-200 characters");
-    return this.query('sendPhoto', parameters);
+    return super.query('sendPhoto', parameters);
   }
 
   /**
@@ -119,7 +119,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
       reply_to_message_id?: number | string,
       reply_markup?: string
     }): Promise<{}> {
-    return this.query('sendAudio', parameters);
+    return super.query('sendAudio', parameters);
   }
 
   /**
@@ -135,7 +135,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
       reply_to_message_id?: number | string,
       reply_markup?: string
     }): Promise<{}> {
-    return this.query('sendDocument', parameters);
+    return super.query('sendDocument', parameters);
   }
 
   /**
@@ -150,7 +150,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
       reply_to_message_id?: number | string,
       reply_markup?: string
     }): Promise<{}> {
-    return this.query('sendSticker', parameters);
+    return super.query('sendSticker', parameters);
   }
 
   /**
@@ -169,7 +169,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
       reply_to_message_id?: number | string,
       reply_markup?: string
     }): Promise<{}> {
-    return this.query('sendVideo', parameters);
+    return super.query('sendVideo', parameters);
   }
 
   /**
@@ -185,7 +185,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
       reply_to_message_id?: number | string,
       reply_markup?: string
     }): Promise<{}> {
-    return this.query('sendVoice', parameters);
+    return super.query('sendVoice', parameters);
   }
 
   /**
@@ -201,7 +201,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
       reply_to_message_id?: number | string,
       reply_markup?: string
     }): Promise<{}> {
-    return this.query('sendLocation', parameters);
+    return super.query('sendLocation', parameters);
   }
 
   /**
@@ -220,7 +220,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
       reply_to_message_id?: number | string,
       reply_markup?: string
     }): Promise<{}> {
-    return this.query('sendVenue', parameters);
+    return super.query('sendVenue', parameters);
   }
 
   /**
@@ -237,7 +237,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
       reply_to_message_id?: number | string,
       reply_markup?: string
     }): Promise<{}> {
-    return this.query('sendContact', parameters);
+    return super.query('sendContact', parameters);
   }
 
   static chatActions = {
@@ -260,7 +260,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
       chat_id: number | string,
       action: string
     }): Promise<{}> {
-    return this.query('sendChatAction', parameters);
+    return super.query('sendChatAction', parameters);
   }
 
   /**
@@ -273,7 +273,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
       offset?: number,
       limit?: number,
     }): Promise<{}> {
-    return this.query('getUserProfilePhotos', parameters);
+    return super.query('getUserProfilePhotos', parameters);
   }
 
   /**
@@ -284,7 +284,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
   async getFile(parameters: {
       file_id: string
     }): Promise<{}> {
-    return this.query('getFile', parameters);
+    return super.query('getFile', parameters);
   }
 
   /**
@@ -296,7 +296,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
       chat_id: number | string,
       user_id: number | string
     }): Promise<{}> {
-    return this.query('kickChatMember', parameters);
+    return super.query('kickChatMember', parameters);
   }
 
   /**
@@ -308,7 +308,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
       chat_id: number | string,
       user_id: number | string
     }): Promise<{}> {
-    return this.query('unbanChatMember', parameters);
+    return super.query('unbanChatMember', parameters);
   }
 
   /**
@@ -321,7 +321,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
       text?: string,
       show_alert?: boolean
     }): Promise<{}> {
-    return this.query('answerCallbackQuery', parameters);
+    return super.query('answerCallbackQuery', parameters);
   }
 
   /**
@@ -338,7 +338,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
       disable_web_page_preview?: boolean,
       reply_markup?: string
     }): Promise<{}> {
-    return this.query('editMessageText', parameters);
+    return super.query('editMessageText', parameters);
   }
 
   /**
@@ -353,7 +353,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
       caption?: string,
       reply_markup?: string
     }): Promise<{}> {
-    return this.query('editMessageCaption', parameters);
+    return super.query('editMessageCaption', parameters);
   }
 
   /**
@@ -367,7 +367,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
       inline_message_id?: number | string,
       reply_markup?: string
     }): Promise<{}> {
-    return this.query('editMessageReplyMarkup', parameters);
+    return super.query('editMessageReplyMarkup', parameters);
   }
 
   /**
@@ -384,7 +384,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
       switch_pm_text?: string,
       switch_pm_parameter?: string
     }): Promise<{}> {
-    return this.query('answerInlineQuery', parameters);
+    return super.query('answerInlineQuery', parameters);
   }
 
 }
