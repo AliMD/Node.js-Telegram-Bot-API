@@ -20,6 +20,7 @@ expectToBePromise = (obj) => {
 ;
 
 describe('bot.js', () => {
+  var bot;
 
   describe('new instance', () => {
 
@@ -68,12 +69,12 @@ describe('bot.js', () => {
     });
   });
 
+  before(() => {
+    bot = new TelegramBot(token);
+    return bot;
+  });
+
   describe('query', () => {
-    var bot;
-    before(() => {
-      bot = new TelegramBot(token);
-      return bot;
-    });
 
     it('should exist', () => {
       expect(bot).to.have.property('query');
@@ -109,7 +110,7 @@ describe('bot.js', () => {
       bot.query('sendMessage', {
         chat_id: userId,
         text: 'Test bot.js',
-        disable_notification: false
+        disable_notification: true
       })
       .then((data) => {
         expect(data).to.be.an('object');
@@ -118,6 +119,64 @@ describe('bot.js', () => {
       }, done);
     });
 
+  });
+
+  describe('methods', () => {
+    let methods = [
+      'getMe',
+      'sendMessage',
+      'forwardMessage',
+      'sendPhoto',
+      'sendAudio',
+      'sendDocument',
+      'sendSticker',
+      'sendVideo',
+      'sendVoice',
+      'sendLocation',
+      'sendVenue',
+      'sendContact',
+      'sendChatAction',
+      'getUserProfilePhotos',
+      'getFile',
+      'kickChatMember',
+      'unbanChatMember',
+      'answerCallbackQuery',
+      'editMessageText',
+      'editMessageCaption',
+      'editMessageReplyMarkup',
+      'answerInlineQuery'
+    ];
+    methods.forEach((method) => {
+      it(`should ${method} exist.`, () => {
+        expect(bot).to.have.property(method);
+      })
+    });
+
+    it('should sendMessage work', (done)=>{
+      bot.sendMessage({
+        chat_id: userId+'',
+        text: 'Test2 bot.js',
+        disable_notification: true
+      })
+      .then((data) => {
+        expect(data).to.be.an('object');
+        expect(data).to.have.property('ok');
+        done();
+      }, done);
+    });
+
+    it('should sendMessage with userId as a number', (done)=>{
+      bot.sendMessage({
+        chat_id: parseInt(userId),
+        text: 'Test3 bot.js',
+        disable_notification: true
+      })
+      .then((data) => {
+        expect(data).to.be.an('object');
+        expect(data).to.have.property('ok');
+        done();
+      }, done);
+    });
   });
 
 });
