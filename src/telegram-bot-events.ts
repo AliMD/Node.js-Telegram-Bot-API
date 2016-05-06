@@ -3,6 +3,7 @@
 import debug = require('debug');
 const EventEmitter = require('events');
 const log = debug('TelegramBotApi:events');
+const logUpdate = debug('TelegramBotApi:update');
 const _extend = require('lodash/extend');
 
 import TelegramBotApiMethods from './telegram-bot-methods'
@@ -15,8 +16,7 @@ log('init');
 export default class TelegramBotApi extends TelegramBotApiMethods{
   public events = new EventEmitter();
 
-  public options: Object = {
-    webhook: false,
+  public options = {
     autoUpdate: true,
     updateInterval: 1000
   }
@@ -27,13 +27,16 @@ export default class TelegramBotApi extends TelegramBotApiMethods{
    * @param {Object} options
    */
   constructor(token?: string, options?: {
-    webhook?: boolean,
     autoUpdate?: boolean,
     updateInterval?: number
   }) {
     super(token)
     log('constructor');
     _extend(this.options, options);
+
+    if (this.options.autoUpdate) {
+      this.startAutoUpdates();
+    }
   }
 
   /**
@@ -42,6 +45,7 @@ export default class TelegramBotApi extends TelegramBotApiMethods{
    * @param  {Function} listener
    */
   on(eventName: string, listener: Function) {
+    log(`on ${eventName}`);
     this.events.addListener(eventName, listener);
   }
 
@@ -51,6 +55,7 @@ export default class TelegramBotApi extends TelegramBotApiMethods{
    * @param  {Function} listener
    */
   once(eventName: string, listener: Function) {
+    log(`once ${eventName}`);
     this.events.once(eventName, listener);
   }
 
@@ -60,6 +65,7 @@ export default class TelegramBotApi extends TelegramBotApiMethods{
    * @param  {Function} listener
    */
   off(eventName: string, listener: Function) {
+    log(`off ${eventName}`);
     this.events.removeListener(eventName, listener);
   }
 
@@ -69,7 +75,31 @@ export default class TelegramBotApi extends TelegramBotApiMethods{
    * @param  {Function} listener
    */
   offAll(eventName?: string) {
+    log(`offAll ${eventName}`);
     this.events.removeAllListeners(eventName);
   }
 
+  private _setTimeout:NodeJS.Timer;
+
+  private _getUpdates(_this = this) {
+    logUpdate('getInternalUpdates');
+    if (!_this.options.autoUpdate) {
+      return _this.stopAutoUpdates();
+    }
+    _this._setTimeout = setTimeout(_this._getUpdates, _this.options.updateInterval, _this);
+  }
+
+  startAutoUpdates(updateInterval: number = this.options.updateInterval) {
+    this.stopAutoUpdates();
+    this.options.autoUpdate = true;
+    this.options.updateInterval = updateInterval;
+    this._getUpdates();
+  }
+
+  stopAutoUpdates() {
+    if (this.options.autoUpdate) {
+      clearTimeout(this._setTimeout);
+      this.options.autoUpdate = false;
+    }
+  }
 }
