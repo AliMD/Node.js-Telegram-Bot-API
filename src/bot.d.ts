@@ -30,15 +30,31 @@ export default class TelegramBot {
      */
     query(methodName: string, parameters?: Object): Promise<{}>;
     /**
-     * Send query for getMe
-     * @param  {string} methodName
+     * Send query for getUpdates from server
      * @param  {Object} parameters
+     * @returns {Promise} requet promise
+     */
+    getUpdates(parameters: {
+        offset?: number | string;
+        limit?: number | string;
+        timeout?: number | string;
+    }): Promise<{}>;
+    /**
+     * Send query for setWebhook
+     * @param  {Object} parameters
+     * @returns {Promise} requet promise
+     */
+    setWebhook(parameters: {
+        url?: string;
+        certificate?: string;
+    }): Promise<{}>;
+    /**
+     * Send query for getMe
      * @returns {Promise} requet promise
      */
     getMe(): Promise<{}>;
     /**
      * Send query for sendMessage
-     * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
@@ -53,7 +69,6 @@ export default class TelegramBot {
     }): Promise<{}>;
     /**
      * Send query for forwardMessage
-     * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
@@ -65,7 +80,6 @@ export default class TelegramBot {
     }): Promise<{}>;
     /**
      * Send query for sendPhoto
-     * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
@@ -79,7 +93,6 @@ export default class TelegramBot {
     }): Promise<{}>;
     /**
      * Send query for sendAudio
-     * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
@@ -95,7 +108,6 @@ export default class TelegramBot {
     }): Promise<{}>;
     /**
      * Send query for sendDocument
-     * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
@@ -109,7 +121,6 @@ export default class TelegramBot {
     }): Promise<{}>;
     /**
      * Send query for sendSticker
-     * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
@@ -122,7 +133,6 @@ export default class TelegramBot {
     }): Promise<{}>;
     /**
      * Send query for sendVideo
-     * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
@@ -139,7 +149,6 @@ export default class TelegramBot {
     }): Promise<{}>;
     /**
      * Send query for sendVoice
-     * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
@@ -153,7 +162,6 @@ export default class TelegramBot {
     }): Promise<{}>;
     /**
      * Send query for sendLocation
-     * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
@@ -167,7 +175,6 @@ export default class TelegramBot {
     }): Promise<{}>;
     /**
      * Send query for sendVenue
-     * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
@@ -184,7 +191,6 @@ export default class TelegramBot {
     }): Promise<{}>;
     /**
      * Send query for sendContact
-     * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
@@ -209,7 +215,6 @@ export default class TelegramBot {
     };
     /**
      * Send query for sendChatAction
-     * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
@@ -219,7 +224,6 @@ export default class TelegramBot {
     }): Promise<{}>;
     /**
      * Send query for getUserProfilePhotos
-     * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
@@ -230,7 +234,6 @@ export default class TelegramBot {
     }): Promise<{}>;
     /**
      * Send query for getFile
-     * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
@@ -239,7 +242,6 @@ export default class TelegramBot {
     }): Promise<{}>;
     /**
      * Send query for kickChatMember
-     * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
@@ -249,7 +251,6 @@ export default class TelegramBot {
     }): Promise<{}>;
     /**
      * Send query for unbanChatMember
-     * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
@@ -259,7 +260,6 @@ export default class TelegramBot {
     }): Promise<{}>;
     /**
      * Send query for answerCallbackQuery
-     * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
@@ -270,7 +270,6 @@ export default class TelegramBot {
     }): Promise<{}>;
     /**
      * Send query for editMessageText
-     * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
@@ -285,7 +284,6 @@ export default class TelegramBot {
     }): Promise<{}>;
     /**
      * Send query for editMessageCaption
-     * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
@@ -298,7 +296,6 @@ export default class TelegramBot {
     }): Promise<{}>;
     /**
      * Send query for editMessageReplyMarkup
-     * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
@@ -310,7 +307,6 @@ export default class TelegramBot {
     }): Promise<{}>;
     /**
      * Send query for answerInlineQuery
-     * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */

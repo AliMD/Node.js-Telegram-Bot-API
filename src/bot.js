@@ -62,9 +62,27 @@ class TelegramBot {
         });
     }
     /**
-     * Send query for getMe
-     * @param  {string} methodName
+     * Send query for getUpdates from server
      * @param  {Object} parameters
+     * @returns {Promise} requet promise
+     */
+    getUpdates(parameters) {
+        return __awaiter(this, void 0, Promise, function* () {
+            return this.query('getUpdates', parameters);
+        });
+    }
+    /**
+     * Send query for setWebhook
+     * @param  {Object} parameters
+     * @returns {Promise} requet promise
+     */
+    setWebhook(parameters) {
+        return __awaiter(this, void 0, Promise, function* () {
+            return this.query('setWebhook', parameters);
+        });
+    }
+    /**
+     * Send query for getMe
      * @returns {Promise} requet promise
      */
     getMe() {
@@ -74,7 +92,6 @@ class TelegramBot {
     }
     /**
      * Send query for sendMessage
-     * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
@@ -85,7 +102,6 @@ class TelegramBot {
     }
     /**
      * Send query for forwardMessage
-     * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
@@ -96,7 +112,6 @@ class TelegramBot {
     }
     /**
      * Send query for sendPhoto
-     * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
@@ -108,7 +123,6 @@ class TelegramBot {
     }
     /**
      * Send query for sendAudio
-     * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
@@ -119,7 +133,6 @@ class TelegramBot {
     }
     /**
      * Send query for sendDocument
-     * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
@@ -130,7 +143,6 @@ class TelegramBot {
     }
     /**
      * Send query for sendSticker
-     * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
@@ -141,7 +153,6 @@ class TelegramBot {
     }
     /**
      * Send query for sendVideo
-     * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
@@ -152,7 +163,6 @@ class TelegramBot {
     }
     /**
      * Send query for sendVoice
-     * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
@@ -163,7 +173,6 @@ class TelegramBot {
     }
     /**
      * Send query for sendLocation
-     * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
@@ -174,7 +183,6 @@ class TelegramBot {
     }
     /**
      * Send query for sendVenue
-     * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
@@ -185,7 +193,6 @@ class TelegramBot {
     }
     /**
      * Send query for sendContact
-     * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
@@ -196,7 +203,6 @@ class TelegramBot {
     }
     /**
      * Send query for sendChatAction
-     * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
@@ -207,7 +213,6 @@ class TelegramBot {
     }
     /**
      * Send query for getUserProfilePhotos
-     * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
@@ -218,7 +223,6 @@ class TelegramBot {
     }
     /**
      * Send query for getFile
-     * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
@@ -229,7 +233,6 @@ class TelegramBot {
     }
     /**
      * Send query for kickChatMember
-     * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
@@ -240,7 +243,6 @@ class TelegramBot {
     }
     /**
      * Send query for unbanChatMember
-     * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
@@ -251,7 +253,6 @@ class TelegramBot {
     }
     /**
      * Send query for answerCallbackQuery
-     * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
@@ -262,7 +263,6 @@ class TelegramBot {
     }
     /**
      * Send query for editMessageText
-     * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
@@ -273,7 +273,6 @@ class TelegramBot {
     }
     /**
      * Send query for editMessageCaption
-     * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
@@ -284,7 +283,6 @@ class TelegramBot {
     }
     /**
      * Send query for editMessageReplyMarkup
-     * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
@@ -295,7 +293,6 @@ class TelegramBot {
     }
     /**
      * Send query for answerInlineQuery
-     * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
