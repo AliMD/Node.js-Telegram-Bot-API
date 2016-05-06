@@ -47,4 +47,89 @@ export default class TelegramBot {
       });
   }
 
+  async sendMessage(parameters: Object): Promise<{}> {
+    return this.query('sendMessage', parameters);
+  }
+
+  async forwardMessage(parameters: Object): Promise<{}> {
+    return this.query('forwardMessage', parameters);
+  }
+
+  async sendPhoto(parameters: Object): Promise<{}> {
+    return this.query('sendPhoto', parameters);
+  }
+
+  async sendAudio(parameters: Object): Promise<{}> {
+    return this.query('sendAudio', parameters);
+  }
+
+  async sendDocument(parameters: Object): Promise<{}> {
+    return this.query('sendDocument', parameters);
+  }
+
+  async sendSticker(parameters: Object): Promise<{}> {
+    return this.query('sendSticker', parameters);
+  }
+
+  async sendVideo(parameters: Object): Promise<{}> {
+    return this.query('sendVideo', parameters);
+  }
+
+  async sendVoice(parameters: Object): Promise<{}> {
+    return this.query('sendVoice', parameters);
+  }
+
+  async sendLocation(parameters: Object): Promise<{}> {
+    return this.query('sendLocation', parameters);
+  }
+
+  async sendVenue(parameters: Object): Promise<{}> {
+    return this.query('sendVenue', parameters);
+  }
+
+  async sendContact(parameters: Object): Promise<{}> {
+    return this.query('sendContact', parameters);
+  }
+
+  async sendChatAction(parameters: Object): Promise<{}> {
+    return this.query('sendChatAction', parameters);
+  }
+
+  async getUserProfilePhotos(parameters: Object): Promise<{}> {
+    return this.query('getUserProfilePhotos', parameters);
+  }
+
+  async getFile(parameters: Object): Promise<{}> {
+    return this.query('getFile', parameters);
+  }
+
+  async kickChatMember(parameters: Object): Promise<{}> {
+    return this.query('kickChatMember', parameters);
+  }
+
+  async unbanChatMember(parameters: Object): Promise<{}> {
+    return this.query('unbanChatMember', parameters);
+  }
+
+  async answerCallbackQuery(parameters: Object): Promise<{}> {
+    return this.query('answerCallbackQuery', parameters);
+  }
+
+  async editMessageText(parameters: Object): Promise<{}> {
+    return this.query('editMessageText', parameters);
+  }
+
+  async editMessageCaption(parameters: Object): Promise<{}> {
+    return this.query('editMessageCaption', parameters);
+  }
+
+  async editMessageReplyMarkup(parameters: Object): Promise<{}> {
+    return this.query('editMessageReplyMarkup', parameters);
+  }
+
+  async answerInlineQuery(parameters: Object): Promise<{}> {
+    return this.query('answerInlineQuery', parameters);
+  }
+
+
 }
