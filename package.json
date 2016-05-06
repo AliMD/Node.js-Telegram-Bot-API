@@ -1,5 +1,5 @@
 {
-  "name": "telegram_bot_api",
+  "name": "telegram-bot-api.js",
   "version": "0.1.0",
   "description": "Node.js Telegram Bot API (ESNext)",
   "main": "index.js",
