@@ -5,6 +5,6 @@
  * @license MIT
  */
 
-import TelegramBot from './src/bot';
+import TelegramBotApi from './src/telegram-bot-events';
 
-export default TelegramBot;
+export default TelegramBotApi;
