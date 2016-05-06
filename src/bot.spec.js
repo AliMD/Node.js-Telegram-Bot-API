@@ -20,6 +20,7 @@ expectToBePromise = (obj) => {
 ;
 
 describe('bot.js', () => {
+  var bot;
 
   describe('new instance', () => {
 
@@ -68,12 +69,12 @@ describe('bot.js', () => {
     });
   });
 
+  before(() => {
+    bot = new TelegramBot(token);
+    return bot;
+  });
+
   describe('query', () => {
-    var bot;
-    before(() => {
-      bot = new TelegramBot(token);
-      return bot;
-    });
 
     it('should exist', () => {
       expect(bot).to.have.property('query');
@@ -119,5 +120,36 @@ describe('bot.js', () => {
     });
 
   });
+
+  describe('methods', () => {
+    let methods = [
+      'sendMessage',
+      'forwardMessage',
+      'sendPhoto',
+      'sendAudio',
+      'sendDocument',
+      'sendSticker',
+      'sendVideo',
+      'sendVoice',
+      'sendLocation',
+      'sendVenue',
+      'sendContact',
+      'sendChatAction',
+      'getUserProfilePhotos',
+      'getFile',
+      'kickChatMember',
+      'unbanChatMember',
+      'answerCallbackQuery',
+      'editMessageText',
+      'editMessageCaption',
+      'editMessageReplyMarkup',
+      'answerInlineQuery'
+    ];
+    methods.forEach((method) => {
+      it(`should ${method} exist.`, () => {
+        expect(bot).to.have.property(method);
+      })
+    })
+  })
 
 });
