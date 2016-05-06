@@ -17,7 +17,7 @@ export default class TelegramBotApi extends TelegramBotApiMethods{
   public events = new EventEmitter();
 
   public options = {
-    autoUpdate: true,
+    autoUpdate: false,
     updateInterval: 1000,
     updateLimit: 50,
     updatePoolingTimeout: 0
@@ -91,6 +91,7 @@ export default class TelegramBotApi extends TelegramBotApiMethods{
 
   static async _getUpdates(_this: TelegramBotApi) {
     logUpdate('getInternalUpdates');
+    console.log('getInternalUpdates');
 
     let data = await _this.getUpdates({
       offset: _this._updateOffset,
@@ -98,9 +99,9 @@ export default class TelegramBotApi extends TelegramBotApiMethods{
       timeout: _this.options.updatePoolingTimeout
     });
 
-    console.dir(data);
     if(data) {
-      console.log(data);
+      // console.dir(data);
+      _this.events.emite('update', data);
     }
 
     if (!_this.options.autoUpdate) {

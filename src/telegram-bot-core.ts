@@ -45,6 +45,7 @@ export default class TelegramBotApi {
     queryLog(requestOptions);
     return _1request(requestOptions)
       .then((data) => {
+        queryLog('then');
         let parsed = JSON.parse(data['body']);
         return parsed;
       });
