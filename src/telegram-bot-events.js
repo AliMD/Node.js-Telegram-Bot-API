@@ -1,5 +1,13 @@
 /// <reference path="../typings/main.d.ts" />
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator.throw(value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments)).next());
+    });
+};
 const debug = require('debug');
 const EventEmitter = require('events');
 const log = debug('TelegramBotApi:events');
@@ -21,8 +29,11 @@ class TelegramBotApi extends telegram_bot_methods_1.default {
         this.events = new EventEmitter();
         this.options = {
             autoUpdate: true,
-            updateInterval: 1000
+            updateInterval: 1000,
+            updateLimit: 50,
+            updatePoolingTimeout: 0
         };
+        this._updateOffset = 0;
         log('constructor');
         _extend(this.options, options);
         if (this.options.autoUpdate) {
@@ -70,24 +81,35 @@ class TelegramBotApi extends telegram_bot_methods_1.default {
             this.events.removeAllListeners();
         }
     }
-    _getUpdates(_this = this) {
-        logUpdate('getInternalUpdates');
-        if (!_this.options.autoUpdate) {
-            return _this.stopAutoUpdate();
-        }
-        _this._setTimeout = setTimeout(_this._getUpdates, _this.options.updateInterval, _this);
+    static _getUpdates(_this) {
+        return __awaiter(this, void 0, void 0, function* () {
+            logUpdate('getInternalUpdates');
+            let data = yield _this.getUpdates({
+                offset: _this._updateOffset,
+                limit: _this.options.updateLimit,
+                timeout: _this.options.updatePoolingTimeout
+            });
+            console.dir(data);
+            if (data) {
+                console.log(data);
+            }
+            if (!_this.options.autoUpdate) {
+                _this._startGetUpdates();
+            }
+        });
+    }
+    _startGetUpdates() {
+        this._setTimeout = setTimeout(TelegramBotApi._getUpdates, this.options.updateInterval, this);
     }
     startAutoUpdate(updateInterval = this.options.updateInterval) {
         this.stopAutoUpdate();
         this.options.autoUpdate = true;
         this.options.updateInterval = updateInterval;
-        this._getUpdates();
+        this._startGetUpdates();
     }
     stopAutoUpdate() {
-        if (this.options.autoUpdate) {
-            clearTimeout(this._setTimeout);
-            this.options.autoUpdate = false;
-        }
+        clearTimeout(this._setTimeout);
+        this.options.autoUpdate = false;
     }
 }
 Object.defineProperty(exports, "__esModule", { value: true });

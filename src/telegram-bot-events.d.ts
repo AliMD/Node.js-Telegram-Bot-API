@@ -8,6 +8,8 @@ export default class TelegramBotApi extends TelegramBotApiMethods {
     options: {
         autoUpdate: boolean;
         updateInterval: number;
+        updateLimit: number;
+        updatePoolingTimeout: number;
     };
     /**
      * create a TelegramBotApi
@@ -43,7 +45,9 @@ export default class TelegramBotApi extends TelegramBotApiMethods {
      */
     offAll(eventName?: string): void;
     private _setTimeout;
-    private _getUpdates(_this?);
+    private _updateOffset;
+    static _getUpdates(_this: TelegramBotApi): Promise<void>;
+    private _startGetUpdates();
     startAutoUpdate(updateInterval?: number): void;
     stopAutoUpdate(): void;
 }

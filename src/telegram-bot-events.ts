@@ -18,7 +18,9 @@ export default class TelegramBotApi extends TelegramBotApiMethods{
 
   public options = {
     autoUpdate: true,
-    updateInterval: 1000
+    updateInterval: 1000,
+    updateLimit: 50,
+    updatePoolingTimeout: 0
   }
 
   /**
@@ -83,27 +85,42 @@ export default class TelegramBotApi extends TelegramBotApiMethods{
     }
   }
 
-  private _setTimeout:NodeJS.Timer;
+  private _setTimeout: NodeJS.Timer;
 
-  private _getUpdates(_this = this) {
+  private _updateOffset: number = 0;
+
+  static async _getUpdates(_this: TelegramBotApi) {
     logUpdate('getInternalUpdates');
-    if (!_this.options.autoUpdate) {
-      return _this.stopAutoUpdate();
+
+    let data = await _this.getUpdates({
+      offset: _this._updateOffset,
+      limit: _this.options.updateLimit,
+      timeout: _this.options.updatePoolingTimeout
+    });
+
+    console.dir(data);
+    if(data) {
+      console.log(data);
     }
-    _this._setTimeout = setTimeout(_this._getUpdates, _this.options.updateInterval, _this);
+
+    if (!_this.options.autoUpdate) {
+      _this._startGetUpdates();
+    }
+  }
+
+  private _startGetUpdates() {
+    this._setTimeout = setTimeout(TelegramBotApi._getUpdates, this.options.updateInterval, this);
   }
 
   startAutoUpdate(updateInterval: number = this.options.updateInterval) {
     this.stopAutoUpdate();
     this.options.autoUpdate = true;
     this.options.updateInterval = updateInterval;
-    this._getUpdates();
+    this._startGetUpdates();
   }
 
   stopAutoUpdate() {
-    if (this.options.autoUpdate) {
-      clearTimeout(this._setTimeout);
-      this.options.autoUpdate = false;
-    }
+    clearTimeout(this._setTimeout);
+    this.options.autoUpdate = false;
   }
 }
