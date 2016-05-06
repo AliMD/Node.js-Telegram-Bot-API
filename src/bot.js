@@ -13,7 +13,6 @@ const log = debug('TelegramBotApi:bot');
 const queryLog = debug('TelegramBotApi:bot:query');
 const _extend = require('lodash/extend');
 const _1request_1 = require('./1request');
-const BASE_API_URL = 'https://api.telegram.org/';
 /**
  * @class TelegramBot
  */
@@ -40,7 +39,7 @@ class TelegramBot {
      * @returns {string} url
      */
     makeUrl(methodName) {
-        return `${BASE_API_URL}bot${this.token}/${methodName}`;
+        return `${TelegramBot.baseApiUrl}${this.token}/${methodName}`;
     }
     /**
      * Send query to telegram api server
@@ -103,6 +102,7 @@ class TelegramBot {
      */
     sendPhoto(parameters) {
         return __awaiter(this, void 0, Promise, function* () {
+            console.assert((parameters.caption || '').length <= 200, "Photo caption must be 0-200 characters");
             return this.query('sendPhoto', parameters);
         });
     }
@@ -305,5 +305,16 @@ class TelegramBot {
         });
     }
 }
+TelegramBot.baseApiUrl = 'https://api.telegram.org/bot';
+TelegramBot.chatActions = {
+    typings: 'typings',
+    upload_photo: 'upload_photo',
+    record_video: 'record_video',
+    upload_video: 'upload_video',
+    record_audio: 'record_audio',
+    upload_audio: 'upload_audio',
+    upload_document: 'upload_document',
+    find_location: 'find_location'
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = TelegramBot;

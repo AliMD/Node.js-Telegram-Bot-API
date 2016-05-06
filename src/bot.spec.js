@@ -154,8 +154,21 @@ describe('bot.js', () => {
 
     it('should sendMessage work', (done)=>{
       bot.sendMessage({
-        chat_id: userId,
+        chat_id: userId+'',
         text: 'Test2 bot.js',
+        disable_notification: true
+      })
+      .then((data) => {
+        expect(data).to.be.an('object');
+        expect(data).to.have.property('ok');
+        done();
+      }, done);
+    });
+
+    it('should sendMessage with userId as a number', (done)=>{
+      bot.sendMessage({
+        chat_id: parseInt(userId),
+        text: 'Test3 bot.js',
         disable_notification: true
       })
       .then((data) => {

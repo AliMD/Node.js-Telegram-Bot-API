@@ -15,6 +15,7 @@ export default class TelegramBot {
         autoUpdate?: boolean;
         updateInterval?: number;
     });
+    static baseApiUrl: string;
     /**
      * Make telegram api query url
      * @param {string} methodName
@@ -47,7 +48,7 @@ export default class TelegramBot {
         parse_mode?: string;
         disable_web_page_preview?: boolean;
         disable_notification?: boolean;
-        reply_to_message_id?: number;
+        reply_to_message_id?: number | string;
         reply_markup?: string | Object;
     }): Promise<{}>;
     /**
@@ -56,138 +57,270 @@ export default class TelegramBot {
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
-    forwardMessage(parameters: Object): Promise<{}>;
+    forwardMessage(parameters: {
+        chat_id: number | string;
+        from_chat_id: number | string;
+        message_id: number | string;
+        disable_notification?: boolean;
+    }): Promise<{}>;
     /**
      * Send query for sendPhoto
      * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
-    sendPhoto(parameters: Object): Promise<{}>;
+    sendPhoto(parameters: {
+        chat_id: number | string;
+        photo: string;
+        caption?: string;
+        disable_notification?: boolean;
+        reply_to_message_id?: number | string;
+        reply_markup?: string;
+    }): Promise<{}>;
     /**
      * Send query for sendAudio
      * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
-    sendAudio(parameters: Object): Promise<{}>;
+    sendAudio(parameters: {
+        chat_id: number | string;
+        audio: string;
+        duration?: number;
+        performer?: string;
+        title?: string;
+        disable_notification?: boolean;
+        reply_to_message_id?: number | string;
+        reply_markup?: string;
+    }): Promise<{}>;
     /**
      * Send query for sendDocument
      * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
-    sendDocument(parameters: Object): Promise<{}>;
+    sendDocument(parameters: {
+        chat_id: number | string;
+        document: string;
+        caption?: string;
+        disable_notification?: boolean;
+        reply_to_message_id?: number | string;
+        reply_markup?: string;
+    }): Promise<{}>;
     /**
      * Send query for sendSticker
      * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
-    sendSticker(parameters: Object): Promise<{}>;
+    sendSticker(parameters: {
+        chat_id: number | string;
+        sticker: string;
+        disable_notification?: boolean;
+        reply_to_message_id?: number | string;
+        reply_markup?: string;
+    }): Promise<{}>;
     /**
      * Send query for sendVideo
      * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
-    sendVideo(parameters: Object): Promise<{}>;
+    sendVideo(parameters: {
+        chat_id: number | string;
+        video: string;
+        duration?: number;
+        width?: number;
+        height?: number;
+        caption?: string;
+        disable_notification?: boolean;
+        reply_to_message_id?: number | string;
+        reply_markup?: string;
+    }): Promise<{}>;
     /**
      * Send query for sendVoice
      * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
-    sendVoice(parameters: Object): Promise<{}>;
+    sendVoice(parameters: {
+        chat_id: number | string;
+        voice: string;
+        duration?: number;
+        disable_notification?: boolean;
+        reply_to_message_id?: number | string;
+        reply_markup?: string;
+    }): Promise<{}>;
     /**
      * Send query for sendLocation
      * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
-    sendLocation(parameters: Object): Promise<{}>;
+    sendLocation(parameters: {
+        chat_id: number | string;
+        latitude: number;
+        longitude: number;
+        disable_notification?: boolean;
+        reply_to_message_id?: number | string;
+        reply_markup?: string;
+    }): Promise<{}>;
     /**
      * Send query for sendVenue
      * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
-    sendVenue(parameters: Object): Promise<{}>;
+    sendVenue(parameters: {
+        chat_id: number | string;
+        latitude: number;
+        longitude: number;
+        title: string;
+        address: string;
+        foursquare_id?: string;
+        disable_notification?: boolean;
+        reply_to_message_id?: number | string;
+        reply_markup?: string;
+    }): Promise<{}>;
     /**
      * Send query for sendContact
      * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
-    sendContact(parameters: Object): Promise<{}>;
+    sendContact(parameters: {
+        chat_id: number | string;
+        phone_number: string;
+        first_name: string;
+        last_name: string;
+        disable_notification?: boolean;
+        reply_to_message_id?: number | string;
+        reply_markup?: string;
+    }): Promise<{}>;
+    static chatActions: {
+        typings: string;
+        upload_photo: string;
+        record_video: string;
+        upload_video: string;
+        record_audio: string;
+        upload_audio: string;
+        upload_document: string;
+        find_location: string;
+    };
     /**
      * Send query for sendChatAction
      * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
-    sendChatAction(parameters: Object): Promise<{}>;
+    sendChatAction(parameters: {
+        chat_id: number | string;
+        action: string;
+    }): Promise<{}>;
     /**
      * Send query for getUserProfilePhotos
      * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
-    getUserProfilePhotos(parameters: Object): Promise<{}>;
+    getUserProfilePhotos(parameters: {
+        chat_id: number | string;
+        offset?: number;
+        limit?: number;
+    }): Promise<{}>;
     /**
      * Send query for getFile
      * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
-    getFile(parameters: Object): Promise<{}>;
+    getFile(parameters: {
+        file_id: string;
+    }): Promise<{}>;
     /**
      * Send query for kickChatMember
      * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
-    kickChatMember(parameters: Object): Promise<{}>;
+    kickChatMember(parameters: {
+        chat_id: number | string;
+        user_id: number | string;
+    }): Promise<{}>;
     /**
      * Send query for unbanChatMember
      * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
-    unbanChatMember(parameters: Object): Promise<{}>;
+    unbanChatMember(parameters: {
+        chat_id: number | string;
+        user_id: number | string;
+    }): Promise<{}>;
     /**
      * Send query for answerCallbackQuery
      * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
-    answerCallbackQuery(parameters: Object): Promise<{}>;
+    answerCallbackQuery(parameters: {
+        callback_query_id: string;
+        text?: string;
+        show_alert?: boolean;
+    }): Promise<{}>;
     /**
      * Send query for editMessageText
      * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
-    editMessageText(parameters: Object): Promise<{}>;
+    editMessageText(parameters: {
+        chat_id?: number | string;
+        message_id?: number | string;
+        inline_message_id?: number | string;
+        text: string;
+        parse_mode?: string;
+        disable_web_page_preview?: boolean;
+        reply_markup?: string;
+    }): Promise<{}>;
     /**
      * Send query for editMessageCaption
      * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
-    editMessageCaption(parameters: Object): Promise<{}>;
+    editMessageCaption(parameters: {
+        chat_id?: number | string;
+        message_id?: number | string;
+        inline_message_id?: number | string;
+        caption?: string;
+        reply_markup?: string;
+    }): Promise<{}>;
     /**
      * Send query for editMessageReplyMarkup
      * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
-    editMessageReplyMarkup(parameters: Object): Promise<{}>;
+    editMessageReplyMarkup(parameters: {
+        chat_id?: number | string;
+        message_id?: number | string;
+        inline_message_id?: number | string;
+        reply_markup?: string;
+    }): Promise<{}>;
     /**
      * Send query for answerInlineQuery
      * @param  {string} methodName
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
-    answerInlineQuery(parameters: Object): Promise<{}>;
+    answerInlineQuery(parameters: {
+        inline_query_id: number | string;
+        results: Array<Object>;
+        cache_time?: number;
+        is_personal?: boolean;
+        next_offset?: string;
+        switch_pm_text?: string;
+        switch_pm_parameter?: string;
+    }): Promise<{}>;
 }
