@@ -42,7 +42,7 @@ export default class TelegramBotApi extends TelegramBotApiMethods{
    * @param  {Function} listener
    */
   on(eventName: string, listener: Function) {
-    this.events.on(eventName, listener);
+    this.events.addListener(eventName, listener);
   }
 
   /**
@@ -60,7 +60,7 @@ export default class TelegramBotApi extends TelegramBotApiMethods{
    * @param  {Function} listener
    */
   off(eventName: string, listener: Function) {
-    this.events.off(eventName, listener);
+    this.events.removeListener(eventName, listener);
   }
 
   /**
@@ -69,7 +69,7 @@ export default class TelegramBotApi extends TelegramBotApiMethods{
    * @param  {Function} listener
    */
   offAll(eventName?: string) {
-    this.events.offAll(eventName);
+    this.events.removeAllListeners(eventName);
   }
 
 }
