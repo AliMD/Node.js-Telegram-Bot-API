@@ -1,12 +1,12 @@
 /// <reference path="../typings/main.d.ts" />
 /**
- * @class TelegramBot
+ * @class TelegramBotApi
  */
-export default class TelegramBot {
+export default class TelegramBotApi {
     token: string;
     options: Object;
     /**
-     * create a TelegramBot
+     * create a TelegramBotApi
      * @param {string} token
      * @param {Object} options
      */

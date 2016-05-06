@@ -7,9 +7,9 @@ const _extend = require('lodash/extend');
 import _1request from './1request';
 
 /**
- * @class TelegramBot
+ * @class TelegramBotApi
  */
-export default class TelegramBot {
+export default class TelegramBotApi {
   public options: Object = {
     webhook: false,
     autoUpdate: true,
@@ -17,7 +17,7 @@ export default class TelegramBot {
   }
 
   /**
-   * create a TelegramBot
+   * create a TelegramBotApi
    * @param {string} token
    * @param {Object} options
    */
@@ -26,7 +26,7 @@ export default class TelegramBot {
     autoUpdate?: boolean,
     updateInterval?: number
   }) {
-    log('new TelegramBot');
+    log('new TelegramBotApi');
     console.assert(typeof token === 'string', 'token must be string');
     _extend(this.options, options);
   }
@@ -39,7 +39,7 @@ export default class TelegramBot {
    * @returns {string} url
    */
   makeUrl(methodName: string) {
-    return `${TelegramBot.baseApiUrl}${this.token}/${methodName}`;
+    return `${TelegramBotApi.baseApiUrl}${this.token}/${methodName}`;
   }
 
   /**

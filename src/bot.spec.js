@@ -1,7 +1,7 @@
 import "babel-polyfill";
 import expect from 'expect.js';
 
-import TelegramBot from '../';
+import TelegramBotApi from '../';
 
 const
 token = process.env.TEST_TOCKEN || '123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11',
@@ -25,32 +25,32 @@ describe('bot.js', () => {
   describe('new instance', () => {
 
     it('should an constructor', () => {
-      expect(TelegramBot).to.be.a('function');
-      expect(new TelegramBot()).to.be.an('object');
+      expect(TelegramBotApi).to.be.a('function');
+      expect(new TelegramBotApi()).to.be.an('object');
     });
 
     it('should have token', () => {
-      let bot = new TelegramBot(token);
+      let bot = new TelegramBotApi(token);
       expect(bot.token).to.be.equal(token);
     });
 
     it('should have not token', () => {
-      let bot = new TelegramBot();
+      let bot = new TelegramBotApi();
       expect(bot.token).to.be.empty();
     });
 
     it('should have default options', () => {
-      let bot = new TelegramBot(token);
+      let bot = new TelegramBotApi(token);
       expect(bot.options).to.be.eql(defOptions);
     });
 
     it('should have default options with extend', () => {
-      let bot = new TelegramBot(token, {});
+      let bot = new TelegramBotApi(token, {});
       expect(bot.options).to.be.eql(defOptions);
     });
 
     it('should have extended options', () => {
-      let bot = new TelegramBot(token, {foo: 'bar'});
+      let bot = new TelegramBotApi(token, {foo: 'bar'});
       expect(bot.options.foo).to.be.equal('bar');
     });
 
@@ -59,18 +59,18 @@ describe('bot.js', () => {
   describe('makeUrl', () => {
 
     it('should exist', () => {
-      let bot = new TelegramBot('123456');
+      let bot = new TelegramBotApi('123456');
       expect(bot).to.have.property('makeUrl');
     });
 
     it('should return correct url', () => {
-      let bot = new TelegramBot('123456');
+      let bot = new TelegramBotApi('123456');
       expect(bot.makeUrl('getMe')).to.be.equal('https://api.telegram.org/bot123456/getMe');
     });
   });
 
   before(() => {
-    bot = new TelegramBot(token);
+    bot = new TelegramBotApi(token);
     return bot;
   });
 
