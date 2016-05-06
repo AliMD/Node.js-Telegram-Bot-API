@@ -74,7 +74,7 @@ describe('telegram-bot-methods', () => {
       expectToBePromise(queryRes);
     })
 
-    it('should work with getMe', (done)=>{
+    it('should work with getMe', (done) => {
       bot.query('getMe', {})
       .then((data) => {
         expect(data).to.be.ok();
@@ -82,16 +82,17 @@ describe('telegram-bot-methods', () => {
       }, done);
     });
 
-    it('should return pased json', (done)=>{
+    it('should return pased json', (done) => {
       bot.query('getMe', {})
       .then((data) => {
         expect(data).to.be.an('object');
         expect(data).to.have.property('ok');
         done();
-      }, done);
+      })
+      .catch(done);
     });
 
-    it('should send text message', (done)=>{
+    it('should send text message', (done) => {
       bot.query('sendMessage', {
         chat_id: userId,
         text: 'Test bot.js',
@@ -137,7 +138,7 @@ describe('telegram-bot-methods', () => {
       })
     });
 
-    it('should sendMessage work', (done)=>{
+    it('should sendMessage work', (done) => {
       bot.sendMessage({
         chat_id: userId+'',
         text: 'Test2 bot.js',
@@ -150,7 +151,7 @@ describe('telegram-bot-methods', () => {
       }, done);
     });
 
-    it('should sendMessage with userId as a number', (done)=>{
+    it('should sendMessage with userId as a number', (done) => {
       bot.sendMessage({
         chat_id: parseInt(userId),
         text: 'Test3 bot.js',

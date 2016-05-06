@@ -28,7 +28,7 @@ class TelegramBotApi extends telegram_bot_methods_1.default {
         super(token);
         this.events = new EventEmitter();
         this.options = {
-            autoUpdate: true,
+            autoUpdate: false,
             updateInterval: 1000,
             updateLimit: 50,
             updatePoolingTimeout: 0
@@ -84,14 +84,15 @@ class TelegramBotApi extends telegram_bot_methods_1.default {
     static _getUpdates(_this) {
         return __awaiter(this, void 0, void 0, function* () {
             logUpdate('getInternalUpdates');
+            console.log('getInternalUpdates');
             let data = yield _this.getUpdates({
                 offset: _this._updateOffset,
                 limit: _this.options.updateLimit,
                 timeout: _this.options.updatePoolingTimeout
             });
-            console.dir(data);
             if (data) {
-                console.log(data);
+                // console.dir(data);
+                _this.events.emite('update', data);
             }
             if (!_this.options.autoUpdate) {
                 _this._startGetUpdates();

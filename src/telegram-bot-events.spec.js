@@ -8,7 +8,9 @@ token = process.env.TEST_TOCKEN || '123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11',
 userId = process.env.TEST_USERID || 777000,
 options = {
   autoUpdate: false,
-  updateInterval: 1000
+  updateInterval: 1000,
+  updateLimit: 50,
+  updatePoolingTimeout: 0
 },
 
 expectToBePromise = (obj) => {
@@ -29,6 +31,7 @@ describe('bot.js', () => {
     it('should have default options', () => {
       let bot = new TelegramBotApi(token);
       bot.stopAutoUpdates();
+      console.dir(bot.options);
       expect(bot.options).to.be.eql(options);
     });
 
@@ -163,12 +166,11 @@ describe('bot.js', () => {
 
   })
 
-  describe.only('auto update', () => {
+  describe('auto update', () => {
     it('shout be autoUpdated by default', () => {
       let bot = new TelegramBotApi(token, {autoUpdate: true});
       after(() => {
         bot.stopAutoUpdate();
-        console.log(1);
       });
       expect(bot._setTimeout).to.be.ok();
     });
