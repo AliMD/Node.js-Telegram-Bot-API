@@ -1,16 +1,11 @@
 import "babel-polyfill";
 import expect from 'expect.js';
 
-import TelegramBotApi from '../';
+import TelegramBotApi from './telegram-bot-core';
 
 const
 token = process.env.TEST_TOCKEN || '123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11',
-userId = process.env.TEST_USERID || 777000,
-defOptions = {
-  webhook: false,
-  autoUpdate: true,
-  updateInterval: 1000
-},
+userId = process.env.TEST_USERID || 777000
 
 expectToBePromise = (obj) => {
   expect(obj).to.be.an('object');
@@ -19,7 +14,7 @@ expectToBePromise = (obj) => {
 }
 ;
 
-describe('bot.js', () => {
+describe('telegram-bot-core', () => {
   var bot;
 
   describe('new instance', () => {
@@ -34,24 +29,14 @@ describe('bot.js', () => {
       expect(bot.token).to.be.equal(token);
     });
 
-    it('should have not token', () => {
+    it('should have not token by default', () => {
       let bot = new TelegramBotApi();
       expect(bot.token).to.be.empty();
     });
 
-    it('should have default options', () => {
-      let bot = new TelegramBotApi(token);
-      expect(bot.options).to.be.eql(defOptions);
-    });
-
-    it('should have default options with extend', () => {
+    it('should not have any option', () => {
       let bot = new TelegramBotApi(token, {});
-      expect(bot.options).to.be.eql(defOptions);
-    });
-
-    it('should have extended options', () => {
-      let bot = new TelegramBotApi(token, {foo: 'bar'});
-      expect(bot.options.foo).to.be.equal('bar');
+      expect(bot.options).to.not.be(undefined);
     });
 
   });
@@ -89,7 +74,7 @@ describe('bot.js', () => {
       expectToBePromise(queryRes);
     })
 
-    it('should work with getMe', (done)=>{
+    it('should work with getMe', (done) => {
       bot.query('getMe', {})
       .then((data) => {
         expect(data).to.be.ok();
@@ -97,7 +82,7 @@ describe('bot.js', () => {
       }, done);
     });
 
-    it('should return pased json', (done)=>{
+    it('should return pased json', (done) => {
       bot.query('getMe', {})
       .then((data) => {
         expect(data).to.be.an('object');
@@ -106,7 +91,7 @@ describe('bot.js', () => {
       }, done);
     });
 
-    it('should send text message', (done)=>{
+    it('should send text message', (done) => {
       bot.query('sendMessage', {
         chat_id: userId,
         text: 'Test bot.js',
@@ -119,64 +104,6 @@ describe('bot.js', () => {
       }, done);
     });
 
-  });
-
-  describe('methods', () => {
-    let methods = [
-      'getMe',
-      'sendMessage',
-      'forwardMessage',
-      'sendPhoto',
-      'sendAudio',
-      'sendDocument',
-      'sendSticker',
-      'sendVideo',
-      'sendVoice',
-      'sendLocation',
-      'sendVenue',
-      'sendContact',
-      'sendChatAction',
-      'getUserProfilePhotos',
-      'getFile',
-      'kickChatMember',
-      'unbanChatMember',
-      'answerCallbackQuery',
-      'editMessageText',
-      'editMessageCaption',
-      'editMessageReplyMarkup',
-      'answerInlineQuery'
-    ];
-    methods.forEach((method) => {
-      it(`should ${method} exist.`, () => {
-        expect(bot).to.have.property(method);
-      })
-    });
-
-    it('should sendMessage work', (done)=>{
-      bot.sendMessage({
-        chat_id: userId+'',
-        text: 'Test2 bot.js',
-        disable_notification: true
-      })
-      .then((data) => {
-        expect(data).to.be.an('object');
-        expect(data).to.have.property('ok');
-        done();
-      }, done);
-    });
-
-    it('should sendMessage with userId as a number', (done)=>{
-      bot.sendMessage({
-        chat_id: parseInt(userId),
-        text: 'Test3 bot.js',
-        disable_notification: true
-      })
-      .then((data) => {
-        expect(data).to.be.an('object');
-        expect(data).to.have.property('ok');
-        done();
-      }, done);
-    });
   });
 
 });
