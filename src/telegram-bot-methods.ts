@@ -3,6 +3,7 @@
 import debug = require('debug');
 const log = debug('TelegramBotApi:methods');
 const fs = require('fs');
+const _extend = require('lodash/extend');
 
 import TelegramBotApiCore from './telegram-bot-core'
 
@@ -13,14 +14,22 @@ log('init');
  * extends TelegramBotApiCore with bot api methods
  */
 export default class TelegramBotApi extends TelegramBotApiCore {
+  public options = {
+    gzip: true,
+    autoChatAction: true
+  }
 
   /**
    * create a TelegramBotApi
    * @param {string} token
    * @param {Object} options
    */
-  constructor(token?: string) {
-    super(token);
+  constructor(token?: string, options?:{
+    gzip?: boolean,
+    autoChatAction?: boolean
+  }) {
+    super(token, options);
+    _extend(this.options, options);
     log('constructor');
   }
 
