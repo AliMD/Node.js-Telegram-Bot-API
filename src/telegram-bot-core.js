@@ -43,13 +43,19 @@ class TelegramBotApi {
     query(methodName, parameters) {
         return __awaiter(this, void 0, Promise, function* () {
             let requestOptions = {
-                method: 'POST',
+                method: parameters ? 'POST' : 'GET',
                 url: this.makeUrl(methodName),
                 gzip: true,
-                json: true,
-                formData: parameters
+                json: true
             };
+            if (parameters) {
+                for (let i in parameters)
+                    if (typeof parameters[i] === 'number' || typeof parameters[i] === 'boolean')
+                        parameters[i] += '';
+                requestOptions.formData = parameters;
+            }
             queryLog(methodName);
+            //queryLog(requestOptions);
             let data = yield _1request_1.default(requestOptions);
             if (data.body && data.body.ok)
                 return data.body;
