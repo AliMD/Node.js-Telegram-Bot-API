@@ -5,12 +5,19 @@ import TelegramBotApiCore from './telegram-bot-core';
  * extends TelegramBotApiCore with bot api methods
  */
 export default class TelegramBotApi extends TelegramBotApiCore {
+    options: {
+        gzip: boolean;
+        autoChatAction: boolean;
+    };
     /**
      * create a TelegramBotApi
      * @param {string} token
      * @param {Object} options
      */
-    constructor(token?: string);
+    constructor(token?: string, options?: {
+        gzip?: boolean;
+        autoChatAction?: boolean;
+    });
     /**
      * Create fileReadStream from path or retur file_id
      * @param  {any} file

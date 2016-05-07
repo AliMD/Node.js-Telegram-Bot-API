@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 const debug = require('debug');
 const log = debug('TelegramBotApi:methods');
 const fs = require('fs');
+const _extend = require('lodash/extend');
 const telegram_bot_core_1 = require('./telegram-bot-core');
 log('init');
 /**
@@ -23,8 +24,13 @@ class TelegramBotApi extends telegram_bot_core_1.default {
      * @param {string} token
      * @param {Object} options
      */
-    constructor(token) {
-        super(token);
+    constructor(token, options) {
+        super(token, options);
+        this.options = {
+            gzip: true,
+            autoChatAction: true
+        };
+        _extend(this.options, options);
         log('constructor');
     }
     /**

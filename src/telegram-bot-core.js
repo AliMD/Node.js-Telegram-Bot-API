@@ -12,6 +12,7 @@ const debug = require('debug');
 const log = debug('TelegramBotApi:core');
 const queryLog = debug('TelegramBotApi:query');
 const _1request_1 = require('./1request');
+const _extend = require('lodash/extend');
 log('init');
 /**
  * @class TelegramBotApi
@@ -22,9 +23,13 @@ class TelegramBotApi {
      * @param {string} token
      * @param {Object} options
      */
-    constructor(token = '') {
+    constructor(token = '', options) {
         this.token = token;
+        this.options = {
+            gzip: true
+        };
         log('constructor');
+        _extend(this.options, options);
     }
     /**
      * Make telegram api query url
@@ -45,7 +50,7 @@ class TelegramBotApi {
             let requestOptions = {
                 method: parameters ? 'POST' : 'GET',
                 url: this.makeUrl(methodName),
-                gzip: true,
+                gzip: this.options.gzip,
                 json: true
             };
             if (typeof parameters === 'object' && Object.keys(parameters).length) {

@@ -25,17 +25,19 @@ class TelegramBotApi extends telegram_bot_methods_1.default {
      * @param {Object} options
      */
     constructor(token, options) {
-        super(token);
+        super(token, options);
         this.events = new EventEmitter();
         this.options = {
+            gzip: true,
+            autoChatAction: true,
             autoUpdate: false,
             updateInterval: 1000,
             updateLimit: 50,
             updatePoolingTimeout: 0
         };
         this._updateOffset = 0;
-        logEvents('constructor');
         _extend(this.options, options);
+        logEvents('constructor');
         if (this.options.autoUpdate) {
             this.startAutoUpdate();
         }

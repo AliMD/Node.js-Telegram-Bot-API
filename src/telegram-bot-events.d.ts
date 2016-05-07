@@ -6,6 +6,8 @@ import TelegramBotApiMethods from './telegram-bot-methods';
 export default class TelegramBotApi extends TelegramBotApiMethods {
     events: any;
     options: {
+        gzip: boolean;
+        autoChatAction: boolean;
         autoUpdate: boolean;
         updateInterval: number;
         updateLimit: number;
@@ -17,8 +19,12 @@ export default class TelegramBotApi extends TelegramBotApiMethods {
      * @param {Object} options
      */
     constructor(token?: string, options?: {
+        gzip?: boolean;
+        autoChatAction?: boolean;
         autoUpdate?: boolean;
         updateInterval?: number;
+        updateLimit?: number;
+        updatePoolingTimeout?: number;
     });
     /**
      * Add event listener to events

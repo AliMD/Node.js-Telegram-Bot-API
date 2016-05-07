@@ -4,12 +4,17 @@
  */
 export default class TelegramBotApi {
     token: string;
+    options: {
+        gzip: boolean;
+    };
     /**
      * create a TelegramBotApi
      * @param {string} token
      * @param {Object} options
      */
-    constructor(token?: string);
+    constructor(token?: string, options?: {
+        gzip?: boolean;
+    });
     static baseApiUrl: string;
     /**
      * Make telegram api query url
