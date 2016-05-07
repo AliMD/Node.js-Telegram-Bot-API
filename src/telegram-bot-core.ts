@@ -39,16 +39,15 @@ export default class TelegramBotApi {
    */
   async query(methodName: string, parameters?: Object): Promise<any> {
     let requestOptions = {
+      method: 'POST',
       url: this.makeUrl(methodName),
-      qs: parameters
+      gzip: true,
+      json: true,
+      formData: parameters
     }
-    queryLog(methodName, requestOptions);
-    return _1request(requestOptions)
-      .then((data) => {
-        queryLog('then');
-        let parsed = JSON.parse(data.body);
-        if (parsed.ok) return parsed;
-        throw(parsed);
-      });
+    queryLog(methodName);
+    let data = await _1request(requestOptions);
+    if (data.body && data.body.ok) return data.body;
+    throw(data.body || data);
   }
 }
