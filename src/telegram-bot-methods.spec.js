@@ -34,9 +34,14 @@ describe('telegram-bot-methods', () => {
       expect(bot.token).to.be.empty();
     });
 
-    it('should not have any option', () => {
-      let bot = new TelegramBotApi(token, {});
-      expect(bot.options).to.be(undefined);
+    it('should can change super options like gzip', () => {
+      let bot = new TelegramBotApi(token, {gzip: false});
+      expect(bot.options.gzip).to.be.equal(false);
+    });
+
+    it('should can have option', () => {
+      let bot = new TelegramBotApi(token, {junk: 10});
+      expect(bot.options.junk).to.be(10);
     });
 
   });
