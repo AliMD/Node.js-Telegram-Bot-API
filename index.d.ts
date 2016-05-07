@@ -4,5 +4,5 @@
  * @author Ali Mihandoost <i@ali.md> (http://ali.md/)
  * @license MIT
  */
-import TelegramBot from './src/bot';
-export default TelegramBot;
+import TelegramBotApi from './src/telegram-bot-events';
+export default TelegramBotApi;

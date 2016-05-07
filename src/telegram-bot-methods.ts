@@ -1,64 +1,26 @@
 /// <reference path="../typings/main.d.ts" />
 
 import debug = require('debug');
-const log = debug('TelegramBotApi:bot');
-const queryLog = debug('TelegramBotApi:bot:query');
-const _extend = require('lodash/extend');
-import _1request from './1request';
+const log = debug('TelegramBotApi:methods');
+
+import TelegramBotApiCore from './telegram-bot-core'
+
+log('init');
 
 /**
- * @class TelegramBot
+ * @class TelegramBotApi
+ * extends TelegramBotApiCore with bot api methods
  */
-export default class TelegramBot {
-  public options: Object = {
-    webhook: false,
-    autoUpdate: true,
-    updateInterval: 1000
-  }
+export default class TelegramBotApi extends TelegramBotApiCore {
 
   /**
-   * create a TelegramBot
+   * create a TelegramBotApi
    * @param {string} token
    * @param {Object} options
    */
-  constructor(public token: string = '', options?: {
-    webhook?: boolean,
-    autoUpdate?: boolean,
-    updateInterval?: number
-  }) {
-    log('new TelegramBot');
-    console.assert(typeof token === 'string', 'token must be string');
-    _extend(this.options, options);
-  }
-
-  static baseApiUrl: string = 'https://api.telegram.org/bot';
-
-  /**
-   * Make telegram api query url
-   * @param {string} methodName
-   * @returns {string} url
-   */
-  makeUrl(methodName: string) {
-    return `${TelegramBot.baseApiUrl}${this.token}/${methodName}`;
-  }
-
-  /**
-   * Send query to telegram api server
-   * @param  {string} methodName
-   * @param  {Object} parameters
-   * @returns {Promise} requet promise
-   */
-  async query(methodName: string, parameters?: Object): Promise<{}> {
-    let requestOptions = {
-      url: this.makeUrl(methodName),
-      qs: parameters
-    }
-    queryLog(requestOptions);
-    return _1request(requestOptions)
-      .then((data) => {
-        let parsed = JSON.parse(data['body']);
-        return parsed;
-      });
+  constructor(token?: string) {
+    super(token);
+    log('constructor');
   }
 
   /**
@@ -70,8 +32,8 @@ export default class TelegramBot {
     offset?: number | string,
     limit?:  number | string,
     timeout?:  number | string
-  }): Promise<{}> {
-    return this.query('getUpdates', parameters);
+  }): Promise<any> {
+    return super.query('getUpdates', parameters);
   }
 
   /**
@@ -82,16 +44,16 @@ export default class TelegramBot {
   async setWebhook(parameters: {
     url?: string,
     certificate?: string
-  }): Promise<{}> {
-    return this.query('setWebhook', parameters);
+  }): Promise<any> {
+    return super.query('setWebhook', parameters);
   }
 
   /**
    * Send query for getMe
    * @returns {Promise} requet promise
    */
-  async getMe(): Promise<{}> {
-    return this.query('sendMessage');
+  async getMe(): Promise<any> {
+    return super.query('sendMessage');
   }
 
   /**
@@ -107,8 +69,8 @@ export default class TelegramBot {
       disable_notification?: boolean, // Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
       reply_to_message_id?: number | string, // If the message is a reply, ID of the original message
       reply_markup?: string | Object // Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to hide reply keyboard or to force a reply from the user.
-    }): Promise<{}> {
-    return this.query('sendMessage', parameters);
+    }): Promise<any> {
+    return super.query('sendMessage', parameters);
   }
 
   /**
@@ -121,8 +83,8 @@ export default class TelegramBot {
       from_chat_id: number | string,
       message_id: number | string,
       disable_notification?: boolean
-    }): Promise<{}> {
-    return this.query('forwardMessage', parameters);
+    }): Promise<any> {
+    return super.query('forwardMessage', parameters);
   }
 
   /**
@@ -137,9 +99,9 @@ export default class TelegramBot {
       disable_notification?: boolean,
       reply_to_message_id?: number | string,
       reply_markup?: string
-    }): Promise<{}> {
+    }): Promise<any> {
     console.assert((parameters.caption || '').length <= 200, "Photo caption must be 0-200 characters");
-    return this.query('sendPhoto', parameters);
+    return super.query('sendPhoto', parameters);
   }
 
   /**
@@ -156,8 +118,8 @@ export default class TelegramBot {
       disable_notification?: boolean,
       reply_to_message_id?: number | string,
       reply_markup?: string
-    }): Promise<{}> {
-    return this.query('sendAudio', parameters);
+    }): Promise<any> {
+    return super.query('sendAudio', parameters);
   }
 
   /**
@@ -172,8 +134,8 @@ export default class TelegramBot {
       disable_notification?: boolean,
       reply_to_message_id?: number | string,
       reply_markup?: string
-    }): Promise<{}> {
-    return this.query('sendDocument', parameters);
+    }): Promise<any> {
+    return super.query('sendDocument', parameters);
   }
 
   /**
@@ -187,8 +149,8 @@ export default class TelegramBot {
       disable_notification?: boolean,
       reply_to_message_id?: number | string,
       reply_markup?: string
-    }): Promise<{}> {
-    return this.query('sendSticker', parameters);
+    }): Promise<any> {
+    return super.query('sendSticker', parameters);
   }
 
   /**
@@ -206,8 +168,8 @@ export default class TelegramBot {
       disable_notification?: boolean,
       reply_to_message_id?: number | string,
       reply_markup?: string
-    }): Promise<{}> {
-    return this.query('sendVideo', parameters);
+    }): Promise<any> {
+    return super.query('sendVideo', parameters);
   }
 
   /**
@@ -222,8 +184,8 @@ export default class TelegramBot {
       disable_notification?: boolean,
       reply_to_message_id?: number | string,
       reply_markup?: string
-    }): Promise<{}> {
-    return this.query('sendVoice', parameters);
+    }): Promise<any> {
+    return super.query('sendVoice', parameters);
   }
 
   /**
@@ -238,8 +200,8 @@ export default class TelegramBot {
       disable_notification?: boolean,
       reply_to_message_id?: number | string,
       reply_markup?: string
-    }): Promise<{}> {
-    return this.query('sendLocation', parameters);
+    }): Promise<any> {
+    return super.query('sendLocation', parameters);
   }
 
   /**
@@ -257,8 +219,8 @@ export default class TelegramBot {
       disable_notification?: boolean,
       reply_to_message_id?: number | string,
       reply_markup?: string
-    }): Promise<{}> {
-    return this.query('sendVenue', parameters);
+    }): Promise<any> {
+    return super.query('sendVenue', parameters);
   }
 
   /**
@@ -274,8 +236,8 @@ export default class TelegramBot {
       disable_notification?: boolean,
       reply_to_message_id?: number | string,
       reply_markup?: string
-    }): Promise<{}> {
-    return this.query('sendContact', parameters);
+    }): Promise<any> {
+    return super.query('sendContact', parameters);
   }
 
   static chatActions = {
@@ -297,8 +259,8 @@ export default class TelegramBot {
   async sendChatAction(parameters: {
       chat_id: number | string,
       action: string
-    }): Promise<{}> {
-    return this.query('sendChatAction', parameters);
+    }): Promise<any> {
+    return super.query('sendChatAction', parameters);
   }
 
   /**
@@ -310,8 +272,8 @@ export default class TelegramBot {
       chat_id: number | string,
       offset?: number,
       limit?: number,
-    }): Promise<{}> {
-    return this.query('getUserProfilePhotos', parameters);
+    }): Promise<any> {
+    return super.query('getUserProfilePhotos', parameters);
   }
 
   /**
@@ -321,8 +283,8 @@ export default class TelegramBot {
    */
   async getFile(parameters: {
       file_id: string
-    }): Promise<{}> {
-    return this.query('getFile', parameters);
+    }): Promise<any> {
+    return super.query('getFile', parameters);
   }
 
   /**
@@ -333,8 +295,8 @@ export default class TelegramBot {
   async kickChatMember(parameters: {
       chat_id: number | string,
       user_id: number | string
-    }): Promise<{}> {
-    return this.query('kickChatMember', parameters);
+    }): Promise<any> {
+    return super.query('kickChatMember', parameters);
   }
 
   /**
@@ -345,8 +307,8 @@ export default class TelegramBot {
   async unbanChatMember(parameters: {
       chat_id: number | string,
       user_id: number | string
-    }): Promise<{}> {
-    return this.query('unbanChatMember', parameters);
+    }): Promise<any> {
+    return super.query('unbanChatMember', parameters);
   }
 
   /**
@@ -358,8 +320,8 @@ export default class TelegramBot {
       callback_query_id: string,
       text?: string,
       show_alert?: boolean
-    }): Promise<{}> {
-    return this.query('answerCallbackQuery', parameters);
+    }): Promise<any> {
+    return super.query('answerCallbackQuery', parameters);
   }
 
   /**
@@ -375,8 +337,8 @@ export default class TelegramBot {
       parse_mode?: string,
       disable_web_page_preview?: boolean,
       reply_markup?: string
-    }): Promise<{}> {
-    return this.query('editMessageText', parameters);
+    }): Promise<any> {
+    return super.query('editMessageText', parameters);
   }
 
   /**
@@ -390,8 +352,8 @@ export default class TelegramBot {
       inline_message_id?: number | string,
       caption?: string,
       reply_markup?: string
-    }): Promise<{}> {
-    return this.query('editMessageCaption', parameters);
+    }): Promise<any> {
+    return super.query('editMessageCaption', parameters);
   }
 
   /**
@@ -404,8 +366,8 @@ export default class TelegramBot {
       message_id?: number | string,
       inline_message_id?: number | string,
       reply_markup?: string
-    }): Promise<{}> {
-    return this.query('editMessageReplyMarkup', parameters);
+    }): Promise<any> {
+    return super.query('editMessageReplyMarkup', parameters);
   }
 
   /**
@@ -421,8 +383,8 @@ export default class TelegramBot {
       next_offset?: string,
       switch_pm_text?: string,
       switch_pm_parameter?: string
-    }): Promise<{}> {
-    return this.query('answerInlineQuery', parameters);
+    }): Promise<any> {
+    return super.query('answerInlineQuery', parameters);
   }
 
 }

@@ -9,57 +9,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const debug = require('debug');
-const log = debug('TelegramBotApi:bot');
-const queryLog = debug('TelegramBotApi:bot:query');
-const _extend = require('lodash/extend');
-const _1request_1 = require('./1request');
+const log = debug('TelegramBotApi:methods');
+const telegram_bot_core_1 = require('./telegram-bot-core');
+log('init');
 /**
- * @class TelegramBot
+ * @class TelegramBotApi
+ * extends TelegramBotApiCore with bot api methods
  */
-class TelegramBot {
+class TelegramBotApi extends telegram_bot_core_1.default {
     /**
-     * create a TelegramBot
+     * create a TelegramBotApi
      * @param {string} token
      * @param {Object} options
      */
-    constructor(token = '', options) {
-        this.token = token;
-        this.options = {
-            webhook: false,
-            autoUpdate: true,
-            updateInterval: 1000
-        };
-        log('new TelegramBot');
-        console.assert(typeof token === 'string', 'token must be string');
-        _extend(this.options, options);
-    }
-    /**
-     * Make telegram api query url
-     * @param {string} methodName
-     * @returns {string} url
-     */
-    makeUrl(methodName) {
-        return `${TelegramBot.baseApiUrl}${this.token}/${methodName}`;
-    }
-    /**
-     * Send query to telegram api server
-     * @param  {string} methodName
-     * @param  {Object} parameters
-     * @returns {Promise} requet promise
-     */
-    query(methodName, parameters) {
-        return __awaiter(this, void 0, Promise, function* () {
-            let requestOptions = {
-                url: this.makeUrl(methodName),
-                qs: parameters
-            };
-            queryLog(requestOptions);
-            return _1request_1.default(requestOptions)
-                .then((data) => {
-                let parsed = JSON.parse(data['body']);
-                return parsed;
-            });
-        });
+    constructor(token) {
+        super(token);
+        log('constructor');
     }
     /**
      * Send query for getUpdates from server
@@ -67,8 +32,9 @@ class TelegramBot {
      * @returns {Promise} requet promise
      */
     getUpdates(parameters) {
+        const _super = name => super[name];
         return __awaiter(this, void 0, Promise, function* () {
-            return this.query('getUpdates', parameters);
+            return _super("query").call(this, 'getUpdates', parameters);
         });
     }
     /**
@@ -77,8 +43,9 @@ class TelegramBot {
      * @returns {Promise} requet promise
      */
     setWebhook(parameters) {
+        const _super = name => super[name];
         return __awaiter(this, void 0, Promise, function* () {
-            return this.query('setWebhook', parameters);
+            return _super("query").call(this, 'setWebhook', parameters);
         });
     }
     /**
@@ -86,8 +53,9 @@ class TelegramBot {
      * @returns {Promise} requet promise
      */
     getMe() {
+        const _super = name => super[name];
         return __awaiter(this, void 0, Promise, function* () {
-            return this.query('sendMessage');
+            return _super("query").call(this, 'sendMessage');
         });
     }
     /**
@@ -96,8 +64,9 @@ class TelegramBot {
      * @returns {Promise} requet promise
      */
     sendMessage(parameters) {
+        const _super = name => super[name];
         return __awaiter(this, void 0, Promise, function* () {
-            return this.query('sendMessage', parameters);
+            return _super("query").call(this, 'sendMessage', parameters);
         });
     }
     /**
@@ -106,8 +75,9 @@ class TelegramBot {
      * @returns {Promise} requet promise
      */
     forwardMessage(parameters) {
+        const _super = name => super[name];
         return __awaiter(this, void 0, Promise, function* () {
-            return this.query('forwardMessage', parameters);
+            return _super("query").call(this, 'forwardMessage', parameters);
         });
     }
     /**
@@ -116,9 +86,10 @@ class TelegramBot {
      * @returns {Promise} requet promise
      */
     sendPhoto(parameters) {
+        const _super = name => super[name];
         return __awaiter(this, void 0, Promise, function* () {
             console.assert((parameters.caption || '').length <= 200, "Photo caption must be 0-200 characters");
-            return this.query('sendPhoto', parameters);
+            return _super("query").call(this, 'sendPhoto', parameters);
         });
     }
     /**
@@ -127,8 +98,9 @@ class TelegramBot {
      * @returns {Promise} requet promise
      */
     sendAudio(parameters) {
+        const _super = name => super[name];
         return __awaiter(this, void 0, Promise, function* () {
-            return this.query('sendAudio', parameters);
+            return _super("query").call(this, 'sendAudio', parameters);
         });
     }
     /**
@@ -137,8 +109,9 @@ class TelegramBot {
      * @returns {Promise} requet promise
      */
     sendDocument(parameters) {
+        const _super = name => super[name];
         return __awaiter(this, void 0, Promise, function* () {
-            return this.query('sendDocument', parameters);
+            return _super("query").call(this, 'sendDocument', parameters);
         });
     }
     /**
@@ -147,8 +120,9 @@ class TelegramBot {
      * @returns {Promise} requet promise
      */
     sendSticker(parameters) {
+        const _super = name => super[name];
         return __awaiter(this, void 0, Promise, function* () {
-            return this.query('sendSticker', parameters);
+            return _super("query").call(this, 'sendSticker', parameters);
         });
     }
     /**
@@ -157,8 +131,9 @@ class TelegramBot {
      * @returns {Promise} requet promise
      */
     sendVideo(parameters) {
+        const _super = name => super[name];
         return __awaiter(this, void 0, Promise, function* () {
-            return this.query('sendVideo', parameters);
+            return _super("query").call(this, 'sendVideo', parameters);
         });
     }
     /**
@@ -167,8 +142,9 @@ class TelegramBot {
      * @returns {Promise} requet promise
      */
     sendVoice(parameters) {
+        const _super = name => super[name];
         return __awaiter(this, void 0, Promise, function* () {
-            return this.query('sendVoice', parameters);
+            return _super("query").call(this, 'sendVoice', parameters);
         });
     }
     /**
@@ -177,8 +153,9 @@ class TelegramBot {
      * @returns {Promise} requet promise
      */
     sendLocation(parameters) {
+        const _super = name => super[name];
         return __awaiter(this, void 0, Promise, function* () {
-            return this.query('sendLocation', parameters);
+            return _super("query").call(this, 'sendLocation', parameters);
         });
     }
     /**
@@ -187,8 +164,9 @@ class TelegramBot {
      * @returns {Promise} requet promise
      */
     sendVenue(parameters) {
+        const _super = name => super[name];
         return __awaiter(this, void 0, Promise, function* () {
-            return this.query('sendVenue', parameters);
+            return _super("query").call(this, 'sendVenue', parameters);
         });
     }
     /**
@@ -197,8 +175,9 @@ class TelegramBot {
      * @returns {Promise} requet promise
      */
     sendContact(parameters) {
+        const _super = name => super[name];
         return __awaiter(this, void 0, Promise, function* () {
-            return this.query('sendContact', parameters);
+            return _super("query").call(this, 'sendContact', parameters);
         });
     }
     /**
@@ -207,8 +186,9 @@ class TelegramBot {
      * @returns {Promise} requet promise
      */
     sendChatAction(parameters) {
+        const _super = name => super[name];
         return __awaiter(this, void 0, Promise, function* () {
-            return this.query('sendChatAction', parameters);
+            return _super("query").call(this, 'sendChatAction', parameters);
         });
     }
     /**
@@ -217,8 +197,9 @@ class TelegramBot {
      * @returns {Promise} requet promise
      */
     getUserProfilePhotos(parameters) {
+        const _super = name => super[name];
         return __awaiter(this, void 0, Promise, function* () {
-            return this.query('getUserProfilePhotos', parameters);
+            return _super("query").call(this, 'getUserProfilePhotos', parameters);
         });
     }
     /**
@@ -227,8 +208,9 @@ class TelegramBot {
      * @returns {Promise} requet promise
      */
     getFile(parameters) {
+        const _super = name => super[name];
         return __awaiter(this, void 0, Promise, function* () {
-            return this.query('getFile', parameters);
+            return _super("query").call(this, 'getFile', parameters);
         });
     }
     /**
@@ -237,8 +219,9 @@ class TelegramBot {
      * @returns {Promise} requet promise
      */
     kickChatMember(parameters) {
+        const _super = name => super[name];
         return __awaiter(this, void 0, Promise, function* () {
-            return this.query('kickChatMember', parameters);
+            return _super("query").call(this, 'kickChatMember', parameters);
         });
     }
     /**
@@ -247,8 +230,9 @@ class TelegramBot {
      * @returns {Promise} requet promise
      */
     unbanChatMember(parameters) {
+        const _super = name => super[name];
         return __awaiter(this, void 0, Promise, function* () {
-            return this.query('unbanChatMember', parameters);
+            return _super("query").call(this, 'unbanChatMember', parameters);
         });
     }
     /**
@@ -257,8 +241,9 @@ class TelegramBot {
      * @returns {Promise} requet promise
      */
     answerCallbackQuery(parameters) {
+        const _super = name => super[name];
         return __awaiter(this, void 0, Promise, function* () {
-            return this.query('answerCallbackQuery', parameters);
+            return _super("query").call(this, 'answerCallbackQuery', parameters);
         });
     }
     /**
@@ -267,8 +252,9 @@ class TelegramBot {
      * @returns {Promise} requet promise
      */
     editMessageText(parameters) {
+        const _super = name => super[name];
         return __awaiter(this, void 0, Promise, function* () {
-            return this.query('editMessageText', parameters);
+            return _super("query").call(this, 'editMessageText', parameters);
         });
     }
     /**
@@ -277,8 +263,9 @@ class TelegramBot {
      * @returns {Promise} requet promise
      */
     editMessageCaption(parameters) {
+        const _super = name => super[name];
         return __awaiter(this, void 0, Promise, function* () {
-            return this.query('editMessageCaption', parameters);
+            return _super("query").call(this, 'editMessageCaption', parameters);
         });
     }
     /**
@@ -287,8 +274,9 @@ class TelegramBot {
      * @returns {Promise} requet promise
      */
     editMessageReplyMarkup(parameters) {
+        const _super = name => super[name];
         return __awaiter(this, void 0, Promise, function* () {
-            return this.query('editMessageReplyMarkup', parameters);
+            return _super("query").call(this, 'editMessageReplyMarkup', parameters);
         });
     }
     /**
@@ -297,13 +285,13 @@ class TelegramBot {
      * @returns {Promise} requet promise
      */
     answerInlineQuery(parameters) {
+        const _super = name => super[name];
         return __awaiter(this, void 0, Promise, function* () {
-            return this.query('answerInlineQuery', parameters);
+            return _super("query").call(this, 'answerInlineQuery', parameters);
         });
     }
 }
-TelegramBot.baseApiUrl = 'https://api.telegram.org/bot';
-TelegramBot.chatActions = {
+TelegramBotApi.chatActions = {
     typings: 'typings',
     upload_photo: 'upload_photo',
     record_video: 'record_video',
@@ -314,4 +302,4 @@ TelegramBot.chatActions = {
     find_location: 'find_location'
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = TelegramBot;
+exports.default = TelegramBotApi;
