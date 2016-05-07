@@ -2,6 +2,7 @@
 
 import debug = require('debug');
 const log = debug('TelegramBotApi:methods');
+const fs = require('fs');
 
 import TelegramBotApiCore from './telegram-bot-core'
 
@@ -21,6 +22,26 @@ export default class TelegramBotApi extends TelegramBotApiCore {
   constructor(token?: string) {
     super(token);
     log('constructor');
+  }
+
+  /**
+   * Create fileReadStream from path or retur file_id
+   * @param  {any} file
+   */
+  static async fileIdOrReadStream (file: string): Promise<any> {
+    log(`fileIdOrReadStream for ${file}`);
+    let isFile = false;
+    try {
+      isFile = fs.statSync(file).isFile();
+    }
+    catch (err){}; // skip err
+
+    return !isFile ?
+      file :
+      fs.createReadStream(file, {
+        flags: 'r',
+        autoClose: true
+      });
   }
 
   /**
@@ -100,7 +121,9 @@ export default class TelegramBotApi extends TelegramBotApiCore {
       reply_to_message_id?: number | string,
       reply_markup?: string
     }): Promise<any> {
+
     console.assert((parameters.caption || '').length <= 200, "Photo caption must be 0-200 characters");
+    parameters.photo = await TelegramBotApi.fileIdOrReadStream(parameters.photo);
     return super.query('sendPhoto', parameters);
   }
 
