@@ -75,7 +75,7 @@ describe('telegram-bot-core', () => {
     })
 
     it('should work with getMe', (done) => {
-      bot.query('getMe', {})
+      bot.query('getMe')
       .then((data) => {
         expect(data).to.be.ok();
         done();
@@ -83,7 +83,7 @@ describe('telegram-bot-core', () => {
     });
 
     it('should return pased json', (done) => {
-      bot.query('getMe', {})
+      bot.query('getMe')
       .then((data) => {
         expect(data).to.be.an('object');
         expect(data).to.have.property('ok');
