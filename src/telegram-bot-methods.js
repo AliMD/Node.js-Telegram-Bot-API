@@ -28,7 +28,8 @@ class TelegramBotApi extends telegram_bot_core_1.default {
         super(token, options);
         this.options = {
             gzip: true,
-            autoChatAction: true
+            autoChatAction: true,
+            autoChatActionUploadOnly: true
         };
         _extend(this.options, options);
         log('constructor');
@@ -94,6 +95,10 @@ class TelegramBotApi extends telegram_bot_core_1.default {
     sendMessage(parameters) {
         const _super = name => super[name];
         return __awaiter(this, void 0, Promise, function* () {
+            yield this._sendAutoChatAction({
+                chat_id: parameters.chat_id,
+                action: TelegramBotApi.chatActions.typing
+            }, false);
             return _super("query").call(this, 'sendMessage', parameters);
         });
     }
@@ -105,6 +110,10 @@ class TelegramBotApi extends telegram_bot_core_1.default {
     forwardMessage(parameters) {
         const _super = name => super[name];
         return __awaiter(this, void 0, Promise, function* () {
+            yield this._sendAutoChatAction({
+                chat_id: parameters.chat_id,
+                action: TelegramBotApi.chatActions.typing
+            }, false);
             return _super("query").call(this, 'forwardMessage', parameters);
         });
     }
@@ -118,6 +127,10 @@ class TelegramBotApi extends telegram_bot_core_1.default {
         return __awaiter(this, void 0, Promise, function* () {
             console.assert((parameters.caption || '').length <= 200, "Photo caption must be 0-200 characters");
             parameters.photo = yield TelegramBotApi.fileIdOrReadStream(parameters.photo);
+            yield this._sendAutoChatAction({
+                chat_id: parameters.chat_id,
+                action: TelegramBotApi.chatActions.upload_photo
+            }, typeof parameters.photo !== 'string');
             return _super("query").call(this, 'sendPhoto', parameters);
         });
     }
@@ -130,6 +143,10 @@ class TelegramBotApi extends telegram_bot_core_1.default {
         const _super = name => super[name];
         return __awaiter(this, void 0, Promise, function* () {
             parameters.audio = yield TelegramBotApi.fileIdOrReadStream(parameters.audio);
+            yield this._sendAutoChatAction({
+                chat_id: parameters.chat_id,
+                action: TelegramBotApi.chatActions.upload_audio
+            }, typeof parameters.audio !== 'string');
             return _super("query").call(this, 'sendAudio', parameters);
         });
     }
@@ -142,6 +159,10 @@ class TelegramBotApi extends telegram_bot_core_1.default {
         const _super = name => super[name];
         return __awaiter(this, void 0, Promise, function* () {
             parameters.document = yield TelegramBotApi.fileIdOrReadStream(parameters.document);
+            yield this._sendAutoChatAction({
+                chat_id: parameters.chat_id,
+                action: TelegramBotApi.chatActions.upload_document
+            }, typeof parameters.document !== 'string');
             return _super("query").call(this, 'sendDocument', parameters);
         });
     }
@@ -154,6 +175,10 @@ class TelegramBotApi extends telegram_bot_core_1.default {
         const _super = name => super[name];
         return __awaiter(this, void 0, Promise, function* () {
             parameters.sticker = yield TelegramBotApi.fileIdOrReadStream(parameters.sticker);
+            yield this._sendAutoChatAction({
+                chat_id: parameters.chat_id,
+                action: TelegramBotApi.chatActions.upload_photo
+            }, typeof parameters.sticker !== 'string');
             return _super("query").call(this, 'sendSticker', parameters);
         });
     }
@@ -166,6 +191,10 @@ class TelegramBotApi extends telegram_bot_core_1.default {
         const _super = name => super[name];
         return __awaiter(this, void 0, Promise, function* () {
             parameters.video = yield TelegramBotApi.fileIdOrReadStream(parameters.video);
+            yield this._sendAutoChatAction({
+                chat_id: parameters.chat_id,
+                action: TelegramBotApi.chatActions.upload_video
+            }, typeof parameters.video !== 'string');
             return _super("query").call(this, 'sendVideo', parameters);
         });
     }
@@ -178,6 +207,10 @@ class TelegramBotApi extends telegram_bot_core_1.default {
         const _super = name => super[name];
         return __awaiter(this, void 0, Promise, function* () {
             parameters.voice = yield TelegramBotApi.fileIdOrReadStream(parameters.voice);
+            yield this._sendAutoChatAction({
+                chat_id: parameters.chat_id,
+                action: TelegramBotApi.chatActions.record_audio
+            }, typeof parameters.voice !== 'string');
             return _super("query").call(this, 'sendVoice', parameters);
         });
     }
@@ -189,6 +222,10 @@ class TelegramBotApi extends telegram_bot_core_1.default {
     sendLocation(parameters) {
         const _super = name => super[name];
         return __awaiter(this, void 0, Promise, function* () {
+            yield this._sendAutoChatAction({
+                chat_id: parameters.chat_id,
+                action: TelegramBotApi.chatActions.find_location
+            }, false);
             return _super("query").call(this, 'sendLocation', parameters);
         });
     }
@@ -200,6 +237,10 @@ class TelegramBotApi extends telegram_bot_core_1.default {
     sendVenue(parameters) {
         const _super = name => super[name];
         return __awaiter(this, void 0, Promise, function* () {
+            yield this._sendAutoChatAction({
+                chat_id: parameters.chat_id,
+                action: TelegramBotApi.chatActions.find_location
+            }, false);
             return _super("query").call(this, 'sendVenue', parameters);
         });
     }
@@ -211,6 +252,10 @@ class TelegramBotApi extends telegram_bot_core_1.default {
     sendContact(parameters) {
         const _super = name => super[name];
         return __awaiter(this, void 0, Promise, function* () {
+            yield this._sendAutoChatAction({
+                chat_id: parameters.chat_id,
+                action: TelegramBotApi.chatActions.typing
+            }, false);
             return _super("query").call(this, 'sendContact', parameters);
         });
     }
@@ -223,6 +268,16 @@ class TelegramBotApi extends telegram_bot_core_1.default {
         const _super = name => super[name];
         return __awaiter(this, void 0, Promise, function* () {
             return _super("query").call(this, 'sendChatAction', parameters);
+        });
+    }
+    _sendAutoChatAction(parameters, uploadMode) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (!this.options.autoChatAction)
+                return false;
+            else if (this.options.autoChatActionUploadOnly && !uploadMode)
+                return false;
+            else
+                return this.sendChatAction(parameters);
         });
     }
     /**
@@ -326,7 +381,7 @@ class TelegramBotApi extends telegram_bot_core_1.default {
     }
 }
 TelegramBotApi.chatActions = {
-    typings: 'typings',
+    typing: 'typing',
     upload_photo: 'upload_photo',
     record_video: 'record_video',
     upload_video: 'upload_video',

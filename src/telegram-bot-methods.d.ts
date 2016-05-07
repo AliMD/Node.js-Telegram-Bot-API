@@ -8,6 +8,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
     options: {
         gzip: boolean;
         autoChatAction: boolean;
+        autoChatActionUploadOnly: boolean;
     };
     /**
      * create a TelegramBotApi
@@ -17,6 +18,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
     constructor(token?: string, options?: {
         gzip?: boolean;
         autoChatAction?: boolean;
+        autoChatActionUploadOnly?: boolean;
     });
     /**
      * Create fileReadStream from path or retur file_id
@@ -198,7 +200,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
         reply_markup?: string;
     }): Promise<any>;
     static chatActions: {
-        typings: string;
+        typing: string;
         upload_photo: string;
         record_video: string;
         upload_video: string;
@@ -216,6 +218,10 @@ export default class TelegramBotApi extends TelegramBotApiCore {
         chat_id: number | string;
         action: string;
     }): Promise<any>;
+    _sendAutoChatAction(parameters: {
+        chat_id: number | string;
+        action: string;
+    }, uploadMode: boolean): Promise<any>;
     /**
      * Send query for getUserProfilePhotos
      * @param  {Object} parameters
