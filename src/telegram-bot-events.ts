@@ -85,6 +85,16 @@ export default class TelegramBotApi extends TelegramBotApiMethods{
     }
   }
 
+  /**
+   * Emit special event
+   * @param  {string} eventName
+   * @param  {Function} listener
+   */
+  emit(eventName: string, ...args) {
+    logEvents(`Emit ${eventName}`);
+    this.events.emit(eventName, ...args);
+  }
+
   private _setTimeout: NodeJS.Timer;
 
   private _updateOffset: number = 0;
