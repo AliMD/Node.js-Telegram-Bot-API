@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 const debug = require('debug');
 const log = debug('TelegramBotApi:methods');
+const fs = require('fs');
 const telegram_bot_core_1 = require('./telegram-bot-core');
 log('init');
 /**
@@ -25,6 +26,27 @@ class TelegramBotApi extends telegram_bot_core_1.default {
     constructor(token) {
         super(token);
         log('constructor');
+    }
+    /**
+     * Create fileReadStream from path or retur file_id
+     * @param  {any} file
+     */
+    static fileIdOrReadStream(file) {
+        return __awaiter(this, void 0, Promise, function* () {
+            log(`fileIdOrReadStream for ${file}`);
+            let isFile = false;
+            try {
+                isFile = fs.statSync(file).isFile();
+            }
+            catch (err) { }
+            ; // skip err
+            return !isFile ?
+                file :
+                fs.createReadStream(file, {
+                    flags: 'r',
+                    autoClose: true
+                });
+        });
     }
     /**
      * Send query for getUpdates from server
@@ -89,6 +111,7 @@ class TelegramBotApi extends telegram_bot_core_1.default {
         const _super = name => super[name];
         return __awaiter(this, void 0, Promise, function* () {
             console.assert((parameters.caption || '').length <= 200, "Photo caption must be 0-200 characters");
+            parameters.photo = yield TelegramBotApi.fileIdOrReadStream(parameters.photo);
             return _super("query").call(this, 'sendPhoto', parameters);
         });
     }
@@ -100,6 +123,7 @@ class TelegramBotApi extends telegram_bot_core_1.default {
     sendAudio(parameters) {
         const _super = name => super[name];
         return __awaiter(this, void 0, Promise, function* () {
+            parameters.audio = yield TelegramBotApi.fileIdOrReadStream(parameters.audio);
             return _super("query").call(this, 'sendAudio', parameters);
         });
     }
@@ -111,6 +135,7 @@ class TelegramBotApi extends telegram_bot_core_1.default {
     sendDocument(parameters) {
         const _super = name => super[name];
         return __awaiter(this, void 0, Promise, function* () {
+            parameters.document = yield TelegramBotApi.fileIdOrReadStream(parameters.document);
             return _super("query").call(this, 'sendDocument', parameters);
         });
     }
@@ -122,6 +147,7 @@ class TelegramBotApi extends telegram_bot_core_1.default {
     sendSticker(parameters) {
         const _super = name => super[name];
         return __awaiter(this, void 0, Promise, function* () {
+            parameters.sticker = yield TelegramBotApi.fileIdOrReadStream(parameters.sticker);
             return _super("query").call(this, 'sendSticker', parameters);
         });
     }
@@ -133,6 +159,7 @@ class TelegramBotApi extends telegram_bot_core_1.default {
     sendVideo(parameters) {
         const _super = name => super[name];
         return __awaiter(this, void 0, Promise, function* () {
+            parameters.video = yield TelegramBotApi.fileIdOrReadStream(parameters.video);
             return _super("query").call(this, 'sendVideo', parameters);
         });
     }
@@ -144,6 +171,7 @@ class TelegramBotApi extends telegram_bot_core_1.default {
     sendVoice(parameters) {
         const _super = name => super[name];
         return __awaiter(this, void 0, Promise, function* () {
+            parameters.voice = yield TelegramBotApi.fileIdOrReadStream(parameters.voice);
             return _super("query").call(this, 'sendVoice', parameters);
         });
     }
