@@ -27,7 +27,7 @@ export default class TelegramBotApi {
    * @param {string} methodName
    * @returns {string} url
    */
-  makeUrl(methodName: string) {
+  makeUrl(methodName: string): string {
     return `${TelegramBotApi.baseApiUrl}${this.token}/${methodName}`;
   }
 
@@ -37,7 +37,7 @@ export default class TelegramBotApi {
    * @param  {Object} parameters
    * @returns {Promise} requet promise
    */
-  async query(methodName: string, parameters?: Object): Promise<{}> {
+  async query(methodName: string, parameters?: Object): Promise<any> {
     let requestOptions = {
       url: this.makeUrl(methodName),
       qs: parameters
@@ -46,7 +46,7 @@ export default class TelegramBotApi {
     return _1request(requestOptions)
       .then((data) => {
         queryLog('then');
-        let parsed = JSON.parse(data['body']);
+        let parsed = JSON.parse(data.body);
         return parsed;
       });
   }

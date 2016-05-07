@@ -23,5 +23,5 @@ export default class TelegramBotApi {
      * @param  {Object} parameters
      * @returns {Promise} requet promise
      */
-    query(methodName: string, parameters?: Object): Promise<{}>;
+    query(methodName: string, parameters?: Object): Promise<any>;
 }

@@ -50,7 +50,7 @@ class TelegramBotApi {
             return _1request_1.default(requestOptions)
                 .then((data) => {
                 queryLog('then');
-                let parsed = JSON.parse(data['body']);
+                let parsed = JSON.parse(data.body);
                 return parsed;
             });
         });
