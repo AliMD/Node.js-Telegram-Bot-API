@@ -20,7 +20,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
         offset?: number | string;
         limit?: number | string;
         timeout?: number | string;
-    }): Promise<{}>;
+    }): Promise<any>;
     /**
      * Send query for setWebhook
      * @param  {Object} parameters
@@ -29,12 +29,12 @@ export default class TelegramBotApi extends TelegramBotApiCore {
     setWebhook(parameters: {
         url?: string;
         certificate?: string;
-    }): Promise<{}>;
+    }): Promise<any>;
     /**
      * Send query for getMe
      * @returns {Promise} requet promise
      */
-    getMe(): Promise<{}>;
+    getMe(): Promise<any>;
     /**
      * Send query for sendMessage
      * @param  {Object} parameters
@@ -48,7 +48,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
         disable_notification?: boolean;
         reply_to_message_id?: number | string;
         reply_markup?: string | Object;
-    }): Promise<{}>;
+    }): Promise<any>;
     /**
      * Send query for forwardMessage
      * @param  {Object} parameters
@@ -59,7 +59,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
         from_chat_id: number | string;
         message_id: number | string;
         disable_notification?: boolean;
-    }): Promise<{}>;
+    }): Promise<any>;
     /**
      * Send query for sendPhoto
      * @param  {Object} parameters
@@ -72,7 +72,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
         disable_notification?: boolean;
         reply_to_message_id?: number | string;
         reply_markup?: string;
-    }): Promise<{}>;
+    }): Promise<any>;
     /**
      * Send query for sendAudio
      * @param  {Object} parameters
@@ -87,7 +87,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
         disable_notification?: boolean;
         reply_to_message_id?: number | string;
         reply_markup?: string;
-    }): Promise<{}>;
+    }): Promise<any>;
     /**
      * Send query for sendDocument
      * @param  {Object} parameters
@@ -100,7 +100,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
         disable_notification?: boolean;
         reply_to_message_id?: number | string;
         reply_markup?: string;
-    }): Promise<{}>;
+    }): Promise<any>;
     /**
      * Send query for sendSticker
      * @param  {Object} parameters
@@ -112,7 +112,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
         disable_notification?: boolean;
         reply_to_message_id?: number | string;
         reply_markup?: string;
-    }): Promise<{}>;
+    }): Promise<any>;
     /**
      * Send query for sendVideo
      * @param  {Object} parameters
@@ -128,7 +128,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
         disable_notification?: boolean;
         reply_to_message_id?: number | string;
         reply_markup?: string;
-    }): Promise<{}>;
+    }): Promise<any>;
     /**
      * Send query for sendVoice
      * @param  {Object} parameters
@@ -141,7 +141,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
         disable_notification?: boolean;
         reply_to_message_id?: number | string;
         reply_markup?: string;
-    }): Promise<{}>;
+    }): Promise<any>;
     /**
      * Send query for sendLocation
      * @param  {Object} parameters
@@ -154,7 +154,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
         disable_notification?: boolean;
         reply_to_message_id?: number | string;
         reply_markup?: string;
-    }): Promise<{}>;
+    }): Promise<any>;
     /**
      * Send query for sendVenue
      * @param  {Object} parameters
@@ -170,7 +170,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
         disable_notification?: boolean;
         reply_to_message_id?: number | string;
         reply_markup?: string;
-    }): Promise<{}>;
+    }): Promise<any>;
     /**
      * Send query for sendContact
      * @param  {Object} parameters
@@ -184,7 +184,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
         disable_notification?: boolean;
         reply_to_message_id?: number | string;
         reply_markup?: string;
-    }): Promise<{}>;
+    }): Promise<any>;
     static chatActions: {
         typings: string;
         upload_photo: string;
@@ -203,7 +203,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
     sendChatAction(parameters: {
         chat_id: number | string;
         action: string;
-    }): Promise<{}>;
+    }): Promise<any>;
     /**
      * Send query for getUserProfilePhotos
      * @param  {Object} parameters
@@ -213,7 +213,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
         chat_id: number | string;
         offset?: number;
         limit?: number;
-    }): Promise<{}>;
+    }): Promise<any>;
     /**
      * Send query for getFile
      * @param  {Object} parameters
@@ -221,7 +221,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
      */
     getFile(parameters: {
         file_id: string;
-    }): Promise<{}>;
+    }): Promise<any>;
     /**
      * Send query for kickChatMember
      * @param  {Object} parameters
@@ -230,7 +230,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
     kickChatMember(parameters: {
         chat_id: number | string;
         user_id: number | string;
-    }): Promise<{}>;
+    }): Promise<any>;
     /**
      * Send query for unbanChatMember
      * @param  {Object} parameters
@@ -239,7 +239,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
     unbanChatMember(parameters: {
         chat_id: number | string;
         user_id: number | string;
-    }): Promise<{}>;
+    }): Promise<any>;
     /**
      * Send query for answerCallbackQuery
      * @param  {Object} parameters
@@ -249,7 +249,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
         callback_query_id: string;
         text?: string;
         show_alert?: boolean;
-    }): Promise<{}>;
+    }): Promise<any>;
     /**
      * Send query for editMessageText
      * @param  {Object} parameters
@@ -263,7 +263,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
         parse_mode?: string;
         disable_web_page_preview?: boolean;
         reply_markup?: string;
-    }): Promise<{}>;
+    }): Promise<any>;
     /**
      * Send query for editMessageCaption
      * @param  {Object} parameters
@@ -275,7 +275,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
         inline_message_id?: number | string;
         caption?: string;
         reply_markup?: string;
-    }): Promise<{}>;
+    }): Promise<any>;
     /**
      * Send query for editMessageReplyMarkup
      * @param  {Object} parameters
@@ -286,7 +286,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
         message_id?: number | string;
         inline_message_id?: number | string;
         reply_markup?: string;
-    }): Promise<{}>;
+    }): Promise<any>;
     /**
      * Send query for answerInlineQuery
      * @param  {Object} parameters
@@ -300,5 +300,5 @@ export default class TelegramBotApi extends TelegramBotApiCore {
         next_offset?: string;
         switch_pm_text?: string;
         switch_pm_parameter?: string;
-    }): Promise<{}>;
+    }): Promise<any>;
 }
