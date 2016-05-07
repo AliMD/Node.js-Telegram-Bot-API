@@ -4,7 +4,7 @@ import expect from 'expect.js';
 import TelegramBotApi from './telegram-bot-events';
 
 const
-token = process.env.TEST_TOCKEN || '123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11',
+token = process.env.TEST_TOKEN || '123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11',
 userId = process.env.TEST_USERID || 777000,
 options = {
   autoUpdate: false,
