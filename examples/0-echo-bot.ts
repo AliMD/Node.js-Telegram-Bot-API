@@ -6,7 +6,9 @@ const token = process.env.BOT_TOCKEN || '123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew
 const bot = new TelegramBot(token, {autoUpdate: true});
 
 bot.on('update.message.text', (msg) => {
-  console.log('update.message', msg);
+  console.log('new text message recived');
+  // console.log(msg);
+
   bot.sendMessage({
     chat_id: msg.chat.id,
     text: msg.text
@@ -18,3 +20,8 @@ bot.on('update.message.text', (msg) => {
     console.log('Send Message Error:', err);
   });
 });
+
+console.log('Bot actived, send any message to bot');
+
+// Run command:
+// BOT_TOCKEN=your_bot_token node 0-echo-bot.js
