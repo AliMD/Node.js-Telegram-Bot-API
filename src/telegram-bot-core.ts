@@ -45,7 +45,7 @@ export default class TelegramBotApi {
       json: true
     }
 
-    if(parameters) {
+    if (typeof parameters === 'object' && Object.keys(parameters).length) {
       for (let i in parameters)
         if(typeof parameters[i] === 'number' || typeof parameters[i] === 'boolean')
           parameters[i] += '';
