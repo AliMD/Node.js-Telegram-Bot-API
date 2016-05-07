@@ -17,6 +17,8 @@ export default class TelegramBotApi extends TelegramBotApiMethods{
   public events = new EventEmitter();
 
   public options = {
+    gzip: true,
+    autoChatAction: true,
     autoUpdate: false,
     updateInterval: 1000,
     updateLimit: 50,
@@ -29,12 +31,17 @@ export default class TelegramBotApi extends TelegramBotApiMethods{
    * @param {Object} options
    */
   constructor(token?: string, options?: {
+    gzip?: boolean,
+    autoChatAction?: boolean,
     autoUpdate?: boolean,
-    updateInterval?: number
+    updateInterval?: number,
+    updateLimit?: number,
+    updatePoolingTimeout?: number
   }) {
-    super(token)
-    logEvents('constructor');
+    super(token, options);
     _extend(this.options, options);
+
+    logEvents('constructor');
 
     if (this.options.autoUpdate) {
       this.startAutoUpdate();
