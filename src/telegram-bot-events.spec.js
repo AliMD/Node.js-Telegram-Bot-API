@@ -7,6 +7,8 @@ const
 token = process.env.TEST_TOKEN || '123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11',
 userId = process.env.TEST_USERID || 777000,
 options = {
+  gzip: true,
+  autoChatAction: true,
   autoUpdate: false,
   updateInterval: 1000,
   updateLimit: 50,
@@ -44,6 +46,12 @@ describe('telegram-bot-events', () => {
       let bot = new TelegramBotApi(token, {foo: 'bar'});
       bot.stopAutoUpdate();
       expect(bot.options.foo).to.be.equal('bar');
+    });
+
+    it('should can change super options like gzip', () => {
+      let bot = new TelegramBotApi(token, {gzip: false});
+      bot.stopAutoUpdate();
+      expect(bot.options.gzip).to.be.equal(false);
     });
 
   });
