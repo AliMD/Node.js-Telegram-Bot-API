@@ -34,9 +34,9 @@ describe('telegram-bot-core', () => {
       expect(bot.token).to.be.empty();
     });
 
-    it('should not have any option', () => {
-      let bot = new TelegramBotApi(token, {});
-      expect(bot.options).to.be(undefined);
+    it('should can have option', () => {
+      let bot = new TelegramBotApi(token, {junk: 10});
+      expect(bot.options.junk).to.be(10);
     });
 
   });
