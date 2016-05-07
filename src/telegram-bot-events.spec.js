@@ -20,7 +20,7 @@ expectToBePromise = (obj) => {
 }
 ;
 
-describe('bot.js', () => {
+describe('telegram-bot-events', () => {
   var bot = new TelegramBotApi(token, options);
   after(() => {
     bot.stopAutoUpdate();
@@ -30,20 +30,19 @@ describe('bot.js', () => {
 
     it('should have default options', () => {
       let bot = new TelegramBotApi(token);
-      bot.stopAutoUpdates();
-      console.dir(bot.options);
+      bot.stopAutoUpdate();
       expect(bot.options).to.be.eql(options);
     });
 
     it('should have default options with extend', () => {
       let bot = new TelegramBotApi(token, {});
-      bot.stopAutoUpdates();
+      bot.stopAutoUpdate();
       expect(bot.options).to.be.eql(options);
     });
 
     it('should have extended options', () => {
       let bot = new TelegramBotApi(token, {foo: 'bar'});
-      bot.stopAutoUpdates();
+      bot.stopAutoUpdate();
       expect(bot.options.foo).to.be.equal('bar');
     });
 
@@ -167,6 +166,33 @@ describe('bot.js', () => {
   })
 
   describe('auto update', () => {
+    afterEach(() => {
+      bot.stopAutoUpdate();
+      bot.offAll();
+      console.log('!!!');
+    });
+
+    it('shout be stopAutoUpdated work', (done) => {
+      let bot = new TelegramBotApi(token, options);
+      bot.startAutoUpdate();
+
+      setTimeout(()=>{
+        bot.stopAutoUpdate();
+        expect(bot._setTimeout._onTimeout).to.not.be.ok();
+        expect(bot.options.autoUpdate).to.not.be.ok();
+        bot.stopAutoUpdate();
+        done();
+      }, 200);
+    });
+
+    it('shout be not autoUpdated by default option', () => {
+      let bot = new TelegramBotApi(token);
+      expect(bot._setTimeout).to.not.be.ok();
+
+      bot = new TelegramBotApi(token, {autoUpdate: false});
+      expect(bot._setTimeout).to.not.be.ok();
+    });
+
     it('shout be autoUpdated by default', () => {
       let bot = new TelegramBotApi(token, {autoUpdate: true});
       after(() => {
@@ -177,7 +203,7 @@ describe('bot.js', () => {
 
     it('shout be startAutoUpdated work', (done) => {
       let bot = new TelegramBotApi(token, {autoUpdate: false, updateInterval: 100});
-      after(()=>{
+      after(() => {
         bot.stopAutoUpdate();
       });
       expect(bot._setTimeout).to.not.be.ok();
@@ -185,20 +211,35 @@ describe('bot.js', () => {
       setTimeout(()=>{
         expect(bot._setTimeout).to.be.ok();
         bot.stopAutoUpdate();
+        expect(bot._setTimeout._setTimeout).to.not.be.ok();
         done();
       }, 200);
     });
 
-    it('should trigger on mesage', (done) => {
+    it.skip('should trigger on update', (done) => {
       console.log('send message to this bot for test');
-      bot.on('message', () => {
+      bot.once('update', () => {
         done();
-      })
+      });
+      bot.startAutoUpdate();
     });
 
-    it.skip('should trigger on inlineQuery', () => {
+    it.skip('should trigger on message', (done) => {
+      console.log('send message to this bot for test');
+      bot.once('update.message', () => {
+        done();
+      });
+      bot.startAutoUpdate();
+    });
 
-    })
+    it.skip('should trigger on inline_query', (done) => {
+      console.log('send inline_query to this bot for test');
+      bot.once('update.inline_query', () => {
+        done();
+      });
+      bot.startAutoUpdate();
+    });
+
   })
 
 });
