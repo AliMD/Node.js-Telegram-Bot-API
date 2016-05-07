@@ -7,7 +7,7 @@ const timeout = 20000;
 
 log('init');
 
-export default function (options): Promise<{}> {
+export default function (options): Promise<any> {
   if(!options.timeout) options.timeout = timeout;
   log(options);
 
