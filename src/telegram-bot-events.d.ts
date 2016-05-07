@@ -44,6 +44,12 @@ export default class TelegramBotApi extends TelegramBotApiMethods {
      * @param  {Function} listener
      */
     offAll(eventName?: string): void;
+    /**
+     * Emit special event
+     * @param  {string} eventName
+     * @param  {Function} listener
+     */
+    emit(eventName: string, ...args: any[]): void;
     private _setTimeout;
     private _updateOffset;
     static _getUpdates(_this: TelegramBotApi): Promise<void>;

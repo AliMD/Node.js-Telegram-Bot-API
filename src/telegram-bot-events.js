@@ -81,6 +81,15 @@ class TelegramBotApi extends telegram_bot_methods_1.default {
             this.events.removeAllListeners();
         }
     }
+    /**
+     * Emit special event
+     * @param  {string} eventName
+     * @param  {Function} listener
+     */
+    emit(eventName, ...args) {
+        logEvents(`Emit ${eventName}`);
+        this.events.emit(eventName, ...args);
+    }
     static _getUpdates(_this) {
         return __awaiter(this, void 0, void 0, function* () {
             log('_getUpdates');
@@ -90,21 +99,79 @@ class TelegramBotApi extends telegram_bot_methods_1.default {
                     limit: _this.options.updateLimit,
                     timeout: _this.options.updatePoolingTimeout
                 });
-                if (data && data.ok && data.result) {
+                if (data && data.ok && data.result && data.result.length) {
+                    log('new update');
                     data.result.forEach((item) => {
                         _this._updateOffset = item.update_id + 1;
-                        let eventName;
-                        if ('message' in item)
-                            eventName = 'message';
-                        if ('inline_query' in item)
-                            eventName = 'inline_query';
-                        if ('chosen_inline_result' in item)
-                            eventName = 'chosen_inline_result';
-                        if ('callback_query' in item)
-                            eventName = 'callback_query';
                         setImmediate(() => {
-                            _this.events.emit('update', data);
-                            _this.events.emit(`update.${eventName}`, data);
+                            let itemData = item;
+                            _this.emit('update', itemData);
+                            let eventName;
+                            if ('inline_query' in item) {
+                                itemData = item.inline_query;
+                                eventName = 'inline_query';
+                            }
+                            if ('chosen_inline_result' in item) {
+                                itemData = item.chosen_inline_result;
+                                eventName = 'chosen_inline_result';
+                            }
+                            if ('callback_query' in item) {
+                                itemData = item.callback_query;
+                                eventName = 'callback_query';
+                            }
+                            if ('message' in item) {
+                                itemData = item.message;
+                                eventName = 'message';
+                                if ('new_chat_member' in itemData)
+                                    eventName = 'new_chat_member';
+                                if ('left_chat_member' in itemData)
+                                    eventName = 'left_chat_member';
+                                if ('new_chat_title' in itemData)
+                                    eventName = 'new_chat_title';
+                                if ('new_chat_photo' in itemData)
+                                    eventName = 'new_chat_photo';
+                                if ('delete_chat_photo' in itemData)
+                                    eventName = 'delete_chat_photo';
+                                if ('group_chat_created' in itemData)
+                                    eventName = 'group_chat_created';
+                                if ('supergroup_chat_created' in itemData)
+                                    eventName = 'supergroup_chat_created';
+                                if ('channel_chat_created' in itemData)
+                                    eventName = 'channel_chat_created';
+                                if ('migrate_to_chat_id' in itemData)
+                                    eventName = 'migrate_to_supergroup';
+                                if ('migrate_from_chat_id' in itemData)
+                                    eventName = 'migrate_to_supergroup';
+                                if ('pinned_message' in itemData)
+                                    eventName = 'pinned_message';
+                            }
+                            _this.emit(`update.${eventName}`, itemData);
+                            if (eventName === 'message') {
+                                let messageType;
+                                if ('text' in itemData)
+                                    messageType = 'text';
+                                if ('audio' in itemData)
+                                    messageType = 'audio';
+                                if ('document' in itemData)
+                                    messageType = 'document';
+                                if ('photo' in itemData)
+                                    messageType = 'photo';
+                                if ('sticker' in itemData)
+                                    messageType = 'sticker';
+                                if ('video' in itemData)
+                                    messageType = 'video';
+                                if ('voice' in itemData)
+                                    messageType = 'voice';
+                                if ('contact' in itemData)
+                                    messageType = 'contact';
+                                if ('location' in itemData)
+                                    messageType = 'location';
+                                if ('venue' in itemData)
+                                    messageType = 'venue';
+                                if ('pinned_message' in itemData)
+                                    messageType = 'pinned_message';
+                                _this.emit(`update.${eventName}.${messageType}`, itemData);
+                            }
                         });
                     });
                 }
