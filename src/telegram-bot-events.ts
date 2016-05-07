@@ -109,7 +109,8 @@ export default class TelegramBotApi extends TelegramBotApiMethods{
         timeout: _this.options.updatePoolingTimeout
       });
 
-      if(data && data.ok && data.result) {
+      if(data && data.ok && data.result && data.result.length) {
+        log('new update');
         data.result.forEach((item) => {
           _this._updateOffset = item.update_id + 1;
 
@@ -122,6 +123,8 @@ export default class TelegramBotApi extends TelegramBotApiMethods{
           setImmediate(() => {
             _this.events.emit('update', data);
             _this.events.emit(`update.${eventName}`, data);
+            }
+
           });
         });
       }
