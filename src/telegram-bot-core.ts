@@ -42,12 +42,13 @@ export default class TelegramBotApi {
       url: this.makeUrl(methodName),
       qs: parameters
     }
-    queryLog(requestOptions);
+    queryLog(methodName, requestOptions);
     return _1request(requestOptions)
       .then((data) => {
         queryLog('then');
         let parsed = JSON.parse(data.body);
-        return parsed;
+        if (parsed.ok) return parsed;
+        throw(parsed);
       });
   }
 }
