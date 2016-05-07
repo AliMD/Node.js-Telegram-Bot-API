@@ -10,16 +10,9 @@ bot.on('update.message.text', (msg) => {
   // console.log(msg);
 
   if (msg.text.match(/^hi/i)) {
-    bot.sendMessage({
+    bot.sendSticker({
       chat_id: msg.chat.id,
-      text: 'Hi ;)'
-    })
-    .then(() => {
-      return bot.sendPhoto({
-        chat_id: msg.chat.id,
-        photo: './alimd.jpg',
-        caption: 'Ali Mihandoost\n\ntelegram.me/al1md\n\ntelegram.me/alimd\n\nhttp://ali.md/'
-      });
+      sticker: './hi.png'
     })
     .then(() => {
       console.log('Messages sent.');
