@@ -21,6 +21,7 @@ export default function (options): Promise<any> {
 
       request(options, (err, response, body) => {
         log('response');
+        log(body);
         if (skip) {
           log('skiped!', err);
           return;

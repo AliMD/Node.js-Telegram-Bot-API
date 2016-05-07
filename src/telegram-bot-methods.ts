@@ -2,6 +2,7 @@
 
 import debug = require('debug');
 const log = debug('TelegramBotApi:methods');
+const fs = require('fs');
 
 import TelegramBotApiCore from './telegram-bot-core'
 
@@ -21,6 +22,26 @@ export default class TelegramBotApi extends TelegramBotApiCore {
   constructor(token?: string) {
     super(token);
     log('constructor');
+  }
+
+  /**
+   * Create fileReadStream from path or retur file_id
+   * @param  {any} file
+   */
+  static async fileIdOrReadStream (file: string): Promise<any> {
+    log(`fileIdOrReadStream for ${file}`);
+    let isFile = false;
+    try {
+      isFile = fs.statSync(file).isFile();
+    }
+    catch (err){}; // skip err
+
+    return !isFile ?
+      file :
+      fs.createReadStream(file, {
+        flags: 'r',
+        autoClose: true
+      });
   }
 
   /**
@@ -100,7 +121,9 @@ export default class TelegramBotApi extends TelegramBotApiCore {
       reply_to_message_id?: number | string,
       reply_markup?: string
     }): Promise<any> {
+
     console.assert((parameters.caption || '').length <= 200, "Photo caption must be 0-200 characters");
+    parameters.photo = await TelegramBotApi.fileIdOrReadStream(parameters.photo);
     return super.query('sendPhoto', parameters);
   }
 
@@ -119,6 +142,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
       reply_to_message_id?: number | string,
       reply_markup?: string
     }): Promise<any> {
+    parameters.audio = await TelegramBotApi.fileIdOrReadStream(parameters.audio);
     return super.query('sendAudio', parameters);
   }
 
@@ -135,6 +159,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
       reply_to_message_id?: number | string,
       reply_markup?: string
     }): Promise<any> {
+    parameters.document = await TelegramBotApi.fileIdOrReadStream(parameters.document);
     return super.query('sendDocument', parameters);
   }
 
@@ -150,6 +175,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
       reply_to_message_id?: number | string,
       reply_markup?: string
     }): Promise<any> {
+    parameters.sticker = await TelegramBotApi.fileIdOrReadStream(parameters.sticker);
     return super.query('sendSticker', parameters);
   }
 
@@ -169,6 +195,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
       reply_to_message_id?: number | string,
       reply_markup?: string
     }): Promise<any> {
+    parameters.video = await TelegramBotApi.fileIdOrReadStream(parameters.video);
     return super.query('sendVideo', parameters);
   }
 
@@ -185,6 +212,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
       reply_to_message_id?: number | string,
       reply_markup?: string
     }): Promise<any> {
+    parameters.voice = await TelegramBotApi.fileIdOrReadStream(parameters.voice);
     return super.query('sendVoice', parameters);
   }
 

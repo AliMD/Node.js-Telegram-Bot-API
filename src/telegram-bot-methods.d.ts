@@ -12,6 +12,11 @@ export default class TelegramBotApi extends TelegramBotApiCore {
      */
     constructor(token?: string);
     /**
+     * Create fileReadStream from path or retur file_id
+     * @param  {any} file
+     */
+    static fileIdOrReadStream(file: string): Promise<any>;
+    /**
      * Send query for getUpdates from server
      * @param  {Object} parameters
      * @returns {Promise} requet promise
