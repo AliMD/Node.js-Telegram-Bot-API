@@ -10,11 +10,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 const debug = require('debug');
 const EventEmitter = require('events');
-const log = debug('TelegramBotApi:events');
-const logUpdate = debug('TelegramBotApi:update');
+const logEvents = debug('TelegramBotApi:events');
+const log = debug('TelegramBotApi:update');
 const _extend = require('lodash/extend');
 const telegram_bot_methods_1 = require('./telegram-bot-methods');
-log('init');
+logEvents('init');
 /**
  * @class TelegramBotApi
  */
@@ -34,7 +34,7 @@ class TelegramBotApi extends telegram_bot_methods_1.default {
             updatePoolingTimeout: 0
         };
         this._updateOffset = 0;
-        log('constructor');
+        logEvents('constructor');
         _extend(this.options, options);
         if (this.options.autoUpdate) {
             this.startAutoUpdate();
@@ -46,7 +46,7 @@ class TelegramBotApi extends telegram_bot_methods_1.default {
      * @param  {Function} listener
      */
     on(eventName, listener) {
-        log(`on ${eventName}`);
+        logEvents(`on ${eventName}`);
         this.events.addListener(eventName, listener);
     }
     /**
@@ -55,7 +55,7 @@ class TelegramBotApi extends telegram_bot_methods_1.default {
      * @param  {Function} listener
      */
     once(eventName, listener) {
-        log(`once ${eventName}`);
+        logEvents(`once ${eventName}`);
         this.events.once(eventName, listener);
     }
     /**
@@ -64,7 +64,7 @@ class TelegramBotApi extends telegram_bot_methods_1.default {
      * @param  {Function} listener
      */
     off(eventName, listener) {
-        log(`off ${eventName}`);
+        logEvents(`off ${eventName}`);
         this.events.removeListener(eventName, listener);
     }
     /**
@@ -73,7 +73,7 @@ class TelegramBotApi extends telegram_bot_methods_1.default {
      * @param  {Function} listener
      */
     offAll(eventName) {
-        log(`offAll ${eventName}`);
+        logEvents(`offAll ${eventName}`);
         if (eventName) {
             this.events.removeAllListeners(eventName);
         }
@@ -83,19 +83,40 @@ class TelegramBotApi extends telegram_bot_methods_1.default {
     }
     static _getUpdates(_this) {
         return __awaiter(this, void 0, void 0, function* () {
-            logUpdate('getInternalUpdates');
-            console.log('getInternalUpdates');
-            let data = yield _this.getUpdates({
-                offset: _this._updateOffset,
-                limit: _this.options.updateLimit,
-                timeout: _this.options.updatePoolingTimeout
-            });
-            if (data) {
-                // console.dir(data);
-                _this.events.emite('update', data);
+            log('_getUpdates');
+            try {
+                let data = yield _this.getUpdates({
+                    offset: _this._updateOffset,
+                    limit: _this.options.updateLimit,
+                    timeout: _this.options.updatePoolingTimeout
+                });
+                if (data && data.ok && data.result) {
+                    data.result.forEach((item) => {
+                        _this._updateOffset = item.update_id + 1;
+                        let eventName;
+                        if ('message' in item)
+                            eventName = 'message';
+                        if ('inline_query' in item)
+                            eventName = 'inline_query';
+                        if ('chosen_inline_result' in item)
+                            eventName = 'chosen_inline_result';
+                        if ('callback_query' in item)
+                            eventName = 'callback_query';
+                        setImmediate(() => {
+                            _this.events.emit('update', data);
+                            _this.events.emit(`update.${eventName}`, data);
+                        });
+                    });
+                }
             }
-            if (!_this.options.autoUpdate) {
+            catch (err) {
+                log('_getUpdates:Error', err);
+            }
+            if (_this.options.autoUpdate) {
                 _this._startGetUpdates();
+            }
+            else {
+                log('autoUpdate canceled');
             }
         });
     }
@@ -103,12 +124,14 @@ class TelegramBotApi extends telegram_bot_methods_1.default {
         this._setTimeout = setTimeout(TelegramBotApi._getUpdates, this.options.updateInterval, this);
     }
     startAutoUpdate(updateInterval = this.options.updateInterval) {
+        log('startAutoUpdate');
         this.stopAutoUpdate();
         this.options.autoUpdate = true;
         this.options.updateInterval = updateInterval;
         this._startGetUpdates();
     }
     stopAutoUpdate() {
+        log('stopAutoUpdate');
         clearTimeout(this._setTimeout);
         this.options.autoUpdate = false;
     }

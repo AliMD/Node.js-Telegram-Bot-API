@@ -2,13 +2,13 @@
 
 import debug = require('debug');
 const EventEmitter = require('events');
-const log = debug('TelegramBotApi:events');
-const logUpdate = debug('TelegramBotApi:update');
+const logEvents = debug('TelegramBotApi:events');
+const log = debug('TelegramBotApi:update');
 const _extend = require('lodash/extend');
 
 import TelegramBotApiMethods from './telegram-bot-methods'
 
-log('init');
+logEvents('init');
 
 /**
  * @class TelegramBotApi
@@ -33,7 +33,7 @@ export default class TelegramBotApi extends TelegramBotApiMethods{
     updateInterval?: number
   }) {
     super(token)
-    log('constructor');
+    logEvents('constructor');
     _extend(this.options, options);
 
     if (this.options.autoUpdate) {
@@ -47,7 +47,7 @@ export default class TelegramBotApi extends TelegramBotApiMethods{
    * @param  {Function} listener
    */
   on(eventName: string, listener: Function) {
-    log(`on ${eventName}`);
+    logEvents(`on ${eventName}`);
     this.events.addListener(eventName, listener);
   }
 
@@ -57,7 +57,7 @@ export default class TelegramBotApi extends TelegramBotApiMethods{
    * @param  {Function} listener
    */
   once(eventName: string, listener: Function) {
-    log(`once ${eventName}`);
+    logEvents(`once ${eventName}`);
     this.events.once(eventName, listener);
   }
 
@@ -67,7 +67,7 @@ export default class TelegramBotApi extends TelegramBotApiMethods{
    * @param  {Function} listener
    */
   off(eventName: string, listener: Function) {
-    log(`off ${eventName}`);
+    logEvents(`off ${eventName}`);
     this.events.removeListener(eventName, listener);
   }
 
@@ -77,7 +77,7 @@ export default class TelegramBotApi extends TelegramBotApiMethods{
    * @param  {Function} listener
    */
   offAll(eventName?: string) {
-    log(`offAll ${eventName}`);
+    logEvents(`offAll ${eventName}`);
     if (eventName) {
       this.events.removeAllListeners(eventName);
     } else {
@@ -90,22 +90,41 @@ export default class TelegramBotApi extends TelegramBotApiMethods{
   private _updateOffset: number = 0;
 
   static async _getUpdates(_this: TelegramBotApi) {
-    logUpdate('getInternalUpdates');
-    console.log('getInternalUpdates');
+    log('_getUpdates');
 
-    let data = await _this.getUpdates({
-      offset: _this._updateOffset,
-      limit: _this.options.updateLimit,
-      timeout: _this.options.updatePoolingTimeout
-    });
+    try {
+      let data = await _this.getUpdates({
+        offset: _this._updateOffset,
+        limit: _this.options.updateLimit,
+        timeout: _this.options.updatePoolingTimeout
+      });
 
-    if(data) {
-      // console.dir(data);
-      _this.events.emite('update', data);
+      if(data && data.ok && data.result) {
+        data.result.forEach((item) => {
+          _this._updateOffset = item.update_id + 1;
+
+          let eventName;
+          if ('message' in item) eventName = 'message';
+          if ('inline_query' in item) eventName = 'inline_query';
+          if ('chosen_inline_result' in item) eventName = 'chosen_inline_result';
+          if ('callback_query' in item) eventName = 'callback_query';
+
+          setImmediate(() => {
+            _this.events.emit('update', data);
+            _this.events.emit(`update.${eventName}`, data);
+          });
+        });
+      }
+    }
+    catch (err) {
+      log('_getUpdates:Error', err);
     }
 
-    if (!_this.options.autoUpdate) {
+    if (_this.options.autoUpdate) {
       _this._startGetUpdates();
+    }
+    else {
+      log('autoUpdate canceled');
     }
   }
 
@@ -114,6 +133,7 @@ export default class TelegramBotApi extends TelegramBotApiMethods{
   }
 
   startAutoUpdate(updateInterval: number = this.options.updateInterval) {
+    log('startAutoUpdate');
     this.stopAutoUpdate();
     this.options.autoUpdate = true;
     this.options.updateInterval = updateInterval;
@@ -121,6 +141,7 @@ export default class TelegramBotApi extends TelegramBotApiMethods{
   }
 
   stopAutoUpdate() {
+    log('stopAutoUpdate');
     clearTimeout(this._setTimeout);
     this.options.autoUpdate = false;
   }
