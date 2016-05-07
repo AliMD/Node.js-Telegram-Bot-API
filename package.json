@@ -11,10 +11,11 @@
     "postinstall": "typings install",
     "start": "node .",
     "build": "tsc -p .",
+    "pretest": "npm run build",
     "test": "mocha --compilers js:babel-register --reporter 'spec' --timeout 5000 src/**/*[sS]pec.js examples/*[sS]pec.js",
     "watch": "npm run build -- --watch",
     "watchtest": "npm run test -- --watch",
-    "preversion": "npm run build && npm test",
+    "preversion": "npm test",
     "version": "git add -A .",
     "postversion": "git push && git push --tags"
   },
