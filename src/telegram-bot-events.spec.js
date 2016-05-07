@@ -169,7 +169,6 @@ describe('telegram-bot-events', () => {
     afterEach(() => {
       bot.stopAutoUpdate();
       bot.offAll();
-      console.log('!!!');
     });
 
     it('shout be stopAutoUpdated work', (done) => {
