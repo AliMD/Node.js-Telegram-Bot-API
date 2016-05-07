@@ -12,8 +12,8 @@
     "start": "node .",
     "build": "tsc -p .",
     "test": "mocha --compilers js:babel-register --reporter 'spec' --timeout 5000 src/**/*[sS]pec.js examples/*[sS]pec.js",
-    "watchtest": "mocha --compilers js:babel-register --reporter 'spec' --timeout 5000 --watch src/**/*[sS]pec.js examples/*[sS]pec.js",
-    "watch": "tsc -w -p .",
+    "watch": "npm run build -- --watch",
+    "watchtest": "npm run test -- --watch",
     "preversion": "npm run build && npm test",
     "version": "git add -A .",
     "postversion": "git push && git push --tags"
