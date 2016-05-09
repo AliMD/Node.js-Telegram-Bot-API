@@ -57,10 +57,17 @@ export default class TelegramBotApi extends TelegramBotApiMethods {
      * @param  {Function} listener
      */
     emit(eventName: string, ...args: any[]): void;
+    /**
+     * Start auto update and set options.autoUpdate to true
+     */
+    startAutoUpdate(): void;
+    /**
+     * Stop auto update and set options.autoUpdate to false
+     */
+    stopAutoUpdate(): void;
     private _setTimeout;
+    private _startGetUpdates();
     private _updateOffset;
     static _getUpdates(_this: TelegramBotApi): Promise<void>;
-    private _startGetUpdates();
-    startAutoUpdate(updateInterval?: number): void;
-    stopAutoUpdate(): void;
+    protected _onUpdate(item: any): void;
 }
