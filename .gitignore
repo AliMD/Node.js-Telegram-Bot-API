@@ -51,3 +51,6 @@ typings
 
 # temp files
 .tmp
+
+# Test config file
+config.test.sh
