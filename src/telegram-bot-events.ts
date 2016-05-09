@@ -100,10 +100,33 @@ export default class TelegramBotApi extends TelegramBotApiMethods{
    */
   emit(eventName: string, ...args) {
     logEvents(`Emit ${eventName}`);
-    this.events.emit(eventName, ...args);
+    setImmediate(this.events.emit, eventName, ...args);
+  }
+
+  /**
+   * Start auto update and set options.autoUpdate to true
+   */
+  startAutoUpdate() {
+    log('startAutoUpdate');
+    this.stopAutoUpdate();
+    this.options.autoUpdate = true;
+    this._startGetUpdates();
+  }
+
+  /**
+   * Stop auto update and set options.autoUpdate to false
+   */
+  stopAutoUpdate() {
+    log('stopAutoUpdate');
+    clearTimeout(this._setTimeout);
+    this.options.autoUpdate = false;
   }
 
   private _setTimeout: NodeJS.Timer;
+
+  private _startGetUpdates() {
+    this._setTimeout = setTimeout(TelegramBotApi._getUpdates, this.options.updateInterval, this);
+  }
 
   private _updateOffset: number = 0;
 
@@ -121,52 +144,8 @@ export default class TelegramBotApi extends TelegramBotApiMethods{
         log('new update');
 
         data.result.forEach((item) => {
-          _this._updateOffset = item.update_id + 1;
-          setImmediate(() => {
-            let itemData = item;
-            _this.emit('update', itemData);
-
-            let eventName;
-            if ('inline_query' in item) {itemData = item.inline_query; eventName = 'inline_query';}
-            if ('chosen_inline_result' in item) {itemData = item.chosen_inline_result; eventName = 'chosen_inline_result';}
-            if ('callback_query' in item) {itemData = item.callback_query; eventName = 'callback_query';}
-            if ('message' in item) {
-              itemData = item.message;
-              eventName = 'message';
-
-              if ('new_chat_member' in itemData) eventName = 'new_chat_member';
-              if ('left_chat_member' in itemData) eventName = 'left_chat_member';
-              if ('new_chat_title' in itemData) eventName = 'new_chat_title';
-              if ('new_chat_photo' in itemData) eventName = 'new_chat_photo';
-              if ('delete_chat_photo' in itemData) eventName = 'delete_chat_photo';
-              if ('group_chat_created' in itemData) eventName = 'group_chat_created';
-              if ('supergroup_chat_created' in itemData) eventName = 'supergroup_chat_created';
-              if ('channel_chat_created' in itemData) eventName = 'channel_chat_created';
-              if ('migrate_to_chat_id' in itemData) eventName = 'migrate_to_supergroup';
-              if ('migrate_from_chat_id' in itemData) eventName = 'migrate_to_supergroup';
-              if ('pinned_message' in itemData) eventName = 'pinned_message';
-            }
-
-            _this.emit(`update.${eventName}`, itemData);
-
-            if (eventName === 'message') {
-              let messageType;
-              if ('text' in itemData) messageType = 'text';
-              if ('audio' in itemData) messageType = 'audio';
-              if ('document' in itemData) messageType = 'document';
-              if ('photo' in itemData) messageType = 'photo';
-              if ('sticker' in itemData) messageType = 'sticker';
-              if ('video' in itemData) messageType = 'video';
-              if ('voice' in itemData) messageType = 'voice';
-              if ('contact' in itemData) messageType = 'contact';
-              if ('location' in itemData) messageType = 'location';
-              if ('venue' in itemData) messageType = 'venue';
-              if ('pinned_message' in itemData) messageType = 'pinned_message';
-
-              _this.emit(`update.${eventName}.${messageType}`, itemData);
-            }
-
-          });
+          _this.emit('update', item); // call update event
+          if (_this._updateOffset < item.update_id + 1) _this._updateOffset = item.update_id + 1;
         });
       }
     }
@@ -182,21 +161,48 @@ export default class TelegramBotApi extends TelegramBotApiMethods{
     }
   }
 
-  private _startGetUpdates() {
-    this._setTimeout = setTimeout(TelegramBotApi._getUpdates, this.options.updateInterval, this);
-  }
+  protected _onUpdate(item: any) {
+    let data, eventName;
 
-  startAutoUpdate(updateInterval: number = this.options.updateInterval) {
-    log('startAutoUpdate');
-    this.stopAutoUpdate();
-    this.options.autoUpdate = true;
-    this.options.updateInterval = updateInterval;
-    this._startGetUpdates();
-  }
+    if ('inline_query' in item) {data = item.inline_query; eventName = 'inline_query';}
+    if ('chosen_inline_result' in item) {data = item.chosen_inline_result; eventName = 'chosen_inline_result';}
+    if ('callback_query' in item) {data = item.callback_query; eventName = 'callback_query';}
 
-  stopAutoUpdate() {
-    log('stopAutoUpdate');
-    clearTimeout(this._setTimeout);
-    this.options.autoUpdate = false;
+    if ('message' in item) {
+      data = item.message;
+      eventName = 'message';
+
+      if ('new_chat_member' in data) eventName = 'new_chat_member';
+      if ('left_chat_member' in data) eventName = 'left_chat_member';
+      if ('new_chat_title' in data) eventName = 'new_chat_title';
+      if ('new_chat_photo' in data) eventName = 'new_chat_photo';
+      if ('delete_chat_photo' in data) eventName = 'delete_chat_photo';
+      if ('group_chat_created' in data) eventName = 'group_chat_created';
+      if ('supergroup_chat_created' in data) eventName = 'supergroup_chat_created';
+      if ('channel_chat_created' in data) eventName = 'channel_chat_created';
+      if ('migrate_to_chat_id' in data) eventName = 'migrate_to_supergroup';
+      if ('migrate_from_chat_id' in data) eventName = 'migrate_to_supergroup';
+      if ('pinned_message' in data) eventName = 'pinned_message';
+    }
+
+    this.emit(`update.${eventName}`, data);
+
+    if (eventName === 'message') {
+      let messageType;
+      if ('text' in data) messageType = 'text';
+      if ('audio' in data) messageType = 'audio';
+      if ('document' in data) messageType = 'document';
+      if ('photo' in data) messageType = 'photo';
+      if ('sticker' in data) messageType = 'sticker';
+      if ('video' in data) messageType = 'video';
+      if ('voice' in data) messageType = 'voice';
+      if ('contact' in data) messageType = 'contact';
+      if ('location' in data) messageType = 'location';
+      if ('venue' in data) messageType = 'venue';
+      if ('pinned_message' in data) messageType = 'pinned_message';
+
+      this.emit(`update.${eventName}.${messageType}`, data);
+    }
+
   }
 }
