@@ -1,0 +1,15 @@
+# copy/rename this file to config.test.sh and change the values
+# cp config.test.sh.txt config.test.sh
+
+# set excute permition
+# chmode +x config.test.sh
+
+# find your user id
+# run examples/1-send-user-id.js and send a mesage to bot
+
+export DEBUG="TelegramBotApi:1request"
+export TEST_TOKEN="your telegram bot token"
+export TEST_USERID="your user id"
+
+# now you can run test
+# npm test
