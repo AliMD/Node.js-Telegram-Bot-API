@@ -91,7 +91,10 @@ class TelegramBotApi extends telegram_bot_methods_1.default {
      */
     emit(eventName, ...args) {
         logEvents(`Emit ${eventName}`);
-        setImmediate(this.events.emit, eventName, ...args);
+        let _this = this;
+        setImmediate(() => {
+            _this.events.emit(eventName, ...args);
+        });
     }
     /**
      * Start auto update and set options.autoUpdate to true
@@ -125,7 +128,7 @@ class TelegramBotApi extends telegram_bot_methods_1.default {
                 if (data && data.ok && data.result && data.result.length) {
                     log('_getUpdates: new update');
                     data.result.forEach((item) => {
-                        setImmediate(_this._onUpdate, _this, item);
+                        _this._onUpdate(item);
                         if (_this._updateOffset < item.update_id + 1)
                             _this._updateOffset = item.update_id + 1;
                     });
@@ -147,10 +150,10 @@ class TelegramBotApi extends telegram_bot_methods_1.default {
      * When _getUpdates foud any new update call me
      * @param {any} item
      */
-    _onUpdate(_this, item) {
+    _onUpdate(item) {
         log('_onUpdate: new update item');
         let data, eventName;
-        _this.emit('update', item);
+        this.emit('update', item);
         if ('inline_query' in item) {
             data = item.inline_query;
             eventName = 'inline_query';
@@ -189,7 +192,7 @@ class TelegramBotApi extends telegram_bot_methods_1.default {
             if ('pinned_message' in data)
                 eventName = 'pinned_message';
         }
-        _this.emit(`update.${eventName}`, data);
+        this.emit(`update.${eventName}`, data);
         if (eventName === 'message') {
             let messageType;
             if ('text' in data)
@@ -214,7 +217,7 @@ class TelegramBotApi extends telegram_bot_methods_1.default {
                 messageType = 'venue';
             if ('pinned_message' in data)
                 messageType = 'pinned_message';
-            _this.emit(`update.${eventName}.${messageType}`, data);
+            this.emit(`update.${eventName}.${messageType}`, data);
         }
     }
 }

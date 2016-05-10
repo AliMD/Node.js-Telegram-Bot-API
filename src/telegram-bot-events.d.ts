@@ -73,5 +73,5 @@ export default class TelegramBotApi extends TelegramBotApiMethods {
      * When _getUpdates foud any new update call me
      * @param {any} item
      */
-    protected _onUpdate(_this: TelegramBotApi, item: any): void;
+    protected _onUpdate(item: any): void;
 }
