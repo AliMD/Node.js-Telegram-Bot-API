@@ -141,16 +141,17 @@ export default class TelegramBotApi extends TelegramBotApiMethods{
       });
 
       if(data && data.ok && data.result && data.result.length) {
-        log('new update');
+        log('_getUpdates: new update');
 
         data.result.forEach((item) => {
-          _this.emit('update', item); // call update event
+          setImmediate(_this._onUpdate, item);
           if (_this._updateOffset < item.update_id + 1) _this._updateOffset = item.update_id + 1;
         });
       }
     }
     catch (err) {
       log('_getUpdates:Error', err);
+      console.log('TelegramBotApi Get Update Error!', err);
     }
 
     if (_this.options.autoUpdate) {
@@ -160,9 +161,16 @@ export default class TelegramBotApi extends TelegramBotApiMethods{
       log('autoUpdate canceled');
     }
   }
-
+  /**
+   * When _getUpdates foud any new update call me
+   * @param {any} item
+   */
   protected _onUpdate(item: any) {
+    log('_onUpdate: new update item');
+
     let data, eventName;
+
+    this.emit('update', item);
 
     if ('inline_query' in item) {data = item.inline_query; eventName = 'inline_query';}
     if ('chosen_inline_result' in item) {data = item.chosen_inline_result; eventName = 'chosen_inline_result';}
