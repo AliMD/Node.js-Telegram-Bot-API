@@ -100,7 +100,10 @@ export default class TelegramBotApi extends TelegramBotApiMethods{
    */
   emit(eventName: string, ...args) {
     logEvents(`Emit ${eventName}`);
-    setImmediate(this.events.emit, eventName, ...args);
+    let _this = this;
+    setImmediate(() => {
+      _this.events.emit(eventName, ...args);
+    })
   }
 
   /**
@@ -144,7 +147,7 @@ export default class TelegramBotApi extends TelegramBotApiMethods{
         log('_getUpdates: new update');
 
         data.result.forEach((item) => {
-          setImmediate(_this._onUpdate, _this, item);
+          _this._onUpdate(item);
           if (_this._updateOffset < item.update_id + 1) _this._updateOffset = item.update_id + 1;
         });
       }
@@ -165,12 +168,12 @@ export default class TelegramBotApi extends TelegramBotApiMethods{
    * When _getUpdates foud any new update call me
    * @param {any} item
    */
-  protected _onUpdate(_this:TelegramBotApi, item: any) {
+  protected _onUpdate(item: any) {
     log('_onUpdate: new update item');
 
     let data, eventName;
 
-    _this.emit('update', item);
+    this.emit('update', item);
 
     if ('inline_query' in item) {data = item.inline_query; eventName = 'inline_query';}
     if ('chosen_inline_result' in item) {data = item.chosen_inline_result; eventName = 'chosen_inline_result';}
@@ -193,7 +196,7 @@ export default class TelegramBotApi extends TelegramBotApiMethods{
       if ('pinned_message' in data) eventName = 'pinned_message';
     }
 
-    _this.emit(`update.${eventName}`, data);
+    this.emit(`update.${eventName}`, data);
 
     if (eventName === 'message') {
       let messageType;
@@ -210,7 +213,7 @@ export default class TelegramBotApi extends TelegramBotApiMethods{
       if ('venue' in data) messageType = 'venue';
       if ('pinned_message' in data) messageType = 'pinned_message';
 
-      _this.emit(`update.${eventName}.${messageType}`, data);
+      this.emit(`update.${eventName}.${messageType}`, data);
     }
 
   }
