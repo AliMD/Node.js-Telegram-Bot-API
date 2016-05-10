@@ -8,7 +8,6 @@
   },
   "typings": "index.d.ts",
   "scripts": {
-    "postinstall": "typings install",
     "start": "node .",
     "build": "tsc -p .",
     "pretest": "npm run build",
