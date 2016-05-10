@@ -69,5 +69,9 @@ export default class TelegramBotApi extends TelegramBotApiMethods {
     private _startGetUpdates();
     private _updateOffset;
     static _getUpdates(_this: TelegramBotApi): Promise<void>;
-    protected _onUpdate(item: any): void;
+    /**
+     * When _getUpdates foud any new update call me
+     * @param {any} item
+     */
+    protected _onUpdate(_this: TelegramBotApi, item: any): void;
 }
