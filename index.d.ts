@@ -1,3 +1,4 @@
+/// <reference path="typings/main.d.ts" />
 /**
  * Telegram Bot API for Node.js with ESNext
  * @version 0.0.1

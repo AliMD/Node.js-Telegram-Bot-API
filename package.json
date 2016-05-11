@@ -1,6 +1,6 @@
 {
   "name": "telegram-bot-api.js",
-  "version": "0.6.5",
+  "version": "0.6.6",
   "description": "Node.js Telegram Bot API (ESNext)",
   "main": "index.js",
   "typescript": {

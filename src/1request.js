@@ -1,4 +1,3 @@
-/// <reference path="../typings/main.d.ts" />
 "use strict";
 const debug = require('debug');
 const log = debug('TelegramBotApi:1request');

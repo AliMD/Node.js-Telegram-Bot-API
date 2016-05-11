@@ -1,4 +1,3 @@
-/// <reference path="../typings/main.d.ts" />
 import TelegramBotApiMethods from './telegram-bot-methods';
 /**
  * @class TelegramBotApi
