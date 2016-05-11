@@ -1,5 +1,3 @@
-/// <reference path="../typings/main.d.ts" />
-
 import debug = require('debug');
 const EventEmitter = require('events');
 const logEvents = debug('TelegramBotApi:events');

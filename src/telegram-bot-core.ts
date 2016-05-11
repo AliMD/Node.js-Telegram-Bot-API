@@ -1,5 +1,3 @@
-/// <reference path="../typings/main.d.ts" />
-
 import debug = require('debug');
 const log = debug('TelegramBotApi:core');
 const queryLog = debug('TelegramBotApi:query');
