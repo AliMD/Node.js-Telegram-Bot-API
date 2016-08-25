@@ -1,8 +1,7 @@
-/// <reference path="../typings/main.d.ts" />
 "use strict";
-const index_1 = require('../index');
-const token = process.env.TEST_TOKEN || '123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11';
-const bot = new index_1.default(token, { autoUpdate: true });
+const _1 = require('../src/');
+const token = process.env.BOT_TOKEN || process.env.TEST_TOKEN; // run `. config.test.sh` for setting TEST_TOKEN
+const bot = new _1.default(token, { autoUpdate: true });
 bot.on('update.message.photo', (msg) => {
     console.log('new photo message recived');
     // console.log(msg);
@@ -48,5 +47,3 @@ bot.on('update.message.document', (msg) => {
     });
 });
 console.log('Bot actived.');
-// Run command:
-// BOT_TOCKEN=your_bot_token node 1-remove-caption.js
