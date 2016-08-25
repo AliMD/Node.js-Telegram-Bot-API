@@ -1,4 +1,5 @@
 import TelegramBotApiCore from './telegram-bot-core';
+export declare type chatActions = 'typing' | 'upload_photo' | 'record_video' | 'upload_video' | 'record_audio' | 'upload_audio' | 'upload_document' | 'find_location';
 /**
  * @class TelegramBotApi
  * extends TelegramBotApiCore with bot api methods
@@ -199,14 +200,14 @@ export default class TelegramBotApi extends TelegramBotApiCore {
         reply_markup?: string;
     }): Promise<any>;
     static chatActions: {
-        typing: string;
-        upload_photo: string;
-        record_video: string;
-        upload_video: string;
-        record_audio: string;
-        upload_audio: string;
-        upload_document: string;
-        find_location: string;
+        typing: "typing" | "upload_photo" | "record_video" | "upload_video" | "record_audio" | "upload_audio" | "upload_document" | "find_location";
+        upload_photo: "typing" | "upload_photo" | "record_video" | "upload_video" | "record_audio" | "upload_audio" | "upload_document" | "find_location";
+        record_video: "typing" | "upload_photo" | "record_video" | "upload_video" | "record_audio" | "upload_audio" | "upload_document" | "find_location";
+        upload_video: "typing" | "upload_photo" | "record_video" | "upload_video" | "record_audio" | "upload_audio" | "upload_document" | "find_location";
+        record_audio: "typing" | "upload_photo" | "record_video" | "upload_video" | "record_audio" | "upload_audio" | "upload_document" | "find_location";
+        upload_audio: "typing" | "upload_photo" | "record_video" | "upload_video" | "record_audio" | "upload_audio" | "upload_document" | "find_location";
+        upload_document: "typing" | "upload_photo" | "record_video" | "upload_video" | "record_audio" | "upload_audio" | "upload_document" | "find_location";
+        find_location: "typing" | "upload_photo" | "record_video" | "upload_video" | "record_audio" | "upload_audio" | "upload_document" | "find_location";
     };
     /**
      * Send query for sendChatAction
@@ -215,11 +216,11 @@ export default class TelegramBotApi extends TelegramBotApiCore {
      */
     sendChatAction(parameters: {
         chat_id: number | string;
-        action: string;
+        action: chatActions;
     }): Promise<any>;
     _sendAutoChatAction(parameters: {
         chat_id: number | string;
-        action: string;
+        action: chatActions;
     }, uploadMode: boolean): Promise<any>;
     /**
      * Send query for getUserProfilePhotos
@@ -249,6 +250,14 @@ export default class TelegramBotApi extends TelegramBotApiCore {
         user_id: number | string;
     }): Promise<any>;
     /**
+     * Send query for leaveChat
+     * @param  {Object} parameters
+     * @returns {Promise} requet promise
+     */
+    leaveChat(parameters: {
+        chat_id: number | string;
+    }): Promise<any>;
+    /**
      * Send query for unbanChatMember
      * @param  {Object} parameters
      * @returns {Promise} requet promise
@@ -256,6 +265,39 @@ export default class TelegramBotApi extends TelegramBotApiCore {
     unbanChatMember(parameters: {
         chat_id: number | string;
         user_id: number | string;
+    }): Promise<any>;
+    /**
+     * Send query for getChat
+     * @param  {Object} parameters
+     * @returns {Promise} requet promise
+     */
+    getChat(parameters: {
+        chat_id: number | string;
+    }): Promise<any>;
+    /**
+     * Send query for getChatAdministrators
+     * @param  {Object} parameters
+     * @returns {Promise} requet promise
+     */
+    getChatAdministrators(parameters: {
+        chat_id: number | string;
+    }): Promise<any>;
+    /**
+     * Send query for getChatMembersCount
+     * @param  {Object} parameters
+     * @returns {Promise} requet promise
+     */
+    getChatMembersCount(parameters: {
+        chat_id: number | string;
+    }): Promise<any>;
+    /**
+     * Send query for getChatMember
+     * @param  {Object} parameters
+     * @returns {Promise} requet promise
+     */
+    getChatMember(parameters: {
+        chat_id: number | string;
+        user_id: number;
     }): Promise<any>;
     /**
      * Send query for answerCallbackQuery
