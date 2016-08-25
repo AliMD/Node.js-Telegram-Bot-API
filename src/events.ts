@@ -17,7 +17,7 @@ export default class TelegramBotApi extends TelegramBotApiMethods{
   public options = {
     gzip: true,
     autoChatAction: true,
-    autoChatActionUploadOnly: false,
+    autoChatActionUploadOnly: true,
     autoUpdate: false,
     updateInterval: 1000,
     updateLimit: 50,
@@ -32,6 +32,7 @@ export default class TelegramBotApi extends TelegramBotApiMethods{
   constructor(token?: string, options?: {
     gzip?: boolean,
     autoChatAction?: boolean,
+    autoChatActionUploadOnly?: boolean,
     autoUpdate?: boolean,
     updateInterval?: number,
     updateLimit?: number,
