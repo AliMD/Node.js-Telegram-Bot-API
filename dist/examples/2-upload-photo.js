@@ -13,7 +13,7 @@ bot.on('update.message.text', (msg) => {
             .then(() => {
             return bot.sendPhoto({
                 chat_id: msg.chat.id,
-                photo: './alimd.jpg',
+                photo: 'examples/alimd.jpg',
                 caption: 'Ali Mihandoost\n\ntelegram.me/al1md\n\ntelegram.me/alimd\n\nhttp://ali.md/'
             });
         })

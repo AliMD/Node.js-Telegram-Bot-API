@@ -8,7 +8,7 @@ bot.on('update.message.text', (msg) => {
     if (msg.text.match(/^hi/i)) {
         bot.sendSticker({
             chat_id: msg.chat.id,
-            sticker: './hi.png'
+            sticker: 'examples/hi.png'
         })
             .then(() => {
             console.log('Messages sent.');
