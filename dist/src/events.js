@@ -12,12 +12,12 @@ const logEvents = debug('TelegramBotApi:events');
 const EventEmitter = require('events');
 const log = debug('TelegramBotApi:update');
 const _extend = require('lodash/extend');
-const telegram_bot_methods_1 = require('./telegram-bot-methods');
+const methods_1 = require('./methods');
 logEvents('init');
 /**
  * @class TelegramBotApi
  */
-class TelegramBotApi extends telegram_bot_methods_1.default {
+class TelegramBotApi extends methods_1.default {
     /**
      * create a TelegramBotApi
      * @param {string} token

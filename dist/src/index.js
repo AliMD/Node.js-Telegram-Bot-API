@@ -5,6 +5,6 @@
  * @license MIT
  */
 "use strict";
-const telegram_bot_events_1 = require('./telegram-bot-events');
+const events_1 = require('./events');
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = telegram_bot_events_1.default;
+exports.default = events_1.default;

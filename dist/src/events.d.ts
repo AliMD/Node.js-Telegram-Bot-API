@@ -1,4 +1,4 @@
-import TelegramBotApiMethods from './telegram-bot-methods';
+import TelegramBotApiMethods from './methods';
 /**
  * @class TelegramBotApi
  */

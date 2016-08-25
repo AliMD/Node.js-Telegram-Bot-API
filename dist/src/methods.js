@@ -11,13 +11,13 @@ const debug = require('debug');
 const log = debug('TelegramBotApi:methods');
 const fs = require('fs');
 const _extend = require('lodash/extend');
-const telegram_bot_core_1 = require('./telegram-bot-core');
+const core_1 = require('./core');
 log('init');
 /**
  * @class TelegramBotApi
  * extends TelegramBotApiCore with bot api methods
  */
-class TelegramBotApi extends telegram_bot_core_1.default {
+class TelegramBotApi extends core_1.default {
     /**
      * create a TelegramBotApi
      * @param {string} token
