@@ -29,7 +29,7 @@
     "src/1request.ts",
     "src/core.ts",
     "src/events.ts",
-    "src/telegram-bot-methods.ts",
+    "src/methods.ts",
 
     "examples/0-echo-bot.ts",
     "examples/1-remove-caption.ts",
