@@ -7,6 +7,17 @@ import TelegramBotApiCore from './telegram-bot-core'
 
 log('init');
 
+export type chatActions =
+  'typing' |
+  'upload_photo' |
+  'record_video' |
+  'upload_video' |
+  'record_audio' |
+  'upload_audio' |
+  'upload_document' |
+  'find_location'
+;
+
 /**
  * @class TelegramBotApi
  * extends TelegramBotApiCore with bot api methods
@@ -23,7 +34,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
    * @param {string} token
    * @param {Object} options
    */
-  constructor(token?: string, options?:{
+  constructor(token?: string, options?: {
     gzip?: boolean,
     autoChatAction?: boolean,
     autoChatActionUploadOnly?: boolean
@@ -63,7 +74,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
     limit?:  number | string,
     timeout?:  number | string
   }): Promise<any> {
-    return super.query('getUpdates', parameters);
+    return this.query('getUpdates', parameters);
   }
 
   /**
@@ -75,7 +86,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
     url?: string,
     certificate?: string
   }): Promise<any> {
-    return super.query('setWebhook', parameters);
+    return this.query('setWebhook', parameters);
   }
 
   /**
@@ -83,7 +94,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
    * @returns {Promise} requet promise
    */
   async getMe(): Promise<any> {
-    return super.query('sendMessage');
+    return this.query('sendMessage');
   }
 
   /**
@@ -106,7 +117,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
       action: TelegramBotApi.chatActions.typing
     }, false);
 
-    return super.query('sendMessage', parameters);
+    return this.query('sendMessage', parameters);
   }
 
   /**
@@ -126,7 +137,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
       action: TelegramBotApi.chatActions.typing
     }, false);
 
-    return super.query('forwardMessage', parameters);
+    return this.query('forwardMessage', parameters);
   }
 
   /**
@@ -151,7 +162,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
       action: TelegramBotApi.chatActions.upload_photo
     }, typeof parameters.photo !== 'string');
 
-    return super.query('sendPhoto', parameters);
+    return this.query('sendPhoto', parameters);
   }
 
   /**
@@ -171,13 +182,13 @@ export default class TelegramBotApi extends TelegramBotApiCore {
     }): Promise<any> {
 
     parameters.audio = await TelegramBotApi.fileIdOrReadStream(parameters.audio);
-    
+
     await this._sendAutoChatAction({
       chat_id: parameters.chat_id,
       action: TelegramBotApi.chatActions.upload_audio
     }, typeof parameters.audio !== 'string');
-    
-    return super.query('sendAudio', parameters);
+
+    return this.query('sendAudio', parameters);
   }
 
   /**
@@ -193,15 +204,15 @@ export default class TelegramBotApi extends TelegramBotApiCore {
       reply_to_message_id?: number | string,
       reply_markup?: string
     }): Promise<any> {
-      
+
     parameters.document = await TelegramBotApi.fileIdOrReadStream(parameters.document);
-    
+
     await this._sendAutoChatAction({
       chat_id: parameters.chat_id,
       action: TelegramBotApi.chatActions.upload_document
     }, typeof parameters.document !== 'string');
-    
-    return super.query('sendDocument', parameters);
+
+    return this.query('sendDocument', parameters);
   }
 
   /**
@@ -216,15 +227,15 @@ export default class TelegramBotApi extends TelegramBotApiCore {
       reply_to_message_id?: number | string,
       reply_markup?: string
     }): Promise<any> {
-      
+
     parameters.sticker = await TelegramBotApi.fileIdOrReadStream(parameters.sticker);
-    
+
     await this._sendAutoChatAction({
       chat_id: parameters.chat_id,
       action: TelegramBotApi.chatActions.upload_photo
     }, typeof parameters.sticker !== 'string');
-    
-    return super.query('sendSticker', parameters);
+
+    return this.query('sendSticker', parameters);
   }
 
   /**
@@ -243,15 +254,15 @@ export default class TelegramBotApi extends TelegramBotApiCore {
       reply_to_message_id?: number | string,
       reply_markup?: string
     }): Promise<any> {
-      
+
     parameters.video = await TelegramBotApi.fileIdOrReadStream(parameters.video);
-    
+
     await this._sendAutoChatAction({
       chat_id: parameters.chat_id,
       action: TelegramBotApi.chatActions.upload_video
     }, typeof parameters.video !== 'string');
-    
-    return super.query('sendVideo', parameters);
+
+    return this.query('sendVideo', parameters);
   }
 
   /**
@@ -267,15 +278,15 @@ export default class TelegramBotApi extends TelegramBotApiCore {
       reply_to_message_id?: number | string,
       reply_markup?: string
     }): Promise<any> {
-      
+
     parameters.voice = await TelegramBotApi.fileIdOrReadStream(parameters.voice);
-    
+
     await this._sendAutoChatAction({
       chat_id: parameters.chat_id,
       action: TelegramBotApi.chatActions.record_audio
     }, typeof parameters.voice !== 'string');
-    
-    return super.query('sendVoice', parameters);
+
+    return this.query('sendVoice', parameters);
   }
 
   /**
@@ -291,13 +302,13 @@ export default class TelegramBotApi extends TelegramBotApiCore {
       reply_to_message_id?: number | string,
       reply_markup?: string
     }): Promise<any> {
-      
+
     await this._sendAutoChatAction({
       chat_id: parameters.chat_id,
       action: TelegramBotApi.chatActions.find_location
     }, false);
-    
-    return super.query('sendLocation', parameters);
+
+    return this.query('sendLocation', parameters);
   }
 
   /**
@@ -316,13 +327,13 @@ export default class TelegramBotApi extends TelegramBotApiCore {
       reply_to_message_id?: number | string,
       reply_markup?: string
     }): Promise<any> {
-      
+
     await this._sendAutoChatAction({
       chat_id: parameters.chat_id,
       action: TelegramBotApi.chatActions.find_location
     }, false);
-    
-    return super.query('sendVenue', parameters);
+
+    return this.query('sendVenue', parameters);
   }
 
   /**
@@ -339,24 +350,24 @@ export default class TelegramBotApi extends TelegramBotApiCore {
       reply_to_message_id?: number | string,
       reply_markup?: string
     }): Promise<any> {
-    
+
     await this._sendAutoChatAction({
       chat_id: parameters.chat_id,
       action: TelegramBotApi.chatActions.typing
     }, false);
-    
-    return super.query('sendContact', parameters);
+
+    return this.query('sendContact', parameters);
   }
 
   static chatActions = {
-    typing: 'typing',
-    upload_photo: 'upload_photo',
-    record_video: 'record_video',
-    upload_video: 'upload_video',
-    record_audio: 'record_audio',
-    upload_audio: 'upload_audio',
-    upload_document: 'upload_document',
-    find_location: 'find_location'
+    typing: <chatActions>'typing',
+    upload_photo: <chatActions>'upload_photo',
+    record_video: <chatActions>'record_video',
+    upload_video: <chatActions>'upload_video',
+    record_audio: <chatActions>'record_audio',
+    upload_audio: <chatActions>'upload_audio',
+    upload_document: <chatActions>'upload_document',
+    find_location: <chatActions>'find_location'
   }
 
   /**
@@ -366,14 +377,14 @@ export default class TelegramBotApi extends TelegramBotApiCore {
    */
   async sendChatAction(parameters: {
       chat_id: number | string,
-      action: string
+      action: chatActions
     }): Promise<any> {
-    return super.query('sendChatAction', parameters);
+    return this.query('sendChatAction', parameters);
   }
 
   async _sendAutoChatAction(parameters: {
       chat_id: number | string,
-      action: string
+      action: chatActions
     }, uploadMode: boolean) {
     if (!this.options.autoChatAction) return false;
     else if (this.options.autoChatActionUploadOnly && !uploadMode) return false;
@@ -390,7 +401,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
       offset?: number,
       limit?: number,
     }): Promise<any> {
-    return super.query('getUserProfilePhotos', parameters);
+    return this.query('getUserProfilePhotos', parameters);
   }
 
   /**
@@ -401,7 +412,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
   async getFile(parameters: {
       file_id: string
     }): Promise<any> {
-    return super.query('getFile', parameters);
+    return this.query('getFile', parameters);
   }
 
   /**
@@ -413,7 +424,18 @@ export default class TelegramBotApi extends TelegramBotApiCore {
       chat_id: number | string,
       user_id: number | string
     }): Promise<any> {
-    return super.query('kickChatMember', parameters);
+    return this.query('kickChatMember', parameters);
+  }
+
+  /**
+   * Send query for leaveChat
+   * @param  {Object} parameters
+   * @returns {Promise} requet promise
+   */
+  async leaveChat(parameters: {
+      chat_id: number | string
+    }): Promise<any> {
+    return this.query('leaveChat', parameters);
   }
 
   /**
@@ -425,7 +447,52 @@ export default class TelegramBotApi extends TelegramBotApiCore {
       chat_id: number | string,
       user_id: number | string
     }): Promise<any> {
-    return super.query('unbanChatMember', parameters);
+    return this.query('unbanChatMember', parameters);
+  }
+
+  /**
+   * Send query for getChat
+   * @param  {Object} parameters
+   * @returns {Promise} requet promise
+   */
+  async getChat(parameters: {
+      chat_id: number | string
+    }): Promise<any> {
+    return this.query('getChat', parameters);
+  }
+
+  /**
+   * Send query for getChatAdministrators
+   * @param  {Object} parameters
+   * @returns {Promise} requet promise
+   */
+  async getChatAdministrators(parameters: {
+      chat_id: number | string
+    }): Promise<any> {
+    return this.query('getChatAdministrators', parameters);
+  }
+
+  /**
+   * Send query for getChatMembersCount
+   * @param  {Object} parameters
+   * @returns {Promise} requet promise
+   */
+  async getChatMembersCount(parameters: {
+      chat_id: number | string
+    }): Promise<any> {
+    return this.query('getChatMembersCount', parameters);
+  }
+
+  /**
+   * Send query for getChatMember
+   * @param  {Object} parameters
+   * @returns {Promise} requet promise
+   */
+  async getChatMember(parameters: {
+      chat_id: number | string,
+      user_id: number
+    }): Promise<any> {
+    return this.query('getChatMember', parameters);
   }
 
   /**
@@ -438,8 +505,10 @@ export default class TelegramBotApi extends TelegramBotApiCore {
       text?: string,
       show_alert?: boolean
     }): Promise<any> {
-    return super.query('answerCallbackQuery', parameters);
+    return this.query('answerCallbackQuery', parameters);
   }
+
+  // ..== Inline mode methods ==..
 
   /**
    * Send query for editMessageText
@@ -455,7 +524,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
       disable_web_page_preview?: boolean,
       reply_markup?: string
     }): Promise<any> {
-    return super.query('editMessageText', parameters);
+    return this.query('editMessageText', parameters);
   }
 
   /**
@@ -470,7 +539,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
       caption?: string,
       reply_markup?: string
     }): Promise<any> {
-    return super.query('editMessageCaption', parameters);
+    return this.query('editMessageCaption', parameters);
   }
 
   /**
@@ -479,12 +548,12 @@ export default class TelegramBotApi extends TelegramBotApiCore {
    * @returns {Promise} requet promise
    */
   async editMessageReplyMarkup(parameters: {
-     chat_id?: number | string,
+      chat_id?: number | string,
       message_id?: number | string,
       inline_message_id?: number | string,
       reply_markup?: string
     }): Promise<any> {
-    return super.query('editMessageReplyMarkup', parameters);
+    return this.query('editMessageReplyMarkup', parameters);
   }
 
   /**
@@ -501,7 +570,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
       switch_pm_text?: string,
       switch_pm_parameter?: string
     }): Promise<any> {
-    return super.query('answerInlineQuery', parameters);
+    return this.query('answerInlineQuery', parameters);
   }
 
 }
