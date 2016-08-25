@@ -8,7 +8,7 @@ userId = process.env.TEST_USERID || 777000,
 options = {
   gzip: true,
   autoChatAction: true,
-  autoChatActionUploadOnly: false,
+  autoChatActionUploadOnly: true,
   autoUpdate: false,
   updateInterval: 1000,
   updateLimit: 50,
