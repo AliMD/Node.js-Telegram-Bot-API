@@ -1,8 +1,6 @@
-/// <reference path="../typings/main.d.ts" />
+import TelegramBot from '../src/';
 
-import TelegramBot from '../index';
-
-const token = process.env.TEST_TOKEN || '123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11'
+const token = process.env.BOT_TOKEN || process.env.TEST_TOKEN; // run `. config.test.sh` for setting TEST_TOKEN
 const bot = new TelegramBot(token, {autoUpdate: true});
 
 bot.on('update.message.text', (msg) => {
@@ -31,6 +29,3 @@ bot.on('update.message.text', (msg) => {
 });
 
 console.log('Bot actived, say hi to the bot');
-
-// Run command:
-// BOT_TOCKEN=your_bot_token node 2-upload-photo.js
