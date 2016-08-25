@@ -20,6 +20,8 @@ export type chatActions =
   'find_location'
 ;
 
+export type parseMode = 'Markdown' | 'HTML';
+
 /**
  * @class TelegramBotApi
  * extends TelegramBotApiCore with bot api methods
@@ -107,7 +109,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
   async sendMessage(parameters: {
       chat_id: integer, // Unique identifier for the target chat or username of the target channel (in the format @channelusername)
       text: string, // Text of the message to be sent
-      parse_mode?: string, // Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message.
+      parse_mode?: parseMode, // Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message.
       disable_web_page_preview?: boolean, // Disables link previews for links in this message
       disable_notification?: boolean, // Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
       reply_to_message_id?: integer, // If the message is a reply, ID of the original message
@@ -522,7 +524,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
       message_id?: integer,
       inline_message_id?: integer,
       text: string,
-      parse_mode?: string,
+      parse_mode?: parseMode,
       disable_web_page_preview?: boolean,
       reply_markup?: string
     }): Promise<any> {
