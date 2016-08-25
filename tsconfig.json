@@ -28,7 +28,12 @@
     "src/telegram-bot-events.ts",
     "src/telegram-bot-methods.ts",
     "typings/index.d.ts",
-    "node_modules/typescript/lib/lib.es7.d.ts"
+    "node_modules/typescript/lib/lib.es7.d.ts",
+
+    "examples/0-echo-bot.ts",
+    "examples/1-remove-caption.ts",
+    "examples/2-upload-photo.ts",
+    "examples/3-sticker-maker.ts"
   ],
 
   "atom": {
