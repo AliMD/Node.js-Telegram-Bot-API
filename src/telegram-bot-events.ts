@@ -1,6 +1,6 @@
 import debug = require('debug');
-const EventEmitter = require('events');
 const logEvents = debug('TelegramBotApi:events');
+const EventEmitter = require('events');
 const log = debug('TelegramBotApi:update');
 const _extend = require('lodash/extend');
 
@@ -123,7 +123,7 @@ export default class TelegramBotApi extends TelegramBotApiMethods{
     this.options.autoUpdate = false;
   }
 
-  private _setTimeout: NodeJS.Timer;
+  private _setTimeout: number;
 
   private _startGetUpdates() {
     this._setTimeout = setTimeout(TelegramBotApi._getUpdates, this.options.updateInterval, this);
