@@ -28,7 +28,7 @@
     "src/index.ts",
     "src/1request.ts",
     "src/core.ts",
-    "src/telegram-bot-events.ts",
+    "src/events.ts",
     "src/telegram-bot-methods.ts",
 
     "examples/0-echo-bot.ts",
