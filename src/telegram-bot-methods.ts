@@ -7,6 +7,8 @@ import TelegramBotApiCore from './telegram-bot-core'
 
 log('init');
 
+export type integer = string | number;
+
 export type chatActions =
   'typing' |
   'upload_photo' |
@@ -70,9 +72,9 @@ export default class TelegramBotApi extends TelegramBotApiCore {
    * @returns {Promise} requet promise
    */
   async getUpdates(parameters: {
-    offset?: number | string,
-    limit?:  number | string,
-    timeout?:  number | string
+    offset?: integer,
+    limit?:  integer,
+    timeout?:  integer
   }): Promise<any> {
     return this.query('getUpdates', parameters);
   }
@@ -103,12 +105,12 @@ export default class TelegramBotApi extends TelegramBotApiCore {
    * @returns {Promise} requet promise
    */
   async sendMessage(parameters: {
-      chat_id: number | string, // Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+      chat_id: integer, // Unique identifier for the target chat or username of the target channel (in the format @channelusername)
       text: string, // Text of the message to be sent
       parse_mode?: string, // Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message.
       disable_web_page_preview?: boolean, // Disables link previews for links in this message
       disable_notification?: boolean, // Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound.
-      reply_to_message_id?: number | string, // If the message is a reply, ID of the original message
+      reply_to_message_id?: integer, // If the message is a reply, ID of the original message
       reply_markup?: string | Object // Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to hide reply keyboard or to force a reply from the user.
     }): Promise<any> {
 
@@ -126,9 +128,9 @@ export default class TelegramBotApi extends TelegramBotApiCore {
    * @returns {Promise} requet promise
    */
   async forwardMessage(parameters: {
-      chat_id: number | string,
-      from_chat_id: number | string,
-      message_id: number | string,
+      chat_id: integer,
+      from_chat_id: integer,
+      message_id: integer,
       disable_notification?: boolean
     }): Promise<any> {
 
@@ -146,11 +148,11 @@ export default class TelegramBotApi extends TelegramBotApiCore {
    * @returns {Promise} requet promise
    */
   async sendPhoto(parameters: {
-      chat_id: number | string,
+      chat_id: integer,
       photo: string,
       caption?: string,
       disable_notification?: boolean,
-      reply_to_message_id?: number | string,
+      reply_to_message_id?: integer,
       reply_markup?: string
     }): Promise<any> {
 
@@ -171,13 +173,13 @@ export default class TelegramBotApi extends TelegramBotApiCore {
    * @returns {Promise} requet promise
    */
   async sendAudio(parameters: {
-      chat_id: number | string,
+      chat_id: integer,
       audio: string,
       duration?: number,
       performer?: string,
       title?: string,
       disable_notification?: boolean,
-      reply_to_message_id?: number | string,
+      reply_to_message_id?: integer,
       reply_markup?: string
     }): Promise<any> {
 
@@ -197,11 +199,11 @@ export default class TelegramBotApi extends TelegramBotApiCore {
    * @returns {Promise} requet promise
    */
   async sendDocument(parameters: {
-      chat_id: number | string,
+      chat_id: integer,
       document: string,
       caption?: string,
       disable_notification?: boolean,
-      reply_to_message_id?: number | string,
+      reply_to_message_id?: integer,
       reply_markup?: string
     }): Promise<any> {
 
@@ -221,10 +223,10 @@ export default class TelegramBotApi extends TelegramBotApiCore {
    * @returns {Promise} requet promise
    */
   async sendSticker(parameters: {
-      chat_id: number | string,
+      chat_id: integer,
       sticker: string,
       disable_notification?: boolean,
-      reply_to_message_id?: number | string,
+      reply_to_message_id?: integer,
       reply_markup?: string
     }): Promise<any> {
 
@@ -244,14 +246,14 @@ export default class TelegramBotApi extends TelegramBotApiCore {
    * @returns {Promise} requet promise
    */
   async sendVideo(parameters: {
-      chat_id: number | string,
+      chat_id: integer,
       video: string,
       duration?: number,
       width?: number,
       height?: number,
       caption?: string,
       disable_notification?: boolean,
-      reply_to_message_id?: number | string,
+      reply_to_message_id?: integer,
       reply_markup?: string
     }): Promise<any> {
 
@@ -271,11 +273,11 @@ export default class TelegramBotApi extends TelegramBotApiCore {
    * @returns {Promise} requet promise
    */
   async sendVoice(parameters: {
-      chat_id: number | string,
+      chat_id: integer,
       voice: string,
       duration?: number,
       disable_notification?: boolean,
-      reply_to_message_id?: number | string,
+      reply_to_message_id?: integer,
       reply_markup?: string
     }): Promise<any> {
 
@@ -295,11 +297,11 @@ export default class TelegramBotApi extends TelegramBotApiCore {
    * @returns {Promise} requet promise
    */
   async sendLocation(parameters: {
-      chat_id: number | string,
+      chat_id: integer,
       latitude: number,
       longitude: number,
       disable_notification?: boolean,
-      reply_to_message_id?: number | string,
+      reply_to_message_id?: integer,
       reply_markup?: string
     }): Promise<any> {
 
@@ -317,14 +319,14 @@ export default class TelegramBotApi extends TelegramBotApiCore {
    * @returns {Promise} requet promise
    */
   async sendVenue(parameters: {
-      chat_id: number | string,
+      chat_id: integer,
       latitude: number,
       longitude: number,
       title: string,
       address: string,
       foursquare_id?: string,
       disable_notification?: boolean,
-      reply_to_message_id?: number | string,
+      reply_to_message_id?: integer,
       reply_markup?: string
     }): Promise<any> {
 
@@ -342,12 +344,12 @@ export default class TelegramBotApi extends TelegramBotApiCore {
    * @returns {Promise} requet promise
    */
   async sendContact(parameters: {
-      chat_id: number | string,
+      chat_id: integer,
       phone_number: string,
       first_name: string,
       last_name: string,
       disable_notification?: boolean,
-      reply_to_message_id?: number | string,
+      reply_to_message_id?: integer,
       reply_markup?: string
     }): Promise<any> {
 
@@ -376,14 +378,14 @@ export default class TelegramBotApi extends TelegramBotApiCore {
    * @returns {Promise} requet promise
    */
   async sendChatAction(parameters: {
-      chat_id: number | string,
+      chat_id: integer,
       action: chatActions
     }): Promise<any> {
     return this.query('sendChatAction', parameters);
   }
 
   async _sendAutoChatAction(parameters: {
-      chat_id: number | string,
+      chat_id: integer,
       action: chatActions
     }, uploadMode: boolean) {
     if (!this.options.autoChatAction) return false;
@@ -397,7 +399,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
    * @returns {Promise} requet promise
    */
   async getUserProfilePhotos(parameters: {
-      chat_id: number | string,
+      chat_id: integer,
       offset?: number,
       limit?: number,
     }): Promise<any> {
@@ -421,8 +423,8 @@ export default class TelegramBotApi extends TelegramBotApiCore {
    * @returns {Promise} requet promise
    */
   async kickChatMember(parameters: {
-      chat_id: number | string,
-      user_id: number | string
+      chat_id: integer,
+      user_id: integer
     }): Promise<any> {
     return this.query('kickChatMember', parameters);
   }
@@ -433,7 +435,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
    * @returns {Promise} requet promise
    */
   async leaveChat(parameters: {
-      chat_id: number | string
+      chat_id: integer
     }): Promise<any> {
     return this.query('leaveChat', parameters);
   }
@@ -444,8 +446,8 @@ export default class TelegramBotApi extends TelegramBotApiCore {
    * @returns {Promise} requet promise
    */
   async unbanChatMember(parameters: {
-      chat_id: number | string,
-      user_id: number | string
+      chat_id: integer,
+      user_id: integer
     }): Promise<any> {
     return this.query('unbanChatMember', parameters);
   }
@@ -456,7 +458,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
    * @returns {Promise} requet promise
    */
   async getChat(parameters: {
-      chat_id: number | string
+      chat_id: integer
     }): Promise<any> {
     return this.query('getChat', parameters);
   }
@@ -467,7 +469,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
    * @returns {Promise} requet promise
    */
   async getChatAdministrators(parameters: {
-      chat_id: number | string
+      chat_id: integer
     }): Promise<any> {
     return this.query('getChatAdministrators', parameters);
   }
@@ -478,7 +480,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
    * @returns {Promise} requet promise
    */
   async getChatMembersCount(parameters: {
-      chat_id: number | string
+      chat_id: integer
     }): Promise<any> {
     return this.query('getChatMembersCount', parameters);
   }
@@ -489,7 +491,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
    * @returns {Promise} requet promise
    */
   async getChatMember(parameters: {
-      chat_id: number | string,
+      chat_id: integer,
       user_id: number
     }): Promise<any> {
     return this.query('getChatMember', parameters);
@@ -516,9 +518,9 @@ export default class TelegramBotApi extends TelegramBotApiCore {
    * @returns {Promise} requet promise
    */
   async editMessageText(parameters: {
-      chat_id?: number | string,
-      message_id?: number | string,
-      inline_message_id?: number | string,
+      chat_id?: integer,
+      message_id?: integer,
+      inline_message_id?: integer,
       text: string,
       parse_mode?: string,
       disable_web_page_preview?: boolean,
@@ -533,9 +535,9 @@ export default class TelegramBotApi extends TelegramBotApiCore {
    * @returns {Promise} requet promise
    */
   async editMessageCaption(parameters: {
-      chat_id?: number | string,
-      message_id?: number | string,
-      inline_message_id?: number | string,
+      chat_id?: integer,
+      message_id?: integer,
+      inline_message_id?: integer,
       caption?: string,
       reply_markup?: string
     }): Promise<any> {
@@ -548,9 +550,9 @@ export default class TelegramBotApi extends TelegramBotApiCore {
    * @returns {Promise} requet promise
    */
   async editMessageReplyMarkup(parameters: {
-      chat_id?: number | string,
-      message_id?: number | string,
-      inline_message_id?: number | string,
+      chat_id?: integer,
+      message_id?: integer,
+      inline_message_id?: integer,
       reply_markup?: string
     }): Promise<any> {
     return this.query('editMessageReplyMarkup', parameters);
@@ -562,7 +564,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
    * @returns {Promise} requet promise
    */
   async answerInlineQuery(parameters: {
-      inline_query_id: number | string,
+      inline_query_id: integer,
       results: Array<Object>,
       cache_time?: number,
       is_personal?: boolean,
