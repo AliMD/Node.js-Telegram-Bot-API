@@ -11,7 +11,7 @@
     "noLib": true,
     "preserveConstEnums": true,
     "suppressImplicitAnyIndexErrors": true,
-    "outDir": "lib"
+    "outDir": "dist"
   },
 
   "filesGlob": [

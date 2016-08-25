@@ -5,11 +5,11 @@
   "engines": {
     "node": ">=6.4"
   },
-  "main": "lib/index.ts",
+  "main": "dist/src/index.js",
   "typescript": {
     "main": "src/index.ts"
   },
-  "typings": "lib/index.d.ts",
+  "typings": "dist/src/index.d.ts",
   "scripts": {
     "postinstall": "typings install",
     "start": "node .",
