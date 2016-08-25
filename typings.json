@@ -1,13 +1,9 @@
 {
-  "ambientDevDependencies": {
+  "globalDependencies": {
+    "debug": "registry:dt/debug#0.0.0+20160317120654",
     "expect.js": "registry:dt/expect.js#0.3.1+20160317120654",
-    "mocha": "registry:dt/mocha#2.2.5+20160317120654"
-  },
-  "dependencies": {
-    "debug": "registry:npm/debug#2.0.0+20160211003958",
-    "lodash": "registry:npm/lodash#4.0.0+20160416211519"
-  },
-  "ambientDependencies": {
-    "node": "registry:dt/node#4.0.0+20160501135006"
+    "lodash": "registry:dt/lodash#4.14.0+20160817155621",
+    "mocha": "registry:dt/mocha#2.2.5+20160720003353",
+    "node": "registry:dt/node#6.0.0+20160823142437"
   }
 }
