@@ -19,7 +19,7 @@ export default class TelegramBotApi {
    * @param {string} token
    * @param {Object} options
    */
-  constructor(public token: string = '', options?:{
+  constructor(public token: string = '', options?: {
     gzip?: boolean
   }) {
     log('constructor');
