@@ -1,5 +1,5 @@
 import "babel-polyfill";
-import expect from 'expect.js';
+const expect = require('expect.js');
 
 import TelegramBotApi from './telegram-bot-core';
 

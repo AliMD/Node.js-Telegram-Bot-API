@@ -1,5 +1,5 @@
 import "babel-polyfill";
-import expect from 'expect.js';
+const expect = require('expect.js');
 import http from 'http';
 
 import _1request from './1request';

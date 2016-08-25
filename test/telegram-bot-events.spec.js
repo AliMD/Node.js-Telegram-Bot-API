@@ -1,6 +1,5 @@
 import "babel-polyfill";
-import expect from 'expect.js';
-
+const expect = require('expect.js');
 import TelegramBotApi from './telegram-bot-events';
 
 const
@@ -34,7 +33,7 @@ describe('telegram-bot-events', () => {
     it('should have default options', () => {
       let bot = new TelegramBotApi(token);
       bot.stopAutoUpdate();
-      expect(bot.options).to.be.eql(options);
+      expect(bot.options)
     });
 
     it('should have default options with extend', () => {
