@@ -15,7 +15,7 @@ bot.onMessage(/^\/test[ ]*$/, async function (msg){
 
   await bot.sendMessage({
     chat_id: msg.chat.id,
-    text: msg.text
+    text: 'Command test recived ;)'
   });
 
   console.log('sent');
