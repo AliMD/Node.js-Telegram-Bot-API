@@ -25,7 +25,7 @@ export default class TelegramBotApi extends TelegramBotApiEvent{
   }) {
     super(token, options);
 
-    this.on('update.message.text', this._onMsg);
+    this.on('update.message.text', this._onMsg.bind(this));
 
     log('constructor');
   }
@@ -52,9 +52,11 @@ export default class TelegramBotApi extends TelegramBotApiEvent{
    * @param {Function} callBackFn
    */
   private _onMsgListenerLoop (callBackFn: Function) {
+    // log('_onMsgListenerLoop', callBackFn);
     let i: number = 0;
     let len: number = this._onMsgListenerArray.length;
     for (; i < len; i++) {
+      // log(`_onMsgListenerLoop i`, callBackFn);
       if (callBackFn(this._onMsgListenerArray[i], i) === false) break;
     }
   }
@@ -65,8 +67,10 @@ export default class TelegramBotApi extends TelegramBotApiEvent{
    * @private
    * @param {any} msg
    */
-  private async _onMsg (msg) {
-   this._onMsgListenerLoop((item) => {
+  private _onMsg (msg) {
+    // log(`_onMsg: ${msg.text}`);
+    this._onMsgListenerLoop((item) => {
+      // log(item.pattern);
       if (item.pattern && item.pattern.test && item.pattern.test(msg.text)) {
         if (typeof item.listener === 'function') {
           return item.listener(msg);
