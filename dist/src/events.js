@@ -29,7 +29,7 @@ class TelegramBotApi extends methods_1.default {
         this.options = {
             gzip: true,
             autoChatAction: true,
-            autoChatActionUploadOnly: false,
+            autoChatActionUploadOnly: true,
             autoUpdate: false,
             updateInterval: 1000,
             updateLimit: 50,

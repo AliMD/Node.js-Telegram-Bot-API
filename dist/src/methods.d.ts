@@ -1,6 +1,7 @@
 import TelegramBotApiCore from './core';
 export declare type integer = string | number;
 export declare type chatActions = 'typing' | 'upload_photo' | 'record_video' | 'upload_video' | 'record_audio' | 'upload_audio' | 'upload_document' | 'find_location';
+export declare type parseMode = 'Markdown' | 'HTML';
 /**
  * @class TelegramBotApi
  * extends TelegramBotApiCore with bot api methods
@@ -58,7 +59,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
     sendMessage(parameters: {
         chat_id: integer;
         text: string;
-        parse_mode?: string;
+        parse_mode?: parseMode;
         disable_web_page_preview?: boolean;
         disable_notification?: boolean;
         reply_to_message_id?: integer;
@@ -320,7 +321,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
         message_id?: integer;
         inline_message_id?: integer;
         text: string;
-        parse_mode?: string;
+        parse_mode?: parseMode;
         disable_web_page_preview?: boolean;
         reply_markup?: string;
     }): Promise<any>;

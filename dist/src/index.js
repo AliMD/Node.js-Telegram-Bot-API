@@ -5,6 +5,6 @@
  * @license MIT
  */
 "use strict";
-const events_1 = require('./events');
+const more_1 = require('./more');
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = events_1.default;
+exports.default = more_1.default;

@@ -21,6 +21,7 @@ export default class TelegramBotApi extends TelegramBotApiMethods {
     constructor(token?: string, options?: {
         gzip?: boolean;
         autoChatAction?: boolean;
+        autoChatActionUploadOnly?: boolean;
         autoUpdate?: boolean;
         updateInterval?: number;
         updateLimit?: number;
