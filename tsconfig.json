@@ -26,15 +26,12 @@
     "node_modules/typescript/lib/lib.es7.d.ts",
 
     "src/index.ts",
-    "src/1request.ts",
-    "src/core.ts",
-    "src/events.ts",
-    "src/methods.ts",
 
     "examples/0-echo-bot.ts",
     "examples/1-remove-caption.ts",
     "examples/2-upload-photo.ts",
-    "examples/3-sticker-maker.ts"
+    "examples/3-sticker-maker.ts",
+    "examples/4-special-command.ts"
   ],
 
   "atom": {
