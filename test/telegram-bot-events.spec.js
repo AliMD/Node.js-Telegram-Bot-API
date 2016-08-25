@@ -1,6 +1,6 @@
 import "babel-polyfill";
 const expect = require('expect.js');
-import TelegramBotApi from './telegram-bot-events';
+import TelegramBotApi from '../lib/telegram-bot-events';
 
 const
 token = process.env.TEST_TOKEN || '123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11',

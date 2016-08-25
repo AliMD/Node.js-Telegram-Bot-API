@@ -2,7 +2,7 @@ import "babel-polyfill";
 const expect = require('expect.js');
 import http from 'http';
 
-import _1request from './1request';
+import _1request from '../lib/1request';
 
 function expectToBePromise (obj) {
   expect(obj).to.be.an('object');
