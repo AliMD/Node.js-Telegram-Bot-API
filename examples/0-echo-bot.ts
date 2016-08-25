@@ -1,6 +1,6 @@
 /**
  * Run command:
- * BOT_TOCKEN=your_bot_token node lib/examples/0-echo-bot.js
+ * BOT_TOCKEN=your_bot_token node dist/examples/0-echo-bot.js
  *
  * if you change the ts file you must build typescript by run `npn run build`
  */
