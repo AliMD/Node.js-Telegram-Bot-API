@@ -1,7 +1,7 @@
 import "babel-polyfill";
 const expect = require('expect.js');
 
-import TelegramBotApi from '../dist/src/telegram-bot-core';
+import TelegramBotApi from '../dist/src/core';
 
 const
 token = process.env.TEST_TOKEN || '123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11',
@@ -14,7 +14,7 @@ expectToBePromise = (obj) => {
 }
 ;
 
-describe('telegram-bot-core', () => {
+describe('core', () => {
   var bot;
 
   describe('new instance', () => {

@@ -3,7 +3,7 @@ const log = debug('TelegramBotApi:methods');
 const fs = require('fs');
 const _extend = require('lodash/extend');
 
-import TelegramBotApiCore from './telegram-bot-core'
+import TelegramBotApiCore from './core'
 
 log('init');
 
