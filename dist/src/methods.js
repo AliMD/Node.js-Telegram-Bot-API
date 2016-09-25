@@ -30,6 +30,7 @@ class TelegramBotApi extends core_1.default {
             autoChatAction: true,
             autoChatActionUploadOnly: true
         };
+        this._textLimit = 4096;
         _extend(this.options, options);
         log('constructor');
     }
@@ -94,7 +95,16 @@ class TelegramBotApi extends core_1.default {
                 chat_id: parameters.chat_id,
                 action: TelegramBotApi.chatActions.typing
             }, false);
-            return this.query('sendMessage', parameters);
+            if (parameters.text.length <= this._textLimit) {
+                return this.query('sendMessage', parameters);
+            }
+            // else
+            let i = 0, ret = null, text = parameters.text;
+            for (; i < text.length; i += this._textLimit) {
+                parameters.text = text.substr(i, this._textLimit);
+                ret = yield this.query('sendMessage', parameters);
+            }
+            return ret;
         });
     }
     /**

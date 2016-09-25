@@ -51,6 +51,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
      * @returns {Promise} requet promise
      */
     getMe(): Promise<any>;
+    private _textLimit;
     /**
      * Send query for sendMessage
      * @param  {Object} parameters
