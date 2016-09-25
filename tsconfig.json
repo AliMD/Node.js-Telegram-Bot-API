@@ -13,27 +13,28 @@
     "suppressImplicitAnyIndexErrors": true,
     "outDir": "dist"
   },
-
   "filesGlob": [
     "!node_modules/**",
     "src/**/*.ts",
+    "examples/*.ts",
     "typings/index.d.ts",
     "node_modules/typescript/lib/lib.es7.d.ts"
   ],
-
   "files": [
-    "typings/index.d.ts",
-    "node_modules/typescript/lib/lib.es7.d.ts",
-
+    "src/1request.ts",
+    "src/core.ts",
+    "src/events.ts",
     "src/index.ts",
-
+    "src/methods.ts",
+    "src/more.ts",
     "examples/0-echo-bot.ts",
     "examples/1-remove-caption.ts",
     "examples/2-upload-photo.ts",
     "examples/3-sticker-maker.ts",
-    "examples/4-special-command.ts"
+    "examples/4-special-command.ts",
+    "typings/index.d.ts",
+    "node_modules/typescript/lib/lib.es7.d.ts"
   ],
-
   "atom": {
     "rewriteTsconfig": true
   }
