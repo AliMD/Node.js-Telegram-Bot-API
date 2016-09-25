@@ -101,6 +101,8 @@ export default class TelegramBotApi extends TelegramBotApiCore {
     return this.query('sendMessage');
   }
 
+  private _textLimit: number = 4096
+
   /**
    * Send query for sendMessage
    * @param  {Object} parameters
@@ -121,7 +123,24 @@ export default class TelegramBotApi extends TelegramBotApiCore {
       action: TelegramBotApi.chatActions.typing
     }, false);
 
-    return this.query('sendMessage', parameters);
+    if (parameters.text.length <= this._textLimit) {
+      return this.query('sendMessage', parameters);
+    }
+
+    // else
+
+    let
+      i: number = 0,
+      ret: Promise<any> = null,
+      text: string = parameters.text
+    ;
+
+    for (; i<text.length; i += this._textLimit) {
+      parameters.text = text.substr(i, this._textLimit);
+      ret = await this.query('sendMessage', parameters);
+    }
+
+    return ret;
   }
 
   /**
