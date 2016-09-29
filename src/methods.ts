@@ -1,7 +1,7 @@
 import debug = require('debug');
 const log = debug('TelegramBotApi:methods');
-const fs = require('fs');
-const _extend = require('lodash/extend');
+import fs = require('fs');
+import _extend = require('lodash/extend');
 
 import TelegramBotApiCore from './core'
 
@@ -19,6 +19,17 @@ export type chatActions =
   'upload_document' |
   'find_location'
 ;
+
+export type fileObject =
+  string |
+  {
+    value: string,
+    options: {
+      filename: string,
+      contentType: string
+    }
+  } |
+  fs.ReadStream;
 
 export type parseMode = 'Markdown' | 'HTML';
 
@@ -49,24 +60,47 @@ export default class TelegramBotApi extends TelegramBotApiCore {
   }
 
   /**
-   * Create fileReadStream from path or retur file_id
-   * @param  {any} file
+   * Try to convert fileObject to validated for use in form-data
+   * @static
+   * @param {(string | customeFile | any)} file
+   * @returns {(string | customeFile | any)}
    */
-  static async fileIdOrReadStream (file: string): Promise<any> {
+  static sanitizeFilePath (file: fileObject): fileObject {
     log(`fileIdOrReadStream for ${file}`);
+
+    if (typeof file === 'string') {
+      file = TelegramBotApi._makeReadStram(file+'');
+    }
+    else if (file['value'] && typeof file['value'] === 'string') {
+      file['value'] = TelegramBotApi._makeReadStram(file['value']);
+    }
+
+    return file;
+  }
+
+  /**
+   * Create ReadStream from path to use in form-data if file exist
+   * @static
+   * @param {string} path
+   * @returns {(fs.ReadStream | string)}
+   */
+  static _makeReadStram (path: string): fs.ReadStream | string {
     let isFile = false;
+
+    //TODO: Find better way for check file exist
     try {
-      isFile = fs.statSync(file).isFile();
+      isFile = fs.statSync(path).isFile();
     }
     catch (err){}; // skip err
 
     return !isFile ?
-      file :
-      fs.createReadStream(file, {
+      path :
+      fs.createReadStream(path, {
         flags: 'r',
         autoClose: true
       });
   }
+
 
   /**
    * Send query for getUpdates from server
@@ -170,7 +204,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
    */
   async sendPhoto(parameters: {
       chat_id: integer,
-      photo: string,
+      photo: fileObject,
       caption?: string,
       disable_notification?: boolean,
       reply_to_message_id?: integer,
@@ -178,7 +212,8 @@ export default class TelegramBotApi extends TelegramBotApiCore {
     }): Promise<any> {
 
     console.assert((parameters.caption || '').length <= 200, "Photo caption must be 0-200 characters");
-    parameters.photo = await TelegramBotApi.fileIdOrReadStream(parameters.photo);
+
+    parameters.photo = TelegramBotApi.sanitizeFilePath(parameters.photo);
 
     await this._sendAutoChatAction({
       chat_id: parameters.chat_id,
@@ -195,7 +230,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
    */
   async sendAudio(parameters: {
       chat_id: integer,
-      audio: string,
+      audio: fileObject,
       duration?: number,
       performer?: string,
       title?: string,
@@ -204,7 +239,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
       reply_markup?: string
     }): Promise<any> {
 
-    parameters.audio = await TelegramBotApi.fileIdOrReadStream(parameters.audio);
+    parameters.audio = TelegramBotApi.sanitizeFilePath(parameters.audio);
 
     await this._sendAutoChatAction({
       chat_id: parameters.chat_id,
@@ -221,14 +256,14 @@ export default class TelegramBotApi extends TelegramBotApiCore {
    */
   async sendDocument(parameters: {
       chat_id: integer,
-      document: string,
+      document: fileObject,
       caption?: string,
       disable_notification?: boolean,
       reply_to_message_id?: integer,
       reply_markup?: string
     }): Promise<any> {
 
-    parameters.document = await TelegramBotApi.fileIdOrReadStream(parameters.document);
+    parameters.document = await TelegramBotApi.sanitizeFilePath(parameters.document);
 
     await this._sendAutoChatAction({
       chat_id: parameters.chat_id,
@@ -245,13 +280,13 @@ export default class TelegramBotApi extends TelegramBotApiCore {
    */
   async sendSticker(parameters: {
       chat_id: integer,
-      sticker: string,
+      sticker: fileObject,
       disable_notification?: boolean,
       reply_to_message_id?: integer,
       reply_markup?: string
     }): Promise<any> {
 
-    parameters.sticker = await TelegramBotApi.fileIdOrReadStream(parameters.sticker);
+    parameters.sticker = await TelegramBotApi.sanitizeFilePath(parameters.sticker);
 
     await this._sendAutoChatAction({
       chat_id: parameters.chat_id,
@@ -268,7 +303,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
    */
   async sendVideo(parameters: {
       chat_id: integer,
-      video: string,
+      video: fileObject,
       duration?: number,
       width?: number,
       height?: number,
@@ -278,7 +313,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
       reply_markup?: string
     }): Promise<any> {
 
-    parameters.video = await TelegramBotApi.fileIdOrReadStream(parameters.video);
+    parameters.video = await TelegramBotApi.sanitizeFilePath(parameters.video);
 
     await this._sendAutoChatAction({
       chat_id: parameters.chat_id,
@@ -295,14 +330,14 @@ export default class TelegramBotApi extends TelegramBotApiCore {
    */
   async sendVoice(parameters: {
       chat_id: integer,
-      voice: string,
+      voice: fileObject,
       duration?: number,
       disable_notification?: boolean,
       reply_to_message_id?: integer,
       reply_markup?: string
     }): Promise<any> {
 
-    parameters.voice = await TelegramBotApi.fileIdOrReadStream(parameters.voice);
+    parameters.voice = await TelegramBotApi.sanitizeFilePath(parameters.voice);
 
     await this._sendAutoChatAction({
       chat_id: parameters.chat_id,
