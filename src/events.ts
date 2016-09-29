@@ -1,6 +1,6 @@
 import debug = require('debug');
 const logEvents = debug('TelegramBotApi:events');
-import EventEmitter = require('events');
+const EventEmitter = require('events');
 const log = debug('TelegramBotApi:update');
 import _extend = require('lodash/extend');
 
