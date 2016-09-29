@@ -1,8 +1,8 @@
 import debug = require('debug');
 const logEvents = debug('TelegramBotApi:events');
-const EventEmitter = require('events');
+import EventEmitter = require('events');
 const log = debug('TelegramBotApi:update');
-const _extend = require('lodash/extend');
+import _extend = require('lodash/extend');
 
 import TelegramBotApiMethods from './methods'
 

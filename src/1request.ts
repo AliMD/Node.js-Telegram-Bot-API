@@ -1,6 +1,6 @@
 import debug = require('debug');
 const log = debug('TelegramBotApi:1request');
-const request = require('request');
+import request = require('request');
 const timeout = 20000;
 
 log('init');

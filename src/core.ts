@@ -2,7 +2,7 @@ import debug = require('debug');
 const log = debug('TelegramBotApi:core');
 const queryLog = debug('TelegramBotApi:query');
 import _1request from './1request';
-const _extend = require('lodash/extend');
+import _extend = require('lodash/extend');
 
 log('init');
 
