@@ -35,25 +35,41 @@ class TelegramBotApi extends core_1.default {
         log('constructor');
     }
     /**
-     * Create fileReadStream from path or retur file_id
-     * @param  {any} file
+     * Try to convert fileObject to validated for use in form-data
+     * @static
+     * @param {(string | customeFile | any)} file
+     * @returns {(string | customeFile | any)}
      */
-    static fileIdOrReadStream(file) {
-        return __awaiter(this, void 0, Promise, function* () {
-            log(`fileIdOrReadStream for ${file}`);
-            let isFile = false;
-            try {
-                isFile = fs.statSync(file).isFile();
-            }
-            catch (err) { }
-            ; // skip err
-            return !isFile ?
-                file :
-                fs.createReadStream(file, {
-                    flags: 'r',
-                    autoClose: true
-                });
-        });
+    static sanitizeFilePath(file) {
+        log(`fileIdOrReadStream for ${file}`);
+        if (typeof file === 'string') {
+            file = TelegramBotApi._makeReadStram(file + '');
+        }
+        else if (file['value'] && typeof file['value'] === 'string') {
+            file['value'] = TelegramBotApi._makeReadStram(file['value']);
+        }
+        return file;
+    }
+    /**
+     * Create ReadStream from path to use in form-data if file exist
+     * @static
+     * @param {string} path
+     * @returns {(fs.ReadStream | string)}
+     */
+    static _makeReadStram(path) {
+        let isFile = false;
+        //TODO: Find better way for check file exist
+        try {
+            isFile = fs.statSync(path).isFile();
+        }
+        catch (err) { }
+        ; // skip err
+        return !isFile ?
+            path :
+            fs.createReadStream(path, {
+                flags: 'r',
+                autoClose: true
+            });
     }
     /**
      * Send query for getUpdates from server
@@ -129,7 +145,7 @@ class TelegramBotApi extends core_1.default {
     sendPhoto(parameters) {
         return __awaiter(this, void 0, Promise, function* () {
             console.assert((parameters.caption || '').length <= 200, "Photo caption must be 0-200 characters");
-            parameters.photo = yield TelegramBotApi.fileIdOrReadStream(parameters.photo);
+            parameters.photo = TelegramBotApi.sanitizeFilePath(parameters.photo);
             yield this._sendAutoChatAction({
                 chat_id: parameters.chat_id,
                 action: TelegramBotApi.chatActions.upload_photo
@@ -144,7 +160,7 @@ class TelegramBotApi extends core_1.default {
      */
     sendAudio(parameters) {
         return __awaiter(this, void 0, Promise, function* () {
-            parameters.audio = yield TelegramBotApi.fileIdOrReadStream(parameters.audio);
+            parameters.audio = TelegramBotApi.sanitizeFilePath(parameters.audio);
             yield this._sendAutoChatAction({
                 chat_id: parameters.chat_id,
                 action: TelegramBotApi.chatActions.upload_audio
@@ -159,7 +175,7 @@ class TelegramBotApi extends core_1.default {
      */
     sendDocument(parameters) {
         return __awaiter(this, void 0, Promise, function* () {
-            parameters.document = yield TelegramBotApi.fileIdOrReadStream(parameters.document);
+            parameters.document = yield TelegramBotApi.sanitizeFilePath(parameters.document);
             yield this._sendAutoChatAction({
                 chat_id: parameters.chat_id,
                 action: TelegramBotApi.chatActions.upload_document
@@ -174,7 +190,7 @@ class TelegramBotApi extends core_1.default {
      */
     sendSticker(parameters) {
         return __awaiter(this, void 0, Promise, function* () {
-            parameters.sticker = yield TelegramBotApi.fileIdOrReadStream(parameters.sticker);
+            parameters.sticker = yield TelegramBotApi.sanitizeFilePath(parameters.sticker);
             yield this._sendAutoChatAction({
                 chat_id: parameters.chat_id,
                 action: TelegramBotApi.chatActions.upload_photo
@@ -189,7 +205,7 @@ class TelegramBotApi extends core_1.default {
      */
     sendVideo(parameters) {
         return __awaiter(this, void 0, Promise, function* () {
-            parameters.video = yield TelegramBotApi.fileIdOrReadStream(parameters.video);
+            parameters.video = yield TelegramBotApi.sanitizeFilePath(parameters.video);
             yield this._sendAutoChatAction({
                 chat_id: parameters.chat_id,
                 action: TelegramBotApi.chatActions.upload_video
@@ -204,7 +220,7 @@ class TelegramBotApi extends core_1.default {
      */
     sendVoice(parameters) {
         return __awaiter(this, void 0, Promise, function* () {
-            parameters.voice = yield TelegramBotApi.fileIdOrReadStream(parameters.voice);
+            parameters.voice = yield TelegramBotApi.sanitizeFilePath(parameters.voice);
             yield this._sendAutoChatAction({
                 chat_id: parameters.chat_id,
                 action: TelegramBotApi.chatActions.record_audio

@@ -1,6 +1,14 @@
+import fs = require('fs');
 import TelegramBotApiCore from './core';
 export declare type integer = string | number;
 export declare type chatActions = 'typing' | 'upload_photo' | 'record_video' | 'upload_video' | 'record_audio' | 'upload_audio' | 'upload_document' | 'find_location';
+export declare type fileObject = string | {
+    value: string;
+    options: {
+        filename: string;
+        contentType: string;
+    };
+} | fs.ReadStream;
 export declare type parseMode = 'Markdown' | 'HTML';
 /**
  * @class TelegramBotApi
@@ -23,10 +31,19 @@ export default class TelegramBotApi extends TelegramBotApiCore {
         autoChatActionUploadOnly?: boolean;
     });
     /**
-     * Create fileReadStream from path or retur file_id
-     * @param  {any} file
+     * Try to convert fileObject to validated for use in form-data
+     * @static
+     * @param {(string | customeFile | any)} file
+     * @returns {(string | customeFile | any)}
      */
-    static fileIdOrReadStream(file: string): Promise<any>;
+    static sanitizeFilePath(file: fileObject): fileObject;
+    /**
+     * Create ReadStream from path to use in form-data if file exist
+     * @static
+     * @param {string} path
+     * @returns {(fs.ReadStream | string)}
+     */
+    static _makeReadStram(path: string): fs.ReadStream | string;
     /**
      * Send query for getUpdates from server
      * @param  {Object} parameters
@@ -84,7 +101,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
      */
     sendPhoto(parameters: {
         chat_id: integer;
-        photo: string;
+        photo: fileObject;
         caption?: string;
         disable_notification?: boolean;
         reply_to_message_id?: integer;
@@ -97,7 +114,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
      */
     sendAudio(parameters: {
         chat_id: integer;
-        audio: string;
+        audio: fileObject;
         duration?: number;
         performer?: string;
         title?: string;
@@ -112,7 +129,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
      */
     sendDocument(parameters: {
         chat_id: integer;
-        document: string;
+        document: fileObject;
         caption?: string;
         disable_notification?: boolean;
         reply_to_message_id?: integer;
@@ -125,7 +142,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
      */
     sendSticker(parameters: {
         chat_id: integer;
-        sticker: string;
+        sticker: fileObject;
         disable_notification?: boolean;
         reply_to_message_id?: integer;
         reply_markup?: string;
@@ -137,7 +154,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
      */
     sendVideo(parameters: {
         chat_id: integer;
-        video: string;
+        video: fileObject;
         duration?: number;
         width?: number;
         height?: number;
@@ -153,7 +170,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
      */
     sendVoice(parameters: {
         chat_id: integer;
-        voice: string;
+        voice: fileObject;
         duration?: number;
         disable_notification?: boolean;
         reply_to_message_id?: integer;
