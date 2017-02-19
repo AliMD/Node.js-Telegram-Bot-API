@@ -132,7 +132,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
    * @returns {Promise} requet promise
    */
   async getMe(): Promise<any> {
-    return this.query('sendMessage');
+    return this.query('getMe');
   }
 
   private _textLimit: number = 4096
