@@ -170,4 +170,26 @@ describe('methods', () => {
     });
   });
 
+  it.only('should work with getMe', (done) => {
+    bot.getMe()
+    .then((data) => {
+      console.log(data);
+      expect(data).to.be.ok();
+      expect(data['username']).to.be.ok();
+      done();
+    }, done)
+    .catch(done);
+
+    // try {
+    //   bot.query('getMe', {})
+    //   .then((data) => {
+    //     expect(data).to.be.ok();
+    //     expect(data.username).to.be.ok();
+    //     done();
+    //   }, done);
+    // } catch (err) {
+    //   done(err);
+    // }
+  });
+
 });
