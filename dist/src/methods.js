@@ -96,8 +96,21 @@ class TelegramBotApi extends core_1.default {
      * @returns {Promise} requet promise
      */
     getMe() {
-        return __awaiter(this, void 0, Promise, function* () {
-            return this.query('sendMessage');
+        log('getMe');
+        return new Promise((resolve, reject) => {
+            this.query('getMe', {})
+                .then((data) => {
+                log('getMe return', data);
+                if (data.ok && data.result) {
+                    resolve(data.result);
+                }
+                else {
+                    reject(data);
+                }
+            })
+                .catch((err) => {
+                reject(err);
+            });
         });
     }
     /**
