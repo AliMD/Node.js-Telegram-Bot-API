@@ -115,6 +115,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
     sendAudio(parameters: {
         chat_id: integer;
         audio: fileObject;
+        caption?: String;
         duration?: number;
         performer?: string;
         title?: string;
@@ -171,6 +172,7 @@ export default class TelegramBotApi extends TelegramBotApiCore {
     sendVoice(parameters: {
         chat_id: integer;
         voice: fileObject;
+        caption?: string;
         duration?: number;
         disable_notification?: boolean;
         reply_to_message_id?: integer;
