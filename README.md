@@ -2,6 +2,6 @@
 Telegram Bot API for Node.js with ESNext  
 
 ## Install
-`yarn add telegram-bot-api.js`
-or
-`npm install --save telegram-bot-api.js`
+`yarn add telegram-bot-api.js`  
+or  
+`npm install --save telegram-bot-api.js`  
